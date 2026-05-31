@@ -8,6 +8,7 @@
 class SpriteManager
 {
 private:
+	//SDL_TextureÉ¾³ıÆ÷
 	struct TextureDeleter {
 		void operator()(SDL_Texture* sdl_texture) {
 			if (sdl_texture)

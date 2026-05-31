@@ -3,6 +3,7 @@
 
 int main()
 {
+	//ªÒ»°Game
 	Game& game = Game::GetInstance();
 	game.Run();
 
