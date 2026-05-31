@@ -1,39 +1,21 @@
-#include "GameObject.h"
+﻿#include "GameObject.h"
 
-GameObject::~GameObject()
-{
-	Clean();
-}
 
-void GameObject::Update(float delta)
+
+void GameObject::Start() 
 {
 	for (auto& component : components) {
-		if (!component->enable) continue;
-		component->Update(delta);
+		component->Start();
 	}
 }
 
-void GameObject::Render()
+void GameObject::Update(float deltaTime) 
 {
 	for (auto& component : components) {
-		if (!component->enable) continue;
-		component->Render();
+		component->Update(deltaTime);
 	}
 }
 
-void GameObject::Input()
-{
-	for (auto& component : components) {
-		if (!component->enable) continue;
-		component->Input();
-	}
-}
-
-void GameObject::Clean()
-{
-	component_map.clear();
-	components.clear();
-}
 
 
 

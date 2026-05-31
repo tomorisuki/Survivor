@@ -1,12 +1,11 @@
-#pragma once
+﻿#pragma once
 #include "Vector2D.h"
 
 class Transform
 {
 public:
-	Transform() :rotation(0) {}
-
-	Vector2D position;
-	Vector2D scale;
-	float rotation;
+	class GameObject* owner = nullptr;
+	Vector2D position{ 0.0f,0.0f };
+	Vector2D scale{ 1.0f,1.0f };
+	float rotation = 0.0f;
 };

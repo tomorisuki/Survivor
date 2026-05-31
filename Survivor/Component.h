@@ -1,23 +1,20 @@
-#pragma once
+﻿#pragma once
 
-class Component 
+#include "Object.h"
+
+class Component : public Object
 {
+	friend class GameObject;
 public:
-	
-	class GameObject* owner = nullptr;
+	virtual ~Component() = default;
 
-	void SetOwner(class GameObject* owner) {
-		this->owner = owner;
+	virtual void Start() {}
+	virtual void Update(float deltaTime) {}
+
+	GameObject* GetGameObject() const {
+		return owner;
 	}
 
-	virtual void Update(float delta) {}
-	virtual void Render() {}
-	virtual void Input() {}
-
-public:
-	//bool disable = true;
-	bool enable = true;
-
-
-
+protected:
+	class GameObject* owner = nullptr;
 };

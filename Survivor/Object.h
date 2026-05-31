@@ -1,20 +1,22 @@
-#pragma once
+﻿#pragma once
+#include <string>
+
+class Engine;
 
 class Object
 {
 public:
-	Object() = default;
 	virtual ~Object() = default;
 
-	virtual void Init() {}
+	std::string GetName() const {
+		return name;
+	}
 
-	virtual void Update(float delta) {}
-	virtual void Render() {}
-	virtual void Input() {}
-
-	virtual void Destroy() {}
 
 protected:
-	bool enable = true;
+	Engine* engine = nullptr;
 
+	std::string name;
+
+	bool pendingDestroy = false;
 };

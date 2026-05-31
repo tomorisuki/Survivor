@@ -30,6 +30,12 @@
     <Filter Include="Engine\Resources">
       <UniqueIdentifier>{31a5a473-0d1b-4d77-88b1-ee4e9908eec1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project">
+      <UniqueIdentifier>{5a6461fe-06d1-4619-abc2-6a2c73168fb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\Scene">
+      <UniqueIdentifier>{e5c908c9-2562-48a3-91de-4d4626d175c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -46,6 +52,9 @@
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Engine\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2D.cpp">
+      <Filter>Engine\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +84,9 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Engine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Project\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
