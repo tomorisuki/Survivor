@@ -5,6 +5,7 @@
 class Scene
 {
 public:
+	
 
 	virtual ~Scene() = default;
 
@@ -19,12 +20,17 @@ public:
 	}
 	virtual void Update(float deltaTime)
 	{
-		for (auto& obj : gameObjects) {
+		/*for (auto& obj : gameObjects) {
 			obj->Update(deltaTime);
-		}
+		}*/
 	}
 
-	virtual void Render() {}
+	virtual void Render() 
+	{
+		for (auto& obj : gameObjects) {
+			obj->Render();
+		}
+	}
 
 	void CleanDestroyObjects() {
 		gameObjects.erase(
@@ -41,6 +47,10 @@ public:
 		GameObject* ptr = obj.get();
 		gameObjects.push_back(std::move(obj));
 		return ptr;
+	}
+
+	void SetEngine(Engine* engine) {
+		this->engine = engine;
 	}
 
 protected:

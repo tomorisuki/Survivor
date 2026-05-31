@@ -103,6 +103,8 @@ public:
 
 	void Update(float deltaTime);
 
+	void Render();
+
 private:
 	std::unordered_map<std::type_index, Component*> componentMap;
 	std::vector<std::unique_ptr<Component>> components;

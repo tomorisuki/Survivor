@@ -7,6 +7,9 @@
 #include "SpriteManager.h"
 #include "Sprite.h"
 
+#include "Engine.h"
+#include "TestScene.h"
+
 constexpr int WINDOW_WIDTH = 1200;
 constexpr int WINDOW_HEIGHT = 800;
 
@@ -30,11 +33,16 @@ private:
 	SDL_Window* sdl_window = nullptr;
 	SDL_Renderer* sdl_renderer = nullptr;
 
+
 	std::unique_ptr<SpriteManager> sprite_manager;
 	std::unique_ptr<Sprite> sprite;
 
-	bool running = true;
+	std::unique_ptr<Engine> engine;
+	std::unique_ptr<InputSystem> input;
 
+	SDL_Event sdl_event;
+	bool running = true;
+	TestScene* scene = nullptr;
 private:
 	Game() = default;
 	Game(const Game&) = delete;

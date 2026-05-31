@@ -1,16 +1,17 @@
-#include "Game.h"
+ï»¿#include "Game.h"
 #include <chrono>
+
 
 bool Game::InitGame()
 {
-    // ³õÊ¼»¯ SDL
+    // åˆå§‹åŒ– SDL
     if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO))
     {
         SDL_Log("SDL_Init failed: %s", SDL_GetError());
         return false;
     }
 
-    // ³õÊ¼»¯ SDL_ttf
+    // åˆå§‹åŒ– SDL_ttf
     if (!TTF_Init())
     {
         SDL_Log("TTF_Init failed: %s", SDL_GetError());
@@ -21,7 +22,7 @@ bool Game::InitGame()
         SDL_WINDOW_RESIZABLE, &sdl_window, &sdl_renderer);
 
 
-    // ÉèÖÃ´¹Ö±Í¬²½£¨¿ÉÑ¡£©
+    // è®¾ç½®å‚ç›´åŒæ­¥ï¼ˆå¯é€‰ï¼‰
     SDL_SetRenderVSync(sdl_renderer, 1);
 
 
@@ -30,6 +31,14 @@ bool Game::InitGame()
     sprite = std::make_unique<Sprite>();
     sprite->SetTexture(sprite_manager->GetSprite("sunflower"));
 
+    SDL_zero(sdl_event);
+
+    input = std::make_unique<InputSystem>(&sdl_event);
+    engine = std::make_unique<Engine>(input.get(), sdl_renderer, sprite_manager.get());
+
+    scene = new TestScene();
+    scene->SetEngine(engine.get());
+    scene->Start();
 
     return true;
 }
@@ -48,7 +57,7 @@ void Game::Run()
     auto last = std::chrono::steady_clock::now();
 
 
-    SDL_Event sdl_event;
+    
 	while (running) {
 
         while (SDL_PollEvent(&sdl_event)) {
@@ -58,6 +67,7 @@ void Game::Run()
                 Clean();
                 break;
             }
+            input->Input();
         }
 
         auto current = std::chrono::steady_clock::now();
@@ -69,7 +79,7 @@ void Game::Run()
             
             float game_dt = static_cast<float>(fixed_dt);
 
-
+            scene->Update(game_dt);
             //update
 
             accumulator -= fixed_dt;
@@ -78,8 +88,7 @@ void Game::Run()
         SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
         SDL_RenderClear(sdl_renderer);
         //render
-        SDL_FRect rect = { 200,200,64,89 };
-        SDL_RenderTexture(sdl_renderer, sprite->GetTexture(), nullptr, &rect);
+        scene->Render();
 
         SDL_RenderPresent(sdl_renderer);
 	}

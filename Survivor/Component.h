@@ -10,6 +10,7 @@ public:
 
 	virtual void Start() {}
 	virtual void Update(float deltaTime) {}
+	virtual void Render() {}
 
 	GameObject* GetGameObject() const {
 		return owner;

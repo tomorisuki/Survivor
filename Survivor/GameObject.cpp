@@ -16,6 +16,13 @@ void GameObject::Update(float deltaTime)
 	}
 }
 
+void GameObject::Render()
+{
+	for (auto& component : components) {
+		component->Render();
+	}
+}
+
 
 
 
