@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 #include <unordered_map>
@@ -8,7 +8,7 @@
 class SpriteManager
 {
 private:
-	//SDL_TextureÉ¾³ýÆ÷
+	//SDL_Textureåˆ é™¤å™¨
 	struct TextureDeleter {
 		void operator()(SDL_Texture* sdl_texture) {
 			if (sdl_texture)

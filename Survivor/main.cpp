@@ -1,9 +1,9 @@
-#include "Game.h"
+﻿#include "Game.h"
 
 
 int main()
 {
-	//��ȡGame
+	//获取Game
 	Game& game = Game::GetInstance();
 	game.Run();
 

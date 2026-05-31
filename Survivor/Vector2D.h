@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <cmath>
 
@@ -11,13 +11,13 @@ public:
 
 	Vector2D(float x,float y): x(x),y(y) {}
 
-	//¿½±´¹¹Ôì
+	//æ‹·è´æ„é€ 
 	Vector2D(const Vector2D& v) {
 		x = v.x;
 		y = v.y;
 	}
 	
-	//¿½±´¸³Öµ
+	//æ‹·è´èµ‹å€¼
 	Vector2D operator=(const Vector2D& v) {
 		x = v.x;
 		y = v.y;
