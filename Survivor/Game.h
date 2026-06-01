@@ -4,7 +4,7 @@
 #include <SDL3_mixer/SDL_mixer.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
-#include "SpriteManager.h"
+#include "TextureManager.h"
 #include "Sprite.h"
 
 #include "Engine.h"
@@ -34,7 +34,7 @@ private:
 	SDL_Renderer* sdl_renderer = nullptr;
 
 
-	std::unique_ptr<SpriteManager> sprite_manager;
+	std::unique_ptr<TextureManager> texture_manager;
 	std::unique_ptr<Sprite> sprite;
 
 	std::unique_ptr<Engine> engine;

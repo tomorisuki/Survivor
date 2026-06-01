@@ -140,8 +140,9 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="SpriteManager.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="SpriteRender.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Vector2D.cpp" />
@@ -153,10 +154,11 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Sprite.h" />
-    <ClInclude Include="SpriteManager.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="SpriteRender.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Transform.h" />

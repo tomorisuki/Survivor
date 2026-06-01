@@ -51,31 +51,40 @@ enum class KeyState {
 
 struct Key {
     Key(){}
-    Key(KeyCode key_code) {}
+    Key(KeyCode key_code) : key_code(key_code) {}
 
     KeyCode key_code = KeyCode::Default;
     KeyState key_state = KeyState::Normal;
+    bool current = false;   // 当前帧状态
+    bool previous = false;  // 上一帧状态
 };
+
+
 
 class InputSystem final
 {
 public:
 
-    explicit InputSystem(SDL_Event* sdl_event):sdl_event(sdl_event) {}
+    //explicit InputSystem(SDL_Event* sdl_event):sdl_event(sdl_event) {}
     ~InputSystem() = default;
 
-    void Input();
+    void Input(SDL_Event& sdl_event);
+
+    void Update();
 
     void BindKeyCode(const std::string& name, KeyCode key_code);
 
     bool isPress(const std::string& name);
-    bool isPress(KeyCode key_code);
+    bool isPress(KeyCode key_code) const;
 
     bool isDown(const std::string& name);
-    bool isDown(KeyCode key_code);
+    bool isDown(KeyCode key_code) const;
+
+    bool isUp(const std::string& name);
+    bool isUp(KeyCode key_code);
 
 private:
-	SDL_Event* sdl_event = nullptr;
+	//SDL_Event* sdl_event = nullptr;
     std::unordered_map<std::string, Key> keyMap;
 
     Key keyArr[34];

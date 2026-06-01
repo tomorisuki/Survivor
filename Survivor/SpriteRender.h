@@ -19,6 +19,7 @@ public:
 		SDL_FRect dstRect = { owner->transform.position.x,
 			owner->transform.position.y,64,89 };
 		SDL_RenderTexture(sdl_renderer, sprite, nullptr, &dstRect);
+		//SDL_RenderTextureRotated()
 	}
 
 	void SetSprite(SDL_Texture* sprite) {

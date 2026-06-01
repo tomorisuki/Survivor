@@ -5,7 +5,7 @@
 #include <string>
 #include <memory>
 
-class SpriteManager
+class TextureManager
 {
 private:
 	//SDL_Texture删除器
@@ -17,21 +17,21 @@ private:
 	};
 
 public:
-	SpriteManager(SDL_Renderer* sdl_renderer):sdl_renderer(sdl_renderer) {}
-	~SpriteManager();
+	TextureManager(SDL_Renderer* sdl_renderer):sdl_renderer(sdl_renderer) {}
+	~TextureManager();
 
 	bool Init();
 
-	bool LoadSprite(const std::string& name, const std::string& path);
+	bool LoadTexture(const std::string& name, const std::string& path);
 
-	SDL_Texture* GetSprite(const std::string& name);
+	SDL_Texture* GetTexture(const std::string& name);
 
 
 
 private:
 	void Clean();
 	SDL_Renderer* sdl_renderer = nullptr;
-	std::unordered_map<std::string, std::unique_ptr<SDL_Texture,TextureDeleter>> sprite_pool;
+	std::unordered_map<std::string, std::unique_ptr<SDL_Texture,TextureDeleter>> texture_pool;
 	bool is_clear = false;
 };
 

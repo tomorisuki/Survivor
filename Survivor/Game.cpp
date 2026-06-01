@@ -26,15 +26,15 @@ bool Game::InitGame()
     SDL_SetRenderVSync(sdl_renderer, 1);
 
 
-    sprite_manager = std::make_unique<SpriteManager>(sdl_renderer);
-    if (!sprite_manager->Init()) return false;
+    texture_manager = std::make_unique<TextureManager>(sdl_renderer);
+    if (!texture_manager->Init()) return false;
     sprite = std::make_unique<Sprite>();
-    sprite->SetTexture(sprite_manager->GetSprite("sunflower"));
+    sprite->SetTexture(texture_manager->GetTexture("sunflower"));
 
     SDL_zero(sdl_event);
 
-    input = std::make_unique<InputSystem>(&sdl_event);
-    engine = std::make_unique<Engine>(input.get(), sdl_renderer, sprite_manager.get());
+    input = std::make_unique<InputSystem>();
+    engine = std::make_unique<Engine>(input.get(), sdl_renderer, texture_manager.get());
 
     scene = new TestScene();
     scene->SetEngine(engine.get());
@@ -64,12 +64,13 @@ void Game::Run()
             if (sdl_event.type == SDL_EVENT_QUIT)
             {
                 running = false;
-                Clean();
                 break;
             }
-            input->Input();
+            input->Input(sdl_event);
         }
-
+        if (!running) break;
+        input->Update();
+        
         auto current = std::chrono::steady_clock::now();
         double frame_time = std::chrono::duration<double>(current - last).count();
         last = current;
@@ -80,7 +81,6 @@ void Game::Run()
             float game_dt = static_cast<float>(fixed_dt);
 
             scene->Update(game_dt);
-            //update
 
             accumulator -= fixed_dt;
         }
@@ -92,7 +92,7 @@ void Game::Run()
 
         SDL_RenderPresent(sdl_renderer);
 	}
-	
+    Clean();
 }
 
 void Game::Clean()

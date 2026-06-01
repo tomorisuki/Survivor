@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Scene.h"
 #include "SpriteRender.h"
+#include <iostream>
 class TestScene :
     public Scene
 {
@@ -11,10 +12,12 @@ public:
 
         auto player = CreateGameObject("player");
         player->AddComponent<SpriteRender>();
-        player->GetComponent<SpriteRender>()->SetSprite(engine->GetSpriteManager()->GetSprite(
+        player->GetComponent<SpriteRender>()->SetSprite(engine->GetTextureManager()->GetTexture(
             "sunflower"));
         player->transform.position = { 0.0f,200.0f };
-        
+        engine->Input()->BindKeyCode("left", KeyCode::KEY_A);
+        engine->Input()->BindKeyCode("right", KeyCode::KEY_D);
+
         Scene::Start();
     }
 
@@ -24,7 +27,12 @@ public:
 
         for (auto& obj : gameObjects) {
             if (obj->GetName() == "player") {
-                obj->transform.position.x += 100.0f * deltaTime;
+                if (engine->Input()->isDown("right")) {
+                    obj->transform.position.x += 100.0f * deltaTime;
+                    //std::cout << "press" << std::endl;
+                }
+                if (engine->Input()->isDown("left"))
+                    obj->transform.position.x -= 100.0f * deltaTime;
             }
             obj->Update(deltaTime);
         }

@@ -47,7 +47,7 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteManager.cpp">
+    <ClCompile Include="TextureManager.cpp">
       <Filter>Engine\Resources</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
@@ -66,10 +66,13 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="TestScene.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Project\Scene</Filter>
     </ClCompile>
     <ClCompile Include="SpriteRender.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderSystem.cpp">
+      <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,7 +97,7 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>Engine\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteManager.h">
+    <ClInclude Include="TextureManager.h">
       <Filter>Engine\Resources</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
@@ -109,7 +112,14 @@
     <ClInclude Include="InputSystem.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene.h" />
-    <ClInclude Include="SpriteRender.h" />
+    <ClInclude Include="TestScene.h">
+      <Filter>Project\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRender.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

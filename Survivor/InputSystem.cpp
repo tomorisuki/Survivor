@@ -1,10 +1,13 @@
 ﻿#include "InputSystem.h"
 
-void InputSystem::Input()
+//test
+#include <iostream>
+
+void InputSystem::Input(SDL_Event& sdl_event)
 {
-    switch (sdl_event->type) {
+    switch (sdl_event.type) {
     case SDL_EVENT_KEY_DOWN:
-        switch (sdl_event->key.key) {
+        switch (sdl_event.key.key) {
         case SDLK_A:      KeyStateRequire[static_cast<int>(KeyCode::KEY_A)] = true; break;
         case SDLK_B:      KeyStateRequire[static_cast<int>(KeyCode::KEY_B)] = true; break;
         case SDLK_C:      KeyStateRequire[static_cast<int>(KeyCode::KEY_C)] = true; break;
@@ -41,7 +44,7 @@ void InputSystem::Input()
         break;
 
     case SDL_EVENT_KEY_UP:
-        switch (sdl_event->key.key) {
+        switch (sdl_event.key.key) {
         case SDLK_A:      KeyStateRequire[static_cast<int>(KeyCode::KEY_A)] = false; break;
         case SDLK_B:      KeyStateRequire[static_cast<int>(KeyCode::KEY_B)] = false; break;
         case SDLK_C:      KeyStateRequire[static_cast<int>(KeyCode::KEY_C)] = false; break;
@@ -77,6 +80,16 @@ void InputSystem::Input()
         }
         break;
     }
+
+
+}
+
+void InputSystem::Update()
+{
+    for (auto& key : keyMap) {
+        key.second.previous = key.second.current;
+        key.second.current = KeyStateRequire[static_cast<int>(key.second.key_code)];
+    }
 }
 
 void InputSystem::BindKeyCode(const std::string& name, KeyCode key_code)
@@ -86,10 +99,17 @@ void InputSystem::BindKeyCode(const std::string& name, KeyCode key_code)
 
 bool InputSystem::isPress(const std::string& name)
 {
-	return false;
+    return keyMap[name].current && !keyMap[name].previous;
+    ////如果按键的状态为true
+    //if (KeyStateRequire[static_cast<int>(keyMap[name].key_code)] &&
+    //    (keyMap[name].key_state != KeyState::Press)) {
+    //    keyMap[name].key_state = KeyState::Press;
+    //    return true;
+    //}
+    //return false;
 }
 
-bool InputSystem::isPress(KeyCode key_code)
+bool InputSystem::isPress(KeyCode key_code) const
 {
 
 	return false;
@@ -97,12 +117,34 @@ bool InputSystem::isPress(KeyCode key_code)
 
 bool InputSystem::isDown(const std::string& name)
 {
-	return false;
+    return keyMap[name].current;
+   /* if (KeyStateRequire[static_cast<int>(keyMap[name].key_code)] &&
+        (keyMap[name].key_state == KeyState::Press || keyMap[name].key_state == KeyState::Down)) {
+        keyMap[name].key_state = KeyState::Down;
+        return true;
+    }
+    return false;*/
 }
 
-bool InputSystem::isDown(KeyCode key_code)
+bool InputSystem::isDown(KeyCode key_code) const
 {
 	return KeyStateRequire[static_cast<int>(key_code)];
+}
+
+bool InputSystem::isUp(const std::string& name)
+{
+    return !keyMap[name].current && keyMap[name].previous;
+   /* if (!KeyStateRequire[static_cast<int>(keyMap[name].key_code)] &&
+        (keyMap[name].key_state == KeyState::Down)) {
+        keyMap[name].key_state = KeyState::Up;
+        return true;
+    }
+    return false;*/
+}
+
+bool InputSystem::isUp(KeyCode key_code)
+{
+    return false;
 }
 
 
