@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <string>
 #include <memory>
+#include "Sprite.h"
 
 class TextureManager
 {
@@ -24,14 +25,18 @@ public:
 
 	bool LoadTexture(const std::string& name, const std::string& path);
 
+
+
 	SDL_Texture* GetTexture(const std::string& name);
 
-
+	//获取Sprite
+	Sprite* GetSprite(const std::string& name);
 
 private:
 	void Clean();
 	SDL_Renderer* sdl_renderer = nullptr;
 	std::unordered_map<std::string, std::unique_ptr<SDL_Texture,TextureDeleter>> texture_pool;
+	std::unordered_map<std::string, std::unique_ptr<Sprite>> sprite_pool;
 	bool is_clear = false;
 };
 

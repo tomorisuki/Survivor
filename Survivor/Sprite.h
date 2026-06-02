@@ -7,6 +7,14 @@
 class Sprite
 {
 public:
+	Sprite() = default;
+
+	//Sprite有参构造:调用SetTexture函数
+	Sprite(SDL_Texture* sdl_texture);
+	
+	~Sprite() = default;
+
+
 	void SetTexture(SDL_Texture* sdl_texture);
 
 	//获取SDL_Texture
@@ -62,7 +70,7 @@ private:
 	SDL_Texture* sdl_texture = nullptr;		//SDL_Texture
 	Vector2D size;							//大小
 	Vector2D scale = { 1.0f,1.0f };			//图片缩放
-	SDL_FRect cropRect;						//图片矩形选区
+	SDL_FRect cropRect = { 0,0,0,0 };		//图片矩形选区
 	float rotation = 0.0f;					//图片旋转角度
 	float alpha = 255.0f;					//图片透明度
 	SDL_FlipMode flipMode = SDL_FLIP_NONE;	//图片翻转模式

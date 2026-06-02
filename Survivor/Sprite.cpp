@@ -1,5 +1,10 @@
 ﻿#include "Sprite.h"
 
+Sprite::Sprite(SDL_Texture* sdl_texture)
+{
+	SetTexture(sdl_texture);
+}
+
 void Sprite::SetTexture(SDL_Texture* sdl_texture)
 {
 	this->sdl_texture = sdl_texture;

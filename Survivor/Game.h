@@ -39,6 +39,8 @@ private:
 
 	std::unique_ptr<Engine> engine;
 	std::unique_ptr<InputSystem> input;
+	std::unique_ptr<RenderSystem> render;
+	std::unique_ptr<AnimationClipManager> aniClipMgr;
 
 	SDL_Event sdl_event;
 	bool running = true;

@@ -21,7 +21,6 @@ bool Game::InitGame()
     SDL_CreateWindowAndRenderer("Survivor", WINDOW_WIDTH, WINDOW_HEIGHT,
         SDL_WINDOW_RESIZABLE, &sdl_window, &sdl_renderer);
 
-
     // 设置垂直同步（可选）
     SDL_SetRenderVSync(sdl_renderer, 1);
 
@@ -33,9 +32,38 @@ bool Game::InitGame()
 
     SDL_zero(sdl_event);
 
-    input = std::make_unique<InputSystem>();
-    engine = std::make_unique<Engine>(input.get(), sdl_renderer, texture_manager.get());
+    /*------------分配内存------------*/
+    
+    engine = std::make_unique<Engine>();
 
+    input = std::make_unique<InputSystem>();
+
+    render = std::make_unique<RenderSystem>(sdl_renderer);
+
+    texture_manager = std::make_unique<TextureManager>(sdl_renderer);
+
+    aniClipMgr = std::make_unique<AnimationClipManager>();
+
+    /*------------分配内存------------*/
+
+
+    
+    /*-----------设置参数-----------*/
+    engine->RegisterInputSystem(input.get());
+    engine->RegisterRenderSystem(render.get());
+    engine->RegisterTextureManager(texture_manager.get());
+    engine->RegisterAnimationClipMgr(aniClipMgr.get());
+    engine->SetWindowSize({ WINDOW_WIDTH,WINDOW_HEIGHT });
+    /*-----------设置参数-----------*/
+
+
+
+    /*------------初始化------------*/
+    texture_manager->Init();
+    aniClipMgr->InitResources(texture_manager.get());
+
+
+    /*------------初始化------------*/
     scene = new TestScene();
     scene->SetEngine(engine.get());
     scene->Start();
@@ -55,8 +83,6 @@ void Game::Run()
     constexpr double fixed_dt = 1.0 / 60.0;
     double accumulator = 0.0;
     auto last = std::chrono::steady_clock::now();
-
-
     
 	while (running) {
 
@@ -78,17 +104,24 @@ void Game::Run()
         accumulator += frame_time;
         while (accumulator >= fixed_dt) {
             
-            float game_dt = static_cast<float>(fixed_dt);
+            float game_delta = static_cast<float>(fixed_dt);
 
-            scene->Update(game_dt);
+            scene->Update(game_delta);
 
             accumulator -= fixed_dt;
         }
-
+        float alpha = static_cast<float>(accumulator / fixed_dt);
         SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
         SDL_RenderClear(sdl_renderer);
-        //render
+        render->RenderClear();
+
         scene->Render();
+
+        
+        render->Render(alpha);
+        /*--------测试-------*/
+        //engine->UpdateCamera(alpha);
+        /*--------测试-------*/
 
         SDL_RenderPresent(sdl_renderer);
 	}

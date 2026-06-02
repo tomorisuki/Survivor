@@ -84,6 +84,10 @@ public:
 		return !(*this == rhs);
 	}
 
+	bool IsZero() const {
+		return *this == Zero;
+	}
+
 	float Length() const {
 		return std::sqrt(x * x + y * y);
 	}

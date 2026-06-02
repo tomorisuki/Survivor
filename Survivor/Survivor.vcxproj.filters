@@ -39,6 +39,9 @@
     <Filter Include="System">
       <UniqueIdentifier>{e3f6e20f-fe5c-4ffc-a8ff-fdb1e292de6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Animation">
+      <UniqueIdentifier>{a0486ccb-a3d9-4f11-850e-56346b820984}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -73,6 +76,21 @@
     </ClCompile>
     <ClCompile Include="RenderSystem.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationFrame.cpp">
+      <Filter>Engine\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationClip.cpp">
+      <Filter>Engine\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatorComponent.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationClipManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,5 +139,16 @@
     <ClInclude Include="RenderSystem.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationFrame.h">
+      <Filter>Engine\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationClip.h">
+      <Filter>Engine\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatorComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationClipManager.h" />
+    <ClInclude Include="Camera.h" />
   </ItemGroup>
 </Project>

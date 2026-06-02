@@ -2,6 +2,8 @@
 
 #include "GameObject.h"
 
+#include "Camera.h"
+
 class Scene
 {
 public:
@@ -20,9 +22,10 @@ public:
 	}
 	virtual void Update(float deltaTime)
 	{
-		/*for (auto& obj : gameObjects) {
-			obj->Update(deltaTime);
-		}*/
+		for (auto& obj : gameObjects) {
+			obj->transform.UpdatePrevPosition();
+		}
+		camera->SaveData();
 	}
 
 	virtual void Render() 
@@ -30,6 +33,10 @@ public:
 		for (auto& obj : gameObjects) {
 			obj->Render();
 		}
+	}
+
+	virtual void ProcessPendingOperations() {
+
 	}
 
 	void CleanDestroyObjects() {
@@ -55,6 +62,6 @@ public:
 
 protected:
 	Engine* engine = nullptr;
-
+	std::unique_ptr<Camera> camera;
 	std::vector<std::unique_ptr<GameObject>> gameObjects;
 };
