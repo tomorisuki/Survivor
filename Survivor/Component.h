@@ -16,6 +16,10 @@ public:
 		return owner;
 	}
 
+	GameObject* Owner() const {
+		return owner;
+	}
+
 protected:
 	class GameObject* owner = nullptr;
 };

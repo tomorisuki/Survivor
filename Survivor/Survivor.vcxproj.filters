@@ -104,6 +104,18 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Engine\Component</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionSystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ICollisionListener.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OrbitBullet.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyAI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -178,5 +190,9 @@
     <ClInclude Include="Collider.h">
       <Filter>Engine\Component</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionSystem.h" />
+    <ClInclude Include="ICollisionListener.h" />
+    <ClInclude Include="OrbitBullet.h" />
+    <ClInclude Include="EnemyAI.h" />
   </ItemGroup>
 </Project>

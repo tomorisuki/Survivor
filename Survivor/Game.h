@@ -7,8 +7,10 @@
 #include "TextureManager.h"
 #include "Sprite.h"
 
+
 #include "Engine.h"
 #include "TestScene.h"
+
 
 constexpr int WINDOW_WIDTH = 1200;
 constexpr int WINDOW_HEIGHT = 800;
@@ -41,6 +43,7 @@ private:
 	std::unique_ptr<InputSystem> input;
 	std::unique_ptr<RenderSystem> render;
 	std::unique_ptr<AnimationClipManager> aniClipMgr;
+	std::unique_ptr<CollisionSystem> collisionSystem;
 
 	SDL_Event sdl_event;
 	bool running = true;

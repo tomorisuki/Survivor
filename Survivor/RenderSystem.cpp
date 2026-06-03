@@ -15,6 +15,10 @@ void RenderSystem::RenderWorld(Sprite* sprite, Camera* camera, const Transform& 
 	dstRect.w = dstRect.w * sprite->Scale().x;
 	dstRect.h = dstRect.h * sprite->Scale().y;
 
+	//应用Transform缩放
+	dstRect.w = dstRect.w * transform.scale.x;
+	dstRect.h = dstRect.h * transform.scale.y;
+
 	RenderItem item;
 	item.sprite = sprite;
 	item.position = transform.position;					//当前位置

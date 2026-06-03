@@ -44,6 +44,8 @@ bool Game::InitGame()
 
     aniClipMgr = std::make_unique<AnimationClipManager>();
 
+    collisionSystem = std::make_unique<CollisionSystem>();
+
     /*------------分配内存------------*/
 
 
@@ -53,6 +55,7 @@ bool Game::InitGame()
     engine->RegisterRenderSystem(render.get());
     engine->RegisterTextureManager(texture_manager.get());
     engine->RegisterAnimationClipMgr(aniClipMgr.get());
+    engine->RegisterCollisionSystem(collisionSystem.get());
     engine->SetWindowSize({ WINDOW_WIDTH,WINDOW_HEIGHT });
     /*-----------设置参数-----------*/
 
@@ -61,7 +64,7 @@ bool Game::InitGame()
     /*------------初始化------------*/
     texture_manager->Init();
     aniClipMgr->InitResources(texture_manager.get());
-
+    collisionSystem->Init();
 
     /*------------初始化------------*/
     scene = new TestScene();
@@ -107,6 +110,11 @@ void Game::Run()
             float game_delta = static_cast<float>(fixed_dt);
 
             scene->Update(game_delta);
+
+            collisionSystem->Update(game_delta);
+
+            //更新的最后一帧处理
+            scene->ProcessPendingOperations();
 
             accumulator -= fixed_dt;
         }

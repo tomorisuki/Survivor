@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Object.h"
 #include "Component.h"
+#include "ICollisionListener.h"
 #include "Transform.h"
 
 #include <string>

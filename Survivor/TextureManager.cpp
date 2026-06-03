@@ -10,7 +10,9 @@ bool TextureManager::Init()
     if (!LoadTexture("sunflower", "assets/sunflower.png")) return false;
     if (!LoadTexture("effect", "assets/testSheet.png")) return false;
 	if (!LoadTexture("dinosaur", "assets/dinosaur.png")) return false;
-    if (!LoadTexture("background", "assets/background.jpg")) return false;
+    if (!LoadTexture("background", "assets/background.png")) return false;
+    if (!LoadTexture("enemy_fly", "assets/enemy_fly.png")) return false;
+    if (!LoadTexture("enemy_die", "assets/enemy_die.png")) return false;
     return true;
 }
 

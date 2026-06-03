@@ -2,10 +2,10 @@
 #include "GameObject.h"
 
 #include "Engine.h"
+#include "OrbitBullet.h"
 
 void Collider::Start()
 {
-
 }
 
 void Collider::Update(float deltaTime)
@@ -26,12 +26,33 @@ void Collider::Render()
 
 void Collider::SetSize(const Vector2D& size)
 {
-	this->size = size;
+	this->size = size.Multiply(owner->transform.scale);
 }
 
 void Collider::SetOffset(const Vector2D& offset)
 {
 	this->offset = offset;
+}
+
+
+void Collider::SetLayer(int layer)
+{
+	this->layer = layer;
+}
+
+void Collider::SetIsTrigger(bool trigger)
+{
+	this->isTrigger = trigger;
+}
+
+int Collider::Layer() const
+{
+	return layer;
+}
+
+bool Collider::IsTrigger() const
+{
+	return isTrigger;
 }
 
 Vector2D Collider::Size() const
@@ -44,9 +65,18 @@ Vector2D Collider::Size() const
 
 Vector2D Collider::ComputedSize() const
 {
-	Vector2D retSize = Size();
+	Vector2D retSize = size;
+	retSize.Multiply(owner->transform.scale);
+	retSize.Multiply(scale);
 	retSize *= engine->GetCamera()->GetZoom();
 	return retSize;
+}
+
+Vector2D Collider::ComputedPosition() const
+{
+	Vector2D retPosition = owner->transform.position;
+	retPosition += offset;
+	return retPosition;
 }
 
 Vector2D Collider::Offset() const

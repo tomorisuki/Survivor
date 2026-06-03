@@ -5,6 +5,8 @@
 #include "RigidBody.h"
 #include "PlayerControl.h"
 #include "Collider.h"
+#include "OrbitBullet.h"
+#include "EnemyAI.h"
 #include <iostream>
 class TestScene :
     public Scene
@@ -44,6 +46,7 @@ public:
         player->GetComponent<Collider>()->EnableDebug(true);
         player->GetComponent<Collider>()->SetSize(Vector2D{ 20.0f,20.0f });
         player->GetComponent<Collider>()->SetOffset(Vector2D{ 2.0f,2.0f });
+        player->GetComponent<Collider>()->SetLayer(1);  //玩家
         
 		//添加动画组件
         player->AddComponent<AnimatorComponent>();
@@ -74,17 +77,114 @@ public:
         effect->AddComponent<AnimatorComponent>();
         effect->GetComponent<AnimatorComponent>()->AddAnimationClip("effect", 
             engine->GetAniClipMgr()->GetAnimationClip("effect"));
-        //engine->GetAniClipMgr()->GetAnimationClip("effect")->SetFlip(true);
         effect->GetComponent<AnimatorComponent>()->Play("effect");
+        effect->AddComponent<Collider>();
+        effect->GetComponent<Collider>()->SetLayer(4);
+        effect->GetComponent<Collider>()->SetSize(Vector2D{ 64.0f,64.0f });
+        effect->GetComponent<Collider>()->EnableDebug(true);
+
+
         effect->AddComponent<SpriteRender>();
         effect->transform.position = {600.0f,400.0f };
 
+        auto oribitBullet1 = CreateGameObject("oribitBullet");
+        oribitBullet1->transform.scale = { 0.5f,0.5f };
+        oribitBullet1->AddComponent<AnimatorComponent>();
+        oribitBullet1->GetComponent<AnimatorComponent>()->AddAnimationClip("effect",
+            engine->GetAniClipMgr()->GetAnimationClip("effect"));
+        oribitBullet1->GetComponent<AnimatorComponent>()->Play("effect");
+        oribitBullet1->AddComponent<SpriteRender>();
+        oribitBullet1->AddComponent<OrbitBullet>();
+        oribitBullet1->GetComponent<OrbitBullet>()->SetFollowTarget(player);
+        oribitBullet1->GetComponent<OrbitBullet>()->SetSpeed(5.0f);
+        oribitBullet1->GetComponent<OrbitBullet>()->SetAngle(0.0f);
+        oribitBullet1->GetComponent<OrbitBullet>()->SetOffset(Vector2D{ -24.0f,-24.0f });
+        oribitBullet1->AddComponent<Collider>();
+        oribitBullet1->GetComponent<Collider>()->SetLayer(3);
+        oribitBullet1->GetComponent<Collider>()->EnableDebug(true);
+        oribitBullet1->GetComponent<Collider>()->SetSize(Vector2D{ 64.0f,64.0f });
+        
+
+        auto oribitBullet2 = CreateGameObject("oribitBullet");
+        oribitBullet2->transform.scale = { 0.5f,0.5f };
+        oribitBullet2->AddComponent<AnimatorComponent>();
+        oribitBullet2->GetComponent<AnimatorComponent>()->AddAnimationClip("effect",
+            engine->GetAniClipMgr()->GetAnimationClip("effect"));
+        oribitBullet2->GetComponent<AnimatorComponent>()->Play("effect");
+        oribitBullet2->AddComponent<SpriteRender>();
+        oribitBullet2->AddComponent<OrbitBullet>();
+        oribitBullet2->GetComponent<OrbitBullet>()->SetFollowTarget(player);
+        oribitBullet2->GetComponent<OrbitBullet>()->SetSpeed(5.0f);
+        oribitBullet2->GetComponent<OrbitBullet>()->SetAngle(2.0f * FMath::PI / 3.0f);
+        oribitBullet2->GetComponent<OrbitBullet>()->SetOffset(Vector2D{ -24.0f,-24.0f });
+        oribitBullet2->AddComponent<Collider>();
+        oribitBullet2->GetComponent<Collider>()->SetLayer(3);
+        oribitBullet2->GetComponent<Collider>()->EnableDebug(true);
+        oribitBullet2->GetComponent<Collider>()->SetSize(Vector2D{ 64.0f,64.0f });
+        
+
+
+        auto oribitBullet3 = CreateGameObject("oribitBullet");
+        oribitBullet3->transform.scale = { 0.5f,0.5f };
+        oribitBullet3->AddComponent<AnimatorComponent>();
+        oribitBullet3->GetComponent<AnimatorComponent>()->AddAnimationClip("effect",
+            engine->GetAniClipMgr()->GetAnimationClip("effect"));
+        oribitBullet3->GetComponent<AnimatorComponent>()->Play("effect");
+        oribitBullet3->AddComponent<SpriteRender>();
+        oribitBullet3->AddComponent<OrbitBullet>();
+        oribitBullet3->GetComponent<OrbitBullet>()->SetFollowTarget(player);
+        oribitBullet3->GetComponent<OrbitBullet>()->SetSpeed(5.0f);
+        oribitBullet3->GetComponent<OrbitBullet>()->SetAngle(2.0f * 2.0f * FMath::PI / 3.0f);
+
+        oribitBullet3->GetComponent<OrbitBullet>()->SetOffset(Vector2D{ -24.0f,-24.0f });
+        oribitBullet3->AddComponent<Collider>();
+        oribitBullet3->GetComponent<Collider>()->SetLayer(3);
+        oribitBullet3->GetComponent<Collider>()->EnableDebug(true);
+        
+        oribitBullet3->GetComponent<Collider>()->SetSize(Vector2D{ 64.0f,64.0f });
+        
+        std::cout << "size:" << oribitBullet3->GetComponent<Collider>()->Size().x << "\t" <<
+            oribitBullet3->GetComponent<Collider>()->Size().y << std::endl;
+
+
+        auto enemy = CreateGameObject("enemy");
+        enemy->transform.scale = { 0.5f,0.5f };
+        enemy->AddComponent<AnimatorComponent>();
+        enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("fly",
+            engine->GetAniClipMgr()->GetAnimationClip("enemy_fly"));
+        enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("die",
+            engine->GetAniClipMgr()->GetAnimationClip("enemy_die"));
+        enemy->GetComponent<AnimatorComponent>()->Play("fly");
+        enemy->AddComponent<SpriteRender>();
+        enemy->AddComponent<RigidBody>();
+        enemy->GetComponent<RigidBody>()->SetUseGravity(false);
+        enemy->GetComponent<RigidBody>()->SetMoveSpeed(1000.0f);
+        enemy->GetComponent<RigidBody>()->SetLinearDamping(4.2f);
+        enemy->AddComponent<EnemyAI>();
+        enemy->GetComponent<EnemyAI>()->SetAttackTarget(player);
+        enemy->GetComponent<EnemyAI>()->SetInitialPosition(Vector2D{0.0f,0.0f});
+        enemy->AddComponent<Collider>();
+        enemy->GetComponent<Collider>()->EnableDebug(true);
+        enemy->GetComponent<Collider>()->SetLayer(2);
+        enemy->GetComponent<Collider>()->SetSize(Vector2D{ 79.0f,69.0f });
+
+
+        
+
+
         Scene::Start();
+
+        for (auto& obj : gameObjects) {
+            auto* collider = obj->GetComponent<Collider>();
+            if (!collider) continue;
+            engine->GetCollisionSystem()->RegisterCollider(collider);
+        }
+
     }
 
     void Update(float deltaTime) override{   
         Scene::Update(deltaTime);
-
+        
         for (auto& obj : gameObjects) {
             obj->Update(deltaTime);
             if (obj->GetName() == "player") {
@@ -99,12 +199,20 @@ public:
             camera->SetZoom(camera->GetZoom() + 0.1f);
         }
         
-
         camera->Update(deltaTime);
+        
     }
 
     void Render() override {
         Scene::Render();
+    }
+
+    void ProcessPendingOperations() override {
+        //删除标记的物体
+        CleanDestroyObjects();
+
+
+
     }
 
 private:

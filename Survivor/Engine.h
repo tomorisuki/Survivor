@@ -4,6 +4,7 @@
 #include "TextureManager.h"
 #include "RenderSystem.h"
 #include "AnimationClipManager.h"
+#include "CollisionSystem.h"
 
 #include "Camera.h"
 
@@ -29,6 +30,10 @@ public:
 		this->texture_manager = texture_manager;
 	}
 
+	void RegisterCollisionSystem(CollisionSystem* collisionSystem) {
+		this->collisionSystem = collisionSystem;
+	}
+
 	void SetWindowSize(const Vector2D& windowSize) {
 		this->windowSize = windowSize;
 	}
@@ -49,6 +54,7 @@ public:
 	AnimationClipManager* GetAniClipMgr() { return aniClip_mgr; }
 	TextureManager* GetTextureManager() { return texture_manager; }
 	Camera* GetCamera() { return camera; }
+	CollisionSystem* GetCollisionSystem() { return collisionSystem; }
 
 	Vector2D WindowSize() const { return windowSize; }
 
@@ -58,6 +64,7 @@ private:
 	RenderSystem* render = nullptr;
 	TextureManager* texture_manager = nullptr;
 	AnimationClipManager* aniClip_mgr = nullptr;
+	CollisionSystem* collisionSystem = nullptr;
 	Camera* camera = nullptr;
 };
 

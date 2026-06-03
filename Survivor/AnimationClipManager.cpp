@@ -23,6 +23,12 @@ bool AnimationClipManager::InitResources(class TextureManager* texture_manager)
 	if (!LoadAnimationClip("dinosaur_attack", texture_manager->GetSprite("dinosaur"), 4, 1, 4, false, 0.1f, 240.0f,24.0f,24.0f))
 		return false;
 
+	if (!LoadAnimationClip("enemy_fly", texture_manager->GetSprite("enemy_fly"), 4, 1, 4, true))
+		return false;
+
+	if (!LoadAnimationClip("enemy_die", texture_manager->GetSprite("enemy_die"), 7, 1, 7, false))
+		return false;
+
 
 	return true;
 }

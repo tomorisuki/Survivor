@@ -3,6 +3,26 @@
 #include "Component.h"
 #include "Vector2D.h"
 
+/*
+* 2026-6-3 21:19 提交了一次，实现了碰撞箱位置偏移
+* 准备实现网格划分
+*/
+
+struct Rect
+{
+	Vector2D position;
+	Vector2D size;
+
+	bool IsCollision(const Rect& rect) const
+	{
+		return !(position.x + size.x <= rect.position.x ||
+			rect.position.x + rect.size.x <= position.x ||
+			position.y + size.y <= rect.position.y ||
+			rect.position.y + rect.size.y <= position.y);
+	}
+};
+
+
 class Collider : public Component
 {
 	friend class GameObject;
@@ -19,11 +39,26 @@ public:
 	//设置缩放
 	void SetOffset(const Vector2D& offset);
 
+	//设置自身层级
+	void SetLayer(int layer);
+
+	//设置是否为触发器
+	void SetIsTrigger(bool trigger);
+
+	//获取自身层级
+	int Layer() const;
+
+	//获取是否为触发器
+	bool IsTrigger() const;
+
 	//返回缩放过后的Size，transform缩放，以及自身缩放
 	Vector2D Size() const;
 
 	//获取应用了transform缩放，自身缩放和camera缩放的size，用于计算
 	Vector2D ComputedSize() const;
+
+	//获取用于计算的位置
+	Vector2D ComputedPosition() const;
 
 	//获取偏移量
 	Vector2D Offset() const;
@@ -35,10 +70,11 @@ public:
 	void EnableDebug(bool debug);
 
 private:
-
+	int layer = 0;
+	bool isTrigger = false;
 	Vector2D size;
 	Vector2D scale = { 1.0f,1.0f };
-	Vector2D offset;				//碰撞箱偏移
+	Vector2D offset = { 0.0f,0.0f };	//碰撞箱偏移
 	bool isDebug = false;
 };
 

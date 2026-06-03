@@ -11,8 +11,11 @@
 
 #include <cmath>
 
+
 //数学工具
 namespace FMath {
+
+	constexpr float PI = 3.1415926f;
 
 	_ALWAYS_INLINE_ float Min(float p_val_a, float p_val_b) {
 		return p_val_a > p_val_b ? p_val_b : p_val_a;
