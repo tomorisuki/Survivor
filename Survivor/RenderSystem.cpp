@@ -97,6 +97,7 @@ void RenderSystem::Render(float alpha)
 		SDL_SetRenderDrawColor(sdl_renderer, 255, 0, 0, 255);
 		SDL_RenderRect(sdl_renderer, &dstRect);
 		SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
+
 	}
 }
 

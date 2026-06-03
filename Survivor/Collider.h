@@ -13,9 +13,10 @@ public:
 	void Render() override;
 
 	
-
+	//设置尺寸
 	void SetSize(const Vector2D& size);
 
+	//设置缩放
 	void SetOffset(const Vector2D& offset);
 
 	//返回缩放过后的Size，transform缩放，以及自身缩放

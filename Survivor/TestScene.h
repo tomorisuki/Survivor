@@ -26,7 +26,7 @@ public:
 		background->AddComponent<SpriteRender>(engine->GetTextureManager()->GetSprite("background"));
         background->transform.position = { 0.0f,0.0f };
 
-
+        
 
         //testSprite = new Sprite(engine->GetTextureManager()->GetTexture("sunflower"));
 
@@ -42,7 +42,8 @@ public:
         player->GetComponent<RigidBody>()->SetMoveSpeed(1500.0f);
         player->AddComponent<Collider>();
         player->GetComponent<Collider>()->EnableDebug(true);
-        player->GetComponent<Collider>()->SetSize(Vector2D{ 24.0f,24.0f });
+        player->GetComponent<Collider>()->SetSize(Vector2D{ 20.0f,20.0f });
+        player->GetComponent<Collider>()->SetOffset(Vector2D{ 2.0f,2.0f });
         
 		//添加动画组件
         player->AddComponent<AnimatorComponent>();

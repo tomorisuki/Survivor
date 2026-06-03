@@ -16,7 +16,11 @@ void Collider::Render()
 {
 	if (isDebug) 
 	{
-		engine->GetRenderSystem()->RenderCollider(engine->GetCamera(), owner->transform, Size());
+		Transform transform;
+		transform.position = owner->transform.position + offset;
+		transform.previousPosition = owner->transform.previousPosition + offset;
+		transform.scale = owner->transform.scale;
+		engine->GetRenderSystem()->RenderCollider(engine->GetCamera(), transform, Size());
 	}
 }
 
