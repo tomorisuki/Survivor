@@ -18,6 +18,7 @@ public:
 				obj->started = true;
 				obj->Start();
 			}
+			obj->transform.UpdatePrevPosition();	//正式更新前，先初始化一下物体的位置
 		}
 	}
 	virtual void Update(float deltaTime)

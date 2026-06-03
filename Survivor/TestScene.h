@@ -2,6 +2,9 @@
 #include "Scene.h"
 #include "SpriteRender.h"
 #include "AnimatorComponent.h"
+#include "RigidBody.h"
+#include "PlayerControl.h"
+#include "Collider.h"
 #include <iostream>
 class TestScene :
     public Scene
@@ -24,9 +27,17 @@ public:
         auto player = CreateGameObject("player");
 
         player->AddComponent<SpriteRender>(engine->GetTextureManager()->GetSprite("sunflower"));
-        player->transform.position = { 0.0f,200.0f };
-
-        
+        engine->GetTextureManager()->GetSprite("sunflower")->SetFlip(true);
+        player->transform.position = { 500.0f,200.0f };
+        player->AddComponent<RigidBody>();
+        player->GetComponent<RigidBody>()->SetUseGravity(false);
+        //player->GetComponent<RigidBody>()->SetFriction(Vector2D{0.98f,0.98f});
+        player->GetComponent<RigidBody>()->SetLinearDamping(5.0f);
+        player->GetComponent<RigidBody>()->SetMoveSpeed(1500.0f);
+        player->AddComponent<Collider>();
+        player->GetComponent<Collider>()->EnableDebug(true);
+        player->GetComponent<Collider>()->SetSize(Vector2D{ 64.0f,89.0f });
+        player->AddComponent<PlayerControl>();
         camera->SetFollowTarget(&player->transform);
         
 
@@ -48,15 +59,6 @@ public:
         effect->AddComponent<SpriteRender>();
         effect->transform.position = {600.0f,400.0f };
 
-        
- 
-
-
-
-
-
-
-
         Scene::Start();
     }
 
@@ -64,21 +66,6 @@ public:
         Scene::Update(deltaTime);
 
         for (auto& obj : gameObjects) {
-            if (obj->GetName() == "player") {
-                if (engine->Input()->isDown("right")) {
-                    
-                    obj->transform.position.x += 500.0f * deltaTime;
-                }
-                if (engine->Input()->isDown("left")) {
-                    obj->transform.position.x -= 500.0f * deltaTime;
-                }
-                if (engine->Input()->isDown("up")) {
-                    obj->transform.position.y -= 500.0f * deltaTime;
-                }
-                if (engine->Input()->isDown("down")) {
-                    obj->transform.position.y += 500.0f * deltaTime;
-                }
-            }
             obj->Update(deltaTime);
         }
 

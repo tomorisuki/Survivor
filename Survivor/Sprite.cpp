@@ -1,4 +1,5 @@
 ﻿#include "Sprite.h"
+#include "Collider.h"
 
 Sprite::Sprite(SDL_Texture* sdl_texture)
 {

@@ -24,6 +24,15 @@ struct RenderItem
 	//bool isInterpolation;				//绘制是否需要插值
 };
 
+struct RenderColliderDebug
+{
+	
+	Vector2D position;
+	Vector2D prev_position;
+	Vector2D size;
+	Camera* camera = nullptr;
+};
+
 
 
 //渲染系统，所有渲染操作都将通过渲染系统执行
@@ -37,6 +46,9 @@ public:
 	//绘制游戏物体-约定此函数渲染的图片都应用渲染插值
 	void RenderWorld(Sprite* sprite, Camera* camera,  const Transform& transform, int layer = 0);
 
+	//绘制碰撞箱矩形框
+	void RenderCollider(Camera* camera,const Transform& transform,const Vector2D& size);
+
 	//渲染
 	void Render(float alpha);
 
@@ -49,6 +61,7 @@ public:
 private:
 	//Camera* cameraZoom = nullptr;
 	std::vector<RenderItem> worldQueue;		//场景物体队列
+	std::vector<RenderColliderDebug> colliderQueue;		//碰撞箱队列
 	SDL_Renderer* sdl_renderer = nullptr;
 	
 };

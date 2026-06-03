@@ -1,7 +1,6 @@
 ﻿#pragma once
 
-#include <cmath>
-
+#include "FMath.h"
 
 
 class Vector2D
@@ -60,12 +59,12 @@ public:
 	}
 
 	Vector2D operator/(float scalar) const {
-		if (std::fabs(scalar) < Epsilon) return *this;
+		if (FMath::Abs(scalar) < Epsilon) return *this;
 		return Vector2D{ x / scalar,y / scalar };
 	}
 
 	Vector2D& operator/=(float scalar) {
-		if (std::fabs(scalar) < Epsilon) return *this;
+		if (FMath::Abs(scalar) < Epsilon) return *this;
 		x /= scalar;
 		y /= scalar;
 		return *this;
@@ -76,8 +75,8 @@ public:
 	}
 
 	bool operator==(const Vector2D& rhs) const {
-		return (std::fabs(x - rhs.x) < Epsilon) &&
-			(std::fabs(y - rhs.y) < Epsilon);
+		return (FMath::Abs(x - rhs.x) < Epsilon) &&
+			(FMath::Abs(y - rhs.y) < Epsilon);
 	}
 
 	bool operator!=(const Vector2D& rhs) const {
@@ -89,7 +88,7 @@ public:
 	}
 
 	float Length() const {
-		return std::sqrt(x * x + y * y);
+		return FMath::Sqrt(x * x + y * y);
 	}
 
 	//不开根号，适合距离比较
@@ -143,3 +142,13 @@ public:
 inline Vector2D operator*(float scalar, const Vector2D& v) {
 	return v * scalar;
 }
+
+//namespace FMath {
+//
+//	Vector2D Clamp(const Vector2D& p_vec, const Vector2D& p_min, const Vector2D& p_max)
+//	{
+//		return { FMath::Clamp(p_vec.x, p_min.x, p_max.x) ,FMath::Clamp(p_vec.y, p_min.y, p_max.y) };
+//	}
+//
+//
+//};
