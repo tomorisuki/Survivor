@@ -13,7 +13,8 @@ public:
 	void AddFrame(const AnimationFrame& frame);
 
 	//Sprite源，总共帧数，行数，单行多少帧
-	void LoadSpriteSheet(Sprite* sprite,int totalFrame,int rows,int oneRowCount,float duration = 0.1f);
+	void LoadSpriteSheet(Sprite* sprite,int totalFrame,int rows,int oneRowCount,
+		float duration = 0.1f,float offsetX = 0.0f,float w = 0.0f ,float h = 0.0f);
 
 	void LoadSpriteSet(std::vector<Sprite*> sprites,float duration = 0.1f);
 
@@ -29,11 +30,20 @@ public:
 	//获取动画是否循环
 	bool IsLoop() const;
 
+	//获取动画是否翻转
+	bool IsFlip() const;
+
 	//获取动画总帧数
 	int FrameCount() const;
 
 	//获取动画总时长
 	float TotalDuration() const;
+
+	//设置动画翻转
+	void SetFlip(bool flag, SDL_FlipMode mode = SDL_FlipMode::SDL_FLIP_HORIZONTAL);
+
+	//获取动画翻转模式
+	SDL_FlipMode FlipMode() const;
 
 private:
 	
@@ -42,5 +52,7 @@ private:
 	float totalDuration = 0.0f;		//动画总时长
 	int frameCount = 0;				//总帧数
 	bool isLoop;					//动画是否循环
+	bool isFlip = false;			//动画是否翻转
+	SDL_FlipMode flipMode = SDL_FlipMode::SDL_FLIP_HORIZONTAL;	//动画翻转模式
 };
 

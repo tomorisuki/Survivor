@@ -9,11 +9,16 @@ void AnimationClip::AddFrame(const AnimationFrame& frame)
 }
 
 void AnimationClip::LoadSpriteSheet(Sprite* sprite, int totalFrame, int rows, int oneRowCount
-          , float duration)
+          , float duration,float offsetX,float w,float h)
 {
     aniFrames.clear();
     float oneFrameWidth = sprite->Size().x / static_cast<float>(oneRowCount);
     float oneFrameHeight = sprite->Size().y / static_cast<float>(rows);
+
+    if (w > 0.0f && h > 0.0f) {
+		oneFrameHeight = h;
+		oneFrameWidth = w;
+    }
 
     int currentRowcount = 0;
     int currentRow = 0;
@@ -27,7 +32,7 @@ void AnimationClip::LoadSpriteSheet(Sprite* sprite, int totalFrame, int rows, in
         AnimationFrame frame;
         
         frame.sprite = sprite;
-        frame.cropRect.x = oneFrameWidth * currentRowcount;
+        frame.cropRect.x = oneFrameWidth * currentRowcount + offsetX;
         frame.cropRect.y = oneFrameHeight * currentRow;
         frame.cropRect.w = oneFrameWidth;
         frame.cropRect.h = oneFrameHeight;
@@ -87,6 +92,11 @@ bool AnimationClip::IsLoop() const
     return isLoop;
 }
 
+bool AnimationClip::IsFlip() const
+{
+    return isFlip;
+}
+
 int AnimationClip::FrameCount() const
 {
     return frameCount;
@@ -95,4 +105,15 @@ int AnimationClip::FrameCount() const
 float AnimationClip::TotalDuration() const
 {
     return totalDuration;
+}
+
+void AnimationClip::SetFlip(bool flag, SDL_FlipMode mode)
+{
+	isFlip = flag;
+	flipMode = mode;
+}
+
+SDL_FlipMode AnimationClip::FlipMode() const
+{
+    return flipMode;
 }

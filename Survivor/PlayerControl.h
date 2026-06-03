@@ -12,7 +12,7 @@ public:
 	
 
 private:
-
+	class AnimatorComponent* animator = nullptr;
 	class InputSystem* input = nullptr;
 	class RigidBody* rigidBody = nullptr;
 

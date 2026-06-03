@@ -24,8 +24,13 @@ public:
 
 	bool isPlaying() const;
 
+
+
 	//TODO : 测试
 	//bool isEnd() const;
+
+	//设置动画翻转
+	void SetFlip(bool flip);
 
 	void Stop();
 	
@@ -40,6 +45,7 @@ private:
 	float currentDuration = 0.0f;
 
 	bool stop = false;
+	bool isFlip = false;
 	//bool isEnd = false;
 
 	class SpriteRender* spriteRender = nullptr;

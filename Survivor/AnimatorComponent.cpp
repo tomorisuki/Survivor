@@ -47,9 +47,18 @@ void AnimatorComponent::Update(float deltaTime)
 void AnimatorComponent::Render()
 {
 	//设置渲染的图片
+	
 	auto* tempSprite = currentAnimation->GetAnimationFrame(currentIndex).sprite;
 	tempSprite->SetCropRect(currentAnimation->GetAnimationFrame(currentIndex).cropRect);
-	//std::cout << currentAnimation->GetAnimationFrame(currentIndex).cropRect.h << std::endl;
+	
+	//tempSprite->SetFlip(currentAnimation->IsFlip());
+
+	//currentAnimation->SetFlip(isFlip);
+
+	//设置翻转
+	tempSprite->SetFlip(isFlip);
+	//设置翻转模式
+	//tempSprite->SetFlipMode(currentAnimation->FlipMode());
 	spriteRender->SetSprite(tempSprite);
 }
 
@@ -87,6 +96,11 @@ void AnimatorComponent::Play(const std::string& name)
 bool AnimatorComponent::isPlaying() const
 {
 	return !stop;
+}
+
+void AnimatorComponent::SetFlip(bool flip)
+{
+	this->isFlip = flip;
 }
 
 void AnimatorComponent::Stop()

@@ -22,12 +22,18 @@ public:
 
         engine->SetCamera(camera.get());
 
+		auto background = CreateGameObject("background");
+		background->AddComponent<SpriteRender>(engine->GetTextureManager()->GetSprite("background"));
+        background->transform.position = { 0.0f,0.0f };
+
+
+
         //testSprite = new Sprite(engine->GetTextureManager()->GetTexture("sunflower"));
 
         auto player = CreateGameObject("player");
 
         player->AddComponent<SpriteRender>(engine->GetTextureManager()->GetSprite("sunflower"));
-        engine->GetTextureManager()->GetSprite("sunflower")->SetFlip(true);
+        engine->GetTextureManager()->GetSprite("sunflower")->SetFlip(false);
         player->transform.position = { 500.0f,200.0f };
         player->AddComponent<RigidBody>();
         player->GetComponent<RigidBody>()->SetUseGravity(false);
@@ -36,7 +42,19 @@ public:
         player->GetComponent<RigidBody>()->SetMoveSpeed(1500.0f);
         player->AddComponent<Collider>();
         player->GetComponent<Collider>()->EnableDebug(true);
-        player->GetComponent<Collider>()->SetSize(Vector2D{ 64.0f,89.0f });
+        player->GetComponent<Collider>()->SetSize(Vector2D{ 24.0f,24.0f });
+        
+		//添加动画组件
+        player->AddComponent<AnimatorComponent>();
+        player->GetComponent<AnimatorComponent>()->AddAnimationClip("idle",
+            engine->GetAniClipMgr()->GetAnimationClip("dinosaur_idle"));
+		player->GetComponent<AnimatorComponent>()->AddAnimationClip("move",
+			engine->GetAniClipMgr()->GetAnimationClip("dinosaur_move"));
+		//engine->GetAniClipMgr()->GetAnimationClip("dinosaur_move")->SetFlip(true);
+		player->GetComponent<AnimatorComponent>()->AddAnimationClip("attack",
+			engine->GetAniClipMgr()->GetAnimationClip("dinosaur_attack"));
+		player->GetComponent<AnimatorComponent>()->Play("idle");
+
         player->AddComponent<PlayerControl>();
         camera->SetFollowTarget(&player->transform);
         
@@ -55,6 +73,7 @@ public:
         effect->AddComponent<AnimatorComponent>();
         effect->GetComponent<AnimatorComponent>()->AddAnimationClip("effect", 
             engine->GetAniClipMgr()->GetAnimationClip("effect"));
+        //engine->GetAniClipMgr()->GetAnimationClip("effect")->SetFlip(true);
         effect->GetComponent<AnimatorComponent>()->Play("effect");
         effect->AddComponent<SpriteRender>();
         effect->transform.position = {600.0f,400.0f };
@@ -67,6 +86,9 @@ public:
 
         for (auto& obj : gameObjects) {
             obj->Update(deltaTime);
+            if (obj->GetName() == "player") {
+				//std::cout << "Collider Size:(" << obj->GetComponent<Collider>()->ComputedSize().x << "," << obj->GetComponent<Collider>()->ComputedSize().y << ")\n";
+            }
         }
 
         if (engine->Input()->isDown("small")) {
@@ -75,6 +97,7 @@ public:
         if (engine->Input()->isDown("big")) {
             camera->SetZoom(camera->GetZoom() + 0.1f);
         }
+        
 
         camera->Update(deltaTime);
     }

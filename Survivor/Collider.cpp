@@ -38,6 +38,13 @@ Vector2D Collider::Size() const
 	return retSize;
 }
 
+Vector2D Collider::ComputedSize() const
+{
+	Vector2D retSize = Size();
+	retSize *= engine->GetCamera()->GetZoom();
+	return retSize;
+}
+
 Vector2D Collider::Offset() const
 {
 	return offset;

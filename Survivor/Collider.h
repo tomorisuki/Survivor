@@ -12,7 +12,7 @@ public:
 	void Update(float deltaTime) override;
 	void Render() override;
 
-
+	
 
 	void SetSize(const Vector2D& size);
 
@@ -21,11 +21,16 @@ public:
 	//返回缩放过后的Size，transform缩放，以及自身缩放
 	Vector2D Size() const;
 
+	//获取应用了transform缩放，自身缩放和camera缩放的size，用于计算
+	Vector2D ComputedSize() const;
+
 	//获取偏移量
 	Vector2D Offset() const;
 
+	//设置缩放，transform缩放，以及自身缩放
 	void SetScale(const Vector2D& scale);
 
+	//设置是否启用调试模式，启用后会在Render函数中绘制碰撞箱
 	void EnableDebug(bool debug);
 
 private:

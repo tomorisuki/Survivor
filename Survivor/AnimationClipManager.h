@@ -22,8 +22,9 @@ public:
 
 	bool InitResources(class TextureManager* texture_manager);
 
-	bool LoadAnimationClip(const std::string& name,Sprite* sprite,
-		int totalFrame, int rows, int oneRowCount, bool isLoop,float duration = 0.1f);
+	bool LoadAnimationClip(const std::string& name, Sprite* sprite,
+		int totalFrame, int rows, int oneRowCount, bool isLoop, float duration = 0.1f,
+		float offsetX = 0.0f, float w = 0.0f , float h = 0.0f);
 
 	//void LoadAnimationClip(const std::string& name,)
 
