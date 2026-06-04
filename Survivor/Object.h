@@ -12,6 +12,15 @@ public:
 		return name;
 	}
 
+	bool GetPendingDestroy() const
+	{
+		return pendingDestroy;
+	}
+
+	void SetPendingDestroy(bool flag)
+	{
+		pendingDestroy = flag;
+	}
 
 protected:
 	Engine* engine = nullptr;

@@ -5,12 +5,20 @@
 
 #include <unordered_map>
 #include <memory>
+#include<iostream>
 
 // 动画播放组件
 class AnimatorComponent : public Component
 {
 	friend class GameObject;
 public:
+	~AnimatorComponent()
+	{
+		std::cout
+			<< "Destroy Animator "
+			<< this
+			<< std::endl;
+	}
 
 	void Start() override;
 
@@ -37,7 +45,7 @@ public:
 	void Resume();
 
 private:
-	std::unordered_map<std::string, std::unique_ptr<AnimationClip>> animations;
+	std::unordered_map<std::string, AnimationClip*> animations;
 	AnimationClip* currentAnimation = nullptr;
 	int currentFrameCount = 0;
 	int currentIndex = 0;

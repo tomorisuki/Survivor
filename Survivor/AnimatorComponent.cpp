@@ -65,7 +65,7 @@ void AnimatorComponent::Render()
 void AnimatorComponent::AddAnimationClip(const std::string& name, AnimationClip* aniClip)
 {
 	if (animations.find(name) != animations.end()) return;
-	animations.emplace(name, std::unique_ptr<AnimationClip>{aniClip});
+	animations.emplace(name, aniClip);
 }
 
 void AnimatorComponent::Play(const std::string& name)
@@ -73,10 +73,10 @@ void AnimatorComponent::Play(const std::string& name)
 	//没有该动画，返回
 	if (animations.find(name) == animations.end()) return;
 	//当前动画正在播放，返回
-	if (animations[name].get() == currentAnimation) return;
+	if (animations[name] == currentAnimation) return;
 
 	//切换当前动画
-	currentAnimation = animations[name].get();
+	currentAnimation = animations[name];
 
 	//设置当前动画总帧数
 	currentFrameCount = animations[name]->FrameCount();

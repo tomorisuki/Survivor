@@ -1,8 +1,18 @@
 ﻿#include "GameObject.h"
 
+#include <iostream>
 
+GameObject::~GameObject()
+{
+	std::cout
+		<< "Destroy GameObject "
+		<< this
+		<< " "
+		<< name
+		<< std::endl;
+}
 
-void GameObject::Start() 
+void GameObject::Start()
 {
 	for (auto& component : components) {
 		component->Start();
@@ -14,17 +24,6 @@ void GameObject::Update(float deltaTime)
 	for (auto& component : components) {
 		component->Update(deltaTime);
 	}
-	//for (auto& component : components)
-	//{
-	//	ICollisionListener* listener =
-	//		dynamic_cast<ICollisionListener*>(
-	//			component.get());
-
-	//	if (listener)
-	//	{
-	//		listener->OnCollision(other);
-	//	}
-	//}
 }
 
 void GameObject::Render()
@@ -33,6 +32,22 @@ void GameObject::Render()
 		component->Render();
 	}
 }
+
+
+void GameObject::OnCollisionEnter(Collider* collider)
+{
+	for (auto& component : components) {
+		component->OnCollisionEnter(collider);
+	}
+}
+
+void GameObject::OnCollisionExit(Collider* collider)
+{
+	for (auto& component : components) {
+		component->OnCollisionExit(collider);
+	}
+}
+
 
 
 

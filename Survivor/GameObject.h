@@ -27,7 +27,7 @@ private:
 
 public:
 	GameObject() = delete;
-	~GameObject() = default;
+	~GameObject();
 
 	Transform transform;
 	
@@ -105,6 +105,12 @@ public:
 	void Update(float deltaTime);
 
 	void Render();
+
+
+	void OnCollisionEnter(class Collider* collider);
+
+	void OnCollisionExit(class Collider* collider);
+
 
 private:
 	std::unordered_map<std::type_index, Component*> componentMap;

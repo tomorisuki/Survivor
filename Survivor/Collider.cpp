@@ -4,6 +4,11 @@
 #include "Engine.h"
 #include "OrbitBullet.h"
 
+Collider::~Collider()
+{
+	std::cout << "Destroy Collider " << this << std::endl;
+}
+
 void Collider::Start()
 {
 }
@@ -84,12 +89,22 @@ Vector2D Collider::Offset() const
 	return offset;
 }
 
+bool Collider::Enable() const
+{
+	return enable;
+}
+
 void Collider::SetScale(const Vector2D& scale)
 {
 	this->scale = scale;
 }
 
-void Collider::EnableDebug(bool debug)
+void Collider::SetEnableDebug(bool debug)
 {
 	this->isDebug = debug;
+}
+
+void Collider::SetEnable(bool enable)
+{
+	this->enable = enable;
 }

@@ -4,16 +4,28 @@
 
 #include "RigidBody.h"
 #include "AnimatorComponent.h"
+#include "Health.h"
+#include "Collider.h"
 
 void EnemyAI::Start()
 {
 	rigidBody = owner->GetComponent<RigidBody>();
 	animator = owner->GetComponent<AnimatorComponent>();
+	health = owner->GetComponent<Health>();
+	collider = owner->GetComponent<Collider>();
 }
 
 void EnemyAI::Update(float deltaTime)
 {
-	if (!rigidBody || !attackTarget) return;
+	if (!rigidBody || !attackTarget || !health) return;
+
+	if (health->GetHp() == 0) {
+		animator->Play("die");
+		if (collider) collider->SetEnable(false);
+		if (!animator->isPlaying())
+			owner->SetPendingDestroy(true);
+		return;
+	}
 
 	//获取一个指向目标的向量
 	Vector2D moveDirection = (attackTarget->transform.position - owner->transform.position).Normalized();

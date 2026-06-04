@@ -116,6 +116,12 @@
     <ClCompile Include="EnemyAI.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Health.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageDealer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -194,5 +200,7 @@
     <ClInclude Include="ICollisionListener.h" />
     <ClInclude Include="OrbitBullet.h" />
     <ClInclude Include="EnemyAI.h" />
+    <ClInclude Include="Health.h" />
+    <ClInclude Include="DamageDealer.h" />
   </ItemGroup>
 </Project>

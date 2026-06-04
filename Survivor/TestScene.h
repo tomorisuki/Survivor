@@ -7,6 +7,10 @@
 #include "Collider.h"
 #include "OrbitBullet.h"
 #include "EnemyAI.h"
+
+#include "DamageDealer.h"
+#include "Health.h"
+
 #include <iostream>
 class TestScene :
     public Scene
@@ -21,6 +25,7 @@ public:
 
         camera = std::make_unique<Camera>();
         camera->SetCameraSize(engine->WindowSize());
+        //camera->SetClamp({ 0.0f,1280.0f },{0.0f,0.0f});
 
         engine->SetCamera(camera.get());
 
@@ -43,7 +48,7 @@ public:
         player->GetComponent<RigidBody>()->SetLinearDamping(5.0f);
         player->GetComponent<RigidBody>()->SetMoveSpeed(1500.0f);
         player->AddComponent<Collider>();
-        player->GetComponent<Collider>()->EnableDebug(true);
+        player->GetComponent<Collider>()->SetEnableDebug(true);
         player->GetComponent<Collider>()->SetSize(Vector2D{ 20.0f,20.0f });
         player->GetComponent<Collider>()->SetOffset(Vector2D{ 2.0f,2.0f });
         player->GetComponent<Collider>()->SetLayer(1);  //玩家
@@ -81,7 +86,7 @@ public:
         effect->AddComponent<Collider>();
         effect->GetComponent<Collider>()->SetLayer(4);
         effect->GetComponent<Collider>()->SetSize(Vector2D{ 64.0f,64.0f });
-        effect->GetComponent<Collider>()->EnableDebug(true);
+        //effect->GetComponent<Collider>()->EnableDebug(true);
 
 
         effect->AddComponent<SpriteRender>();
@@ -98,12 +103,13 @@ public:
         oribitBullet1->GetComponent<OrbitBullet>()->SetFollowTarget(player);
         oribitBullet1->GetComponent<OrbitBullet>()->SetSpeed(5.0f);
         oribitBullet1->GetComponent<OrbitBullet>()->SetAngle(0.0f);
-        oribitBullet1->GetComponent<OrbitBullet>()->SetOffset(Vector2D{ -24.0f,-24.0f });
+        oribitBullet1->GetComponent<OrbitBullet>()->SetRadius(50.0f);
+        //oribitBullet1->GetComponent<OrbitBullet>()->SetOffset(Vector2D{ -24.0f,-24.0f });
         oribitBullet1->AddComponent<Collider>();
         oribitBullet1->GetComponent<Collider>()->SetLayer(3);
-        oribitBullet1->GetComponent<Collider>()->EnableDebug(true);
+        //oribitBullet1->GetComponent<Collider>()->EnableDebug(true);
         oribitBullet1->GetComponent<Collider>()->SetSize(Vector2D{ 64.0f,64.0f });
-        
+        oribitBullet1->AddComponent<DamageDealer>()->SetDamage(1.0f);
 
         auto oribitBullet2 = CreateGameObject("oribitBullet");
         oribitBullet2->transform.scale = { 0.5f,0.5f };
@@ -116,12 +122,13 @@ public:
         oribitBullet2->GetComponent<OrbitBullet>()->SetFollowTarget(player);
         oribitBullet2->GetComponent<OrbitBullet>()->SetSpeed(5.0f);
         oribitBullet2->GetComponent<OrbitBullet>()->SetAngle(2.0f * FMath::PI / 3.0f);
-        oribitBullet2->GetComponent<OrbitBullet>()->SetOffset(Vector2D{ -24.0f,-24.0f });
+        //oribitBullet2->GetComponent<OrbitBullet>()->SetOffset(Vector2D{ -24.0f,-24.0f });
+        oribitBullet2->GetComponent<OrbitBullet>()->SetRadius(50.0f);
         oribitBullet2->AddComponent<Collider>();
         oribitBullet2->GetComponent<Collider>()->SetLayer(3);
-        oribitBullet2->GetComponent<Collider>()->EnableDebug(true);
+        //oribitBullet2->GetComponent<Collider>()->EnableDebug(true);
         oribitBullet2->GetComponent<Collider>()->SetSize(Vector2D{ 64.0f,64.0f });
-        
+        oribitBullet2->AddComponent<DamageDealer>()->SetDamage(1.0f);
 
 
         auto oribitBullet3 = CreateGameObject("oribitBullet");
@@ -135,16 +142,16 @@ public:
         oribitBullet3->GetComponent<OrbitBullet>()->SetFollowTarget(player);
         oribitBullet3->GetComponent<OrbitBullet>()->SetSpeed(5.0f);
         oribitBullet3->GetComponent<OrbitBullet>()->SetAngle(2.0f * 2.0f * FMath::PI / 3.0f);
+        oribitBullet3->GetComponent<OrbitBullet>()->SetRadius(50.0f);
 
-        oribitBullet3->GetComponent<OrbitBullet>()->SetOffset(Vector2D{ -24.0f,-24.0f });
+        //oribitBullet3->GetComponent<OrbitBullet>()->SetOffset(Vector2D{ -24.0f,-24.0f });
         oribitBullet3->AddComponent<Collider>();
         oribitBullet3->GetComponent<Collider>()->SetLayer(3);
-        oribitBullet3->GetComponent<Collider>()->EnableDebug(true);
+        //oribitBullet3->GetComponent<Collider>()->EnableDebug(true);
         
         oribitBullet3->GetComponent<Collider>()->SetSize(Vector2D{ 64.0f,64.0f });
-        
-        std::cout << "size:" << oribitBullet3->GetComponent<Collider>()->Size().x << "\t" <<
-            oribitBullet3->GetComponent<Collider>()->Size().y << std::endl;
+        oribitBullet3->AddComponent<DamageDealer>()->SetDamage(1.0f);
+
 
 
         auto enemy = CreateGameObject("enemy");
@@ -164,43 +171,40 @@ public:
         enemy->GetComponent<EnemyAI>()->SetAttackTarget(player);
         enemy->GetComponent<EnemyAI>()->SetInitialPosition(Vector2D{0.0f,0.0f});
         enemy->AddComponent<Collider>();
-        enemy->GetComponent<Collider>()->EnableDebug(true);
+        enemy->GetComponent<Collider>()->SetEnableDebug(true);
         enemy->GetComponent<Collider>()->SetLayer(2);
         enemy->GetComponent<Collider>()->SetSize(Vector2D{ 79.0f,69.0f });
-
-
+        enemy->AddComponent<Health>()->SetHp(5);
         
-
-
         Scene::Start();
 
+
+
+    }
+
+    void Update(float deltaTime) override{   
+        Scene::Update(deltaTime);
+        engine->GetCollisionSystem()->ClearColliders();
         for (auto& obj : gameObjects) {
             auto* collider = obj->GetComponent<Collider>();
             if (!collider) continue;
             engine->GetCollisionSystem()->RegisterCollider(collider);
         }
 
-    }
-
-    void Update(float deltaTime) override{   
-        Scene::Update(deltaTime);
-        
         for (auto& obj : gameObjects) {
             obj->Update(deltaTime);
-            if (obj->GetName() == "player") {
-				//std::cout << "Collider Size:(" << obj->GetComponent<Collider>()->ComputedSize().x << "," << obj->GetComponent<Collider>()->ComputedSize().y << ")\n";
-            }
         }
 
         if (engine->Input()->isDown("small")) {
-            camera->SetZoom(camera->GetZoom() - 0.1f);
+            camera->SetZoom(camera->GetZoom() - 0.02f);
         }
         if (engine->Input()->isDown("big")) {
-            camera->SetZoom(camera->GetZoom() + 0.1f);
+            camera->SetZoom(camera->GetZoom() + 0.02f);
         }
         
         camera->Update(deltaTime);
-        
+        //std::cout << "obj count : " << gameObjects.size() << std::endl;
+        //std::cout << "collision size:" << engine->GetCollisionSystem()->Size() << std::endl;
     }
 
     void Render() override {
@@ -208,11 +212,8 @@ public:
     }
 
     void ProcessPendingOperations() override {
-        //删除标记的物体
+        
         CleanDestroyObjects();
-
-
-
     }
 
 private:

@@ -7,6 +7,7 @@
 * 2026-6-3 21:19 提交了一次，实现了碰撞箱位置偏移
 * 准备实现网格划分
 */
+#include <iostream> //test
 
 struct Rect
 {
@@ -22,11 +23,41 @@ struct Rect
 	}
 };
 
+class Collider;
+
+struct CollisionPair
+{
+	Collider* a;
+	Collider* b;
+
+	CollisionPair(Collider* lhs, Collider* rhs)
+	{
+		if (lhs < rhs)
+		{
+			a = lhs;
+			b = rhs;
+		}
+		else
+		{
+			a = rhs;
+			b = lhs;
+		}
+	}
+
+	bool operator==(const CollisionPair& other) const
+	{
+		return a == other.a && b == other.b;
+	}
+
+};
+
 
 class Collider : public Component
 {
 	friend class GameObject;
 public:
+
+	~Collider();
 
 	void Start() override;
 	void Update(float deltaTime) override;
@@ -63,11 +94,17 @@ public:
 	//获取偏移量
 	Vector2D Offset() const;
 
+	//是否启用
+	bool Enable() const;
+
 	//设置缩放，transform缩放，以及自身缩放
 	void SetScale(const Vector2D& scale);
 
 	//设置是否启用调试模式，启用后会在Render函数中绘制碰撞箱
-	void EnableDebug(bool debug);
+	void SetEnableDebug(bool debug);
+
+	//设置是否启用
+	void SetEnable(bool enable);
 
 private:
 	int layer = 0;
@@ -76,5 +113,6 @@ private:
 	Vector2D scale = { 1.0f,1.0f };
 	Vector2D offset = { 0.0f,0.0f };	//碰撞箱偏移
 	bool isDebug = false;
+	bool enable = true;					//是否启用
 };
 

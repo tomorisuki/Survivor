@@ -1,7 +1,6 @@
 ﻿#include "CollisionSystem.h"
 #include "GameObject.h"
 
-#include "Collider.h"
 #include <iostream>	//打印消息
 
 void CollisionSystem::Init() 
@@ -19,15 +18,27 @@ void CollisionSystem::Init()
 
 }
 
+//0 1 2 3
+//1 2 3 4
+
 void CollisionSystem::Update(float deltaTime)
 {
+	currentFrame.clear();
+
 	std::size_t ColliderVecSize = colliders.size();
 
 	for (std::size_t i = 0; i < ColliderVecSize; i++) {
 		for (std::size_t j = i + 1; j < ColliderVecSize; j++) {
+
+
 			auto* a = colliders[i];
 			auto* b = colliders[j];
-			if (!collisionMatrix[a->Layer()][b->Layer()]) continue;
+
+			//如果有一个没有启用，那么就不能形成碰撞对
+			if (!a->Enable() || !b->Enable()) continue;
+
+			if (!collisionMatrix[a->Layer()][b->Layer()] &&
+				!collisionMatrix[b->Layer()][a->Layer()]) continue;
 
 			Rect rectA;
 			rectA.position = a->ComputedPosition();
@@ -38,17 +49,35 @@ void CollisionSystem::Update(float deltaTime)
 
 			//发生碰撞
 			if (rectA.IsCollision(rectB)) {
-				/*std::cout << "collision:" << a->Owner()->GetName() << "\t" <<
-					b->Owner()->GetName() << std::endl;*/
-
-				std::cout << "Asize:" << rectA.size.x << "," << rectA.size.y << "\tBsize:" <<
-					rectB.size.x << "," << rectB.size.y << "\t" <<
-					rectA.position.x << "," << rectA.position.y << "\t" <<
-					rectB.position.x << "," << rectB.position.y << std::endl;
-
+				currentFrame.emplace(a, b);
 			}
 		}
 	}
+
+	//二段
+
+	for (const auto& pair : currentFrame)
+	{
+		if (lastFrame.find(pair) == lastFrame.end())
+		{
+			//新碰撞
+			pair.a->Owner()->OnCollisionEnter(pair.b);
+			pair.b->Owner()->OnCollisionEnter(pair.a);
+		}
+	}
+
+	//三段
+
+	for (const auto& pair : lastFrame)
+	{
+		if (currentFrame.find(pair) == currentFrame.end())
+		{
+			pair.a->Owner()->OnCollisionExit(pair.b);
+			pair.b->Owner()->OnCollisionExit(pair.a);
+		}
+	}
+	
+	lastFrame.swap(currentFrame);
 
 
 }
@@ -76,4 +105,10 @@ void CollisionSystem::AddColliderPair(int x, int y, bool flag)
 void CollisionSystem::ClearColliders()
 {
 	colliders.clear();
+}
+
+//test
+int CollisionSystem::Size() const
+{
+	return colliders.size();
 }

@@ -4,10 +4,19 @@
 
 #include <vector>
 
+#include <iostream>
+
 //单个动画
 class AnimationClip
 {
 public:
+	~AnimationClip()
+	{
+		std::cout
+			<< "Destroy Clip "
+			<< this
+			<< std::endl;
+	}
 
 	//添加一帧
 	void AddFrame(const AnimationFrame& frame);

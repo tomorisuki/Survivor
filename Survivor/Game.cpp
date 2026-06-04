@@ -132,6 +132,7 @@ void Game::Run()
         /*--------测试-------*/
 
         SDL_RenderPresent(sdl_renderer);
+        
 	}
     Clean();
 }

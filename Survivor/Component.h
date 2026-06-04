@@ -11,6 +11,10 @@ public:
 	virtual void Start() {}
 	virtual void Update(float deltaTime) {}
 	virtual void Render() {}
+	
+	virtual void OnCollisionEnter(class Collider* collider) {}
+	virtual void OnCollisionExit(class Collider* collider) {}
+
 
 	GameObject* GetGameObject() const {
 		return owner;

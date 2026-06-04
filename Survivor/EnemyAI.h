@@ -24,6 +24,7 @@ private:
 	class GameObject* attackTarget = nullptr;
 	class RigidBody* rigidBody = nullptr;
 	class AnimatorComponent* animator = nullptr;
-
+	class Health* health = nullptr;
+	class Collider* collider = nullptr;
 };
 
