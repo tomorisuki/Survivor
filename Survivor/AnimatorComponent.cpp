@@ -48,13 +48,15 @@ void AnimatorComponent::Render()
 {
 	//设置渲染的图片
 	
-	auto* tempSprite = currentAnimation->GetAnimationFrame(currentIndex).sprite;
+	auto tempSprite = currentAnimation->GetSprite();
 	tempSprite->SetCropRect(currentAnimation->GetAnimationFrame(currentIndex).cropRect);
-	
+	//std::cout << tempSprite << std::endl;
+
 	//tempSprite->SetFlip(currentAnimation->IsFlip());
 
 	//currentAnimation->SetFlip(isFlip);
-
+	//if (owner->GetName() == "enemy")
+	//std::cout << tempSprite << std::endl;
 	//设置翻转
 	tempSprite->SetFlip(isFlip);
 	//设置翻转模式
@@ -65,18 +67,26 @@ void AnimatorComponent::Render()
 void AnimatorComponent::AddAnimationClip(const std::string& name, AnimationClip* aniClip)
 {
 	if (animations.find(name) != animations.end()) return;
-	animations.emplace(name, aniClip);
+	animations.insert({ name,std::unique_ptr<AnimationClip>{aniClip} });
 }
+
+/*
+std::unordered_map<std::string,std::unique_ptr<Person>> persons;
+void test(Person* p){
+persons.emplace("tom",p);
+}
+
+*/
 
 void AnimatorComponent::Play(const std::string& name)
 {
 	//没有该动画，返回
 	if (animations.find(name) == animations.end()) return;
 	//当前动画正在播放，返回
-	if (animations[name] == currentAnimation) return;
+	if (animations[name].get() == currentAnimation) return;
 
 	//切换当前动画
-	currentAnimation = animations[name];
+	currentAnimation = animations[name].get();
 
 	//设置当前动画总帧数
 	currentFrameCount = animations[name]->FrameCount();
@@ -116,5 +126,5 @@ void AnimatorComponent::Resume()
 Sprite* AnimatorComponent::GetFirstFrame() const
 {
 	if (!currentAnimation) return nullptr;
-	return currentAnimation->GetAnimationFrame(0).sprite;
+	return currentAnimation->GetSprite();
 }

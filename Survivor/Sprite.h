@@ -14,6 +14,7 @@ public:
 	
 	~Sprite() = default;
 
+	void operator=(const Sprite& sprite);
 
 	void SetTexture(SDL_Texture* sdl_texture);
 

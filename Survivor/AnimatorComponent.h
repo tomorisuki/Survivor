@@ -25,9 +25,6 @@ public:
 
 	bool isPlaying() const;
 
-	//TODO : 测试
-	//bool isEnd() const;
-
 	//设置动画翻转
 	void SetFlip(bool flip);
 
@@ -39,7 +36,8 @@ public:
 	Sprite* GetFirstFrame() const;
 
 private:
-	std::unordered_map<std::string, AnimationClip*> animations;
+
+	std::unordered_map<std::string, std::unique_ptr<AnimationClip>> animations;
 	AnimationClip* currentAnimation = nullptr;
 	int currentFrameCount = 0;
 	int currentIndex = 0;
@@ -48,7 +46,6 @@ private:
 
 	bool stop = false;
 	bool isFlip = false;
-	//bool isEnd = false;
 
 	class SpriteRender* spriteRender = nullptr;
 };

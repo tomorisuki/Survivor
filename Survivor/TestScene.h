@@ -35,6 +35,7 @@ public:
         engine->SetCamera(camera.get());
 
 		auto background = CreateGameObject("background");
+        background->transform.scale = { 2.0f,2.0f };
 		background->AddComponent<SpriteRender>(engine->GetTextureManager()->GetSprite("background"));
         background->transform.position = { 0.0f,0.0f };
         background->GetComponent<SpriteRender>()->SetLayer(0);
@@ -164,50 +165,16 @@ public:
         oribitBullet3->AddComponent<DamageDealer>()->SetDamage(1.0f);
 
 
-/*
-        auto enemy = CreateGameObject("enemy");
-        enemy->transform.scale = { 0.5f,0.5f };
-        enemy->AddComponent<SpriteRender>();
-        enemy->AddComponent<AnimatorComponent>();
-        enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("fly",
-            engine->GetAniClipMgr()->GetAnimationClip("enemy_fly"));
-        enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("die",
-            engine->GetAniClipMgr()->GetAnimationClip("enemy_die"));
-        enemy->GetComponent<AnimatorComponent>()->Play("fly");
-        
-        enemy->AddComponent<RigidBody>();
-        enemy->GetComponent<RigidBody>()->SetUseGravity(false);
-        enemy->GetComponent<RigidBody>()->SetMoveSpeed(1000.0f);
-        enemy->GetComponent<RigidBody>()->SetLinearDamping(4.2f);
-
-        enemy->AddComponent<EnemyAI>();
-        enemy->GetComponent<EnemyAI>()->SetAttackTarget(player);
-        enemy->GetComponent<EnemyAI>()->SetInitialPosition(Vector2D{0.0f,0.0f});
-
-        enemy->AddComponent<Collider>();
-        enemy->GetComponent<Collider>()->SetEnableDebug(false);
-        enemy->GetComponent<Collider>()->SetLayer(2);
-        enemy->GetComponent<Collider>()->SetSize(Vector2D{ 79.0f,69.0f });
-        enemy->GetComponent<Collider>()->SetEnable(true);
-        enemy->AddComponent<Health>()->SetHp(5);
-        
-		auto enemyShadow = CreateGameObject("enemyShadow");
-		enemyShadow->transform.scale = { 0.5f,0.5f };
-		enemyShadow->AddComponent<SpriteRender>(
-            engine->GetTextureManager()->GetSprite("player_shadow"));
-		enemyShadow->AddComponent<FollowComponent>();
-		enemyShadow->GetComponent<FollowComponent>()->SetTarget(enemy);
-		enemyShadow->GetComponent<FollowComponent>()->SetOffset(Vector2D{ 12.0f,32.0f });
-		enemyShadow->GetComponent<FollowComponent>()->SetLayerDifference(-1);
-*/
 		auto enemySpawn = std::make_unique<EnemySpawn>(engine);
         enemySpawn->SetTarget(player);
+        enemySpawn->SetCirclrPoint(Vector2D{ 1280.0f,720.0f });
+        enemySpawn->SetSpawnRadius(1500.0f);
 		enemySpawnPointer = enemySpawn.get();
 
 
         auto enemySpawnTimer = std::make_unique<Timer>();
         enemySpawnTimer->SetOnce(false);
-        enemySpawnTimer->SetElapsedTime(1.0f);
+        enemySpawnTimer->SetElapsedTime(0.2f);
         enemySpawnTimer->SetCallback([&]() {
             addedGameObjects.push_back(enemySpawnPointer->SpawnEnemy("enemy"));
             });

@@ -36,6 +36,9 @@ public:
 	//设置线性阻尼
 	void SetLinearDamping(float value);
 
+	//设置是否启用
+	void SetEnable(bool enable);
+
 public:
 
 	Vector2D velocity;					//速度
@@ -55,5 +58,6 @@ public:
 	float gravityScale = 1.0f;			//重力缩放
 	bool useGravity = false;			//是否启用重力
 	
+	bool enable = true;					//是否启用
 };
 

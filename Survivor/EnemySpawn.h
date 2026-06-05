@@ -17,6 +17,12 @@ public:
 
 	GameObject* SpawnEnemy(const std::string& enemyName);
 
+	//设置生成圆心
+	void SetCirclrPoint(Vector2D point);
+
+	//设置生成的半径
+	void SetSpawnRadius(float radius);
+
 private:
 
 	//float spawnInterval = 5.0f;		//敌人生成间隔
@@ -27,6 +33,8 @@ private:
 
 	GameObject* target = nullptr;			//敌人目标
 	std::unique_ptr<EnemyFactory> enemyFactory;	//敌人工厂
+	Vector2D point;
+	float spawnRadius = 500.0f;
 
 };
 

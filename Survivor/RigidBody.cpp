@@ -10,6 +10,8 @@ void RigidBody::Start()
 
 void RigidBody::Update(float deltaTime)
 {
+	//如果没有启用，直接返回
+	if (!enable) return;
 	//判断是否应用重力
 	if (useGravity) {
 		velocity.y += gravity * gravityScale * deltaTime;
@@ -79,4 +81,9 @@ void RigidBody::SetMoveSpeed(float moveSpeed)
 void RigidBody::SetLinearDamping(float value)
 {
 	linearDamping = value;
+}
+
+void RigidBody::SetEnable(bool enable)
+{
+	this->enable = enable;
 }

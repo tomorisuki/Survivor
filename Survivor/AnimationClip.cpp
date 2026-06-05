@@ -3,6 +3,7 @@
 #include <iostream>
 
 
+
 void AnimationClip::AddFrame(const AnimationFrame& frame)
 {
     aniFrames.push_back(frame);
@@ -12,6 +13,10 @@ void AnimationClip::LoadSpriteSheet(Sprite* sprite, int totalFrame, int rows, in
           , float duration,float offsetX,float w,float h)
 {
     aniFrames.clear();
+
+    Sprite* tempSprite = new Sprite(sprite->GetTexture());
+    this->sprite.reset(tempSprite);
+
     float oneFrameWidth = sprite->Size().x / static_cast<float>(oneRowCount);
     float oneFrameHeight = sprite->Size().y / static_cast<float>(rows);
 
@@ -31,7 +36,6 @@ void AnimationClip::LoadSpriteSheet(Sprite* sprite, int totalFrame, int rows, in
         }
         AnimationFrame frame;
         
-        frame.sprite = sprite;
         frame.cropRect.x = oneFrameWidth * currentRowcount + offsetX;
         frame.cropRect.y = oneFrameHeight * currentRow;
         frame.cropRect.w = oneFrameWidth;
@@ -40,16 +44,12 @@ void AnimationClip::LoadSpriteSheet(Sprite* sprite, int totalFrame, int rows, in
         totalDuration += duration;
         aniFrames.push_back(frame);
 
-        //std::cout << "frame_w:" << frame.cropRect.w << "\tframe_h:" << frame.cropRect.h << std::endl;
-
         currentRowcount++;
     }
 
     //加载完毕更新对应变量
     frameCount = static_cast<int>(aniFrames.size());
     this->totalDuration = totalDuration;
-
-
 }
 
 void AnimationClip::LoadSpriteSet(std::vector<Sprite*> sprites, float duration)
@@ -59,7 +59,6 @@ void AnimationClip::LoadSpriteSet(std::vector<Sprite*> sprites, float duration)
     float totalDuration = 0.0f;
     for (int i = 0; i < totalSprites; i++) {
         AnimationFrame frame;
-        frame.sprite = sprites[i];
         frame.cropRect = sprites[i]->CropRect();
         frame.duration = duration;
         totalDuration += duration;
@@ -75,6 +74,8 @@ AnimationFrame& AnimationClip::GetAnimationFrame(int index)
 {
     return aniFrames[index];
 }
+
+
 
 void AnimationClip::SetOneFrameDuration(int index, float duration)
 {
@@ -116,4 +117,14 @@ void AnimationClip::SetFlip(bool flag, SDL_FlipMode mode)
 SDL_FlipMode AnimationClip::FlipMode() const
 {
     return flipMode;
+}
+
+void AnimationClip::SetSprite(Sprite* sprite)
+{
+    this->sprite.reset(sprite);
+}
+
+Sprite* AnimationClip::GetSprite() const
+{
+    return sprite.get();
 }

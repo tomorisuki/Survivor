@@ -57,8 +57,6 @@ class Collider : public Component
 	friend class GameObject;
 public:
 
-	~Collider();
-
 	void Start() override;
 	void Update(float deltaTime) override;
 	void Render() override;

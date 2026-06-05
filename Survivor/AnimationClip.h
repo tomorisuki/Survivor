@@ -47,13 +47,27 @@ public:
 	//获取动画翻转模式
 	SDL_FlipMode FlipMode() const;
 
+	void SetSprite(Sprite* sprite);
+
+	Sprite* GetSprite() const;
+
+	void operator=(const AnimationClip& other) {
+		aniFrames = other.aniFrames;
+		totalDuration = other.totalDuration;
+		frameCount = other.frameCount;
+		isLoop = other.isLoop;
+		isFlip = other.isFlip;
+		flipMode = other.flipMode;
+	}
+
 private:
 	
 	std::vector<AnimationFrame> aniFrames;
+	std::unique_ptr<Sprite> sprite;
 
 	float totalDuration = 0.0f;		//动画总时长
 	int frameCount = 0;				//总帧数
-	bool isLoop;					//动画是否循环
+	bool isLoop = false;					//动画是否循环
 	bool isFlip = false;			//动画是否翻转
 	SDL_FlipMode flipMode = SDL_FlipMode::SDL_FLIP_HORIZONTAL;	//动画翻转模式
 };

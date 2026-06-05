@@ -22,6 +22,7 @@ void EnemyAI::Update(float deltaTime)
 	if (health->GetHp() == 0) {
 		animator->Play("die");
 		if (collider) collider->SetEnable(false);
+		if (rigidBody) rigidBody->SetEnable(false);
 		if (!animator->isPlaying())
 			owner->SetPendingDestroy(true);
 		return;
@@ -30,13 +31,17 @@ void EnemyAI::Update(float deltaTime)
 	//获取一个指向目标的向量
 	Vector2D moveDirection = (attackTarget->transform.position - owner->transform.position).Normalized();
 
-	if (moveDirection.x > 0.0f) {
+	if (moveDirection.x > 0.1f) {
+		//moveDirection.x = 1.0f;
 		animator->SetFlip(true);
 	}
-	if (moveDirection.x < 0.0f)
+	else if (moveDirection.x < -0.1f)
 	{
+		//moveDirection.x = -1.0f;
 		animator->SetFlip(false);
 	}
+	
+	//std::cout << moveDirection.x << std::endl;
 
 	rigidBody->AddForce(moveDirection);
 }

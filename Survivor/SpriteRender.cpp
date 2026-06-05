@@ -17,8 +17,8 @@ SpriteRender::SpriteRender(Sprite* sprite)
 void SpriteRender::Start()
 {
 	animator = owner->GetComponent<AnimatorComponent>();
-	if (animator)
-		sprite = animator->GetFirstFrame();
+	//if (animator)
+	//	sprite = animator->GetFirstFrame();
 }
 
 void SpriteRender::Update(float deltaTime)

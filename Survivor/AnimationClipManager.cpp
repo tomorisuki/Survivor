@@ -48,8 +48,18 @@ bool AnimationClipManager::LoadAnimationClip(const std::string& name, Sprite* sp
 	return true;
 }
 
+//AnimationClip* AnimationClipManager::GetAnimationClip(const std::string& name)
+//{
+//	if (aniClip_pool.find(name) == aniClip_pool.end()) return nullptr;
+//	return aniClip_pool[name].get();
+//}
+
 AnimationClip* AnimationClipManager::GetAnimationClip(const std::string& name)
 {
 	if (aniClip_pool.find(name) == aniClip_pool.end()) return nullptr;
-	return aniClip_pool[name].get();
+	AnimationClip* ani = new AnimationClip();
+	*ani = (*aniClip_pool[name]);
+	Sprite* sprite = new Sprite(aniClip_pool[name]->GetSprite()->GetTexture());
+	ani->SetSprite(sprite);
+	return ani;
 }

@@ -42,6 +42,9 @@
     <Filter Include="Engine\Animation">
       <UniqueIdentifier>{a0486ccb-a3d9-4f11-850e-56346b820984}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Object">
+      <UniqueIdentifier>{d80bfa22-fec4-4a73-b87d-2800a72ec7bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -104,26 +107,35 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Engine\Component</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionSystem.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="ICollisionListener.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="OrbitBullet.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="CollisionSystem.cpp">
+      <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="EnemyAI.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="OrbitBullet.cpp">
+      <Filter>Engine\Component</Filter>
     </ClCompile>
     <ClCompile Include="Health.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="DamageDealer.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Engine\Component</Filter>
     </ClCompile>
     <ClCompile Include="FollowComponent.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyFactory.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageDealer.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawn.cpp">
+      <Filter>Engine\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,12 +211,33 @@
     <ClInclude Include="Collider.h">
       <Filter>Engine\Component</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="ICollisionListener.h" />
-    <ClInclude Include="OrbitBullet.h" />
-    <ClInclude Include="EnemyAI.h" />
-    <ClInclude Include="Health.h" />
-    <ClInclude Include="DamageDealer.h" />
-    <ClInclude Include="FollowComponent.h" />
+    <ClInclude Include="CollisionSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyAI.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="OrbitBullet.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="FollowComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawn.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageDealer.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Health.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,15 +1,15 @@
-#pragma once
+ï»¿#pragma once
 
-#include "SpriteRender.h"		//äÖÈ¾×é¼þ
-#include "AnimatorComponent.h"	//¶¯»­×é¼þ
-#include "RigidBody.h"			//ÎïÀí×é¼þ
-#include "Collider.h"			//Åö×²×é¼þ
-#include "OrbitBullet.h"		//×Óµ¯×é¼þ
-#include "EnemyAI.h"			//µÐÈËAI×é¼þ
-#include "DamageDealer.h"		//ÉËº¦×é¼þ
-#include "Health.h"				//ÉúÃü×é¼þ
+#include "SpriteRender.h"		//æ¸²æŸ“ç»„ä»¶
+#include "AnimatorComponent.h"	//åŠ¨ç”»ç»„ä»¶
+#include "RigidBody.h"			//ç‰©ç†ç»„ä»¶
+#include "Collider.h"			//ç¢°æ’žç»„ä»¶
+#include "OrbitBullet.h"		//å­å¼¹ç»„ä»¶
+#include "EnemyAI.h"			//æ•ŒäººAIç»„ä»¶
+#include "DamageDealer.h"		//ä¼¤å®³ç»„ä»¶
+#include "Health.h"				//ç”Ÿå‘½ç»„ä»¶
 
-#include "FollowComponent.h"	//¸úËæ×é¼þ
+#include "FollowComponent.h"	//è·Ÿéšç»„ä»¶
 
 class EnemyFactory
 {
@@ -20,11 +20,11 @@ public:
 	GameObject* CreateEnemy(const std::string& name, const Vector2D& position)
 	{
 		GameObject* enemy = new GameObject(engine);
-		enemy->name = name;	//µÐÈËÃû×Ö
+		enemy->name = name;	//æ•Œäººåå­—
 		enemy->transform.scale = { 0.5f,0.5f };
-		enemy->AddComponent<SpriteRender>();	//äÖÈ¾×é¼þ
+		enemy->AddComponent<SpriteRender>();	//æ¸²æŸ“ç»„ä»¶
 
-		enemy->AddComponent<AnimatorComponent>();	//¶¯»­×é¼þ
+		enemy->AddComponent<AnimatorComponent>();	//åŠ¨ç”»ç»„ä»¶
 		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("fly",
 			engine->GetAniClipMgr()->GetAnimationClip("enemy_fly"));
 		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("die",
@@ -33,7 +33,7 @@ public:
 
 		enemy->AddComponent<RigidBody>();
 		enemy->GetComponent<RigidBody>()->SetUseGravity(false);
-		enemy->GetComponent<RigidBody>()->SetMoveSpeed(1000.0f);
+		enemy->GetComponent<RigidBody>()->SetMoveSpeed(500.0f);
 		enemy->GetComponent<RigidBody>()->SetLinearDamping(4.2f);
 
 		enemy->AddComponent<EnemyAI>();
@@ -60,6 +60,6 @@ public:
 
 private:
 	Engine* engine = nullptr;
-	GameObject* target = nullptr;	//µÐÈË¹¥»÷Ä¿±ê
+	GameObject* target = nullptr;	//æ•Œäººæ”»å‡»ç›®æ ‡
 };
 

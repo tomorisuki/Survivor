@@ -4,10 +4,6 @@
 #include "Engine.h"
 #include "OrbitBullet.h"
 
-Collider::~Collider()
-{
-	std::cout << "Destroy Collider " << this << std::endl;
-}
 
 void Collider::Start()
 {

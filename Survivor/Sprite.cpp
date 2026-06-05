@@ -6,6 +6,18 @@ Sprite::Sprite(SDL_Texture* sdl_texture)
 	SetTexture(sdl_texture);
 }
 
+void Sprite::operator=(const Sprite& sprite)
+{
+	sdl_texture = sprite.sdl_texture;
+	size = sprite.size;
+	scale = sprite.scale;
+	cropRect = sprite.cropRect;
+	rotation = sprite.rotation;
+	alpha = sprite.alpha;
+	flipMode = sprite.flipMode;
+	isFlip = sprite.isFlip;
+}
+
 void Sprite::SetTexture(SDL_Texture* sdl_texture)
 {
 	this->sdl_texture = sdl_texture;
