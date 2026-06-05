@@ -27,7 +27,16 @@ void SpriteRender::Update(float deltaTime)
 void SpriteRender::Render()
 {
 	if (!sprite) return;
-	engine->GetRenderSystem()->RenderWorld(sprite, engine->GetCamera(),owner->transform);
+	int tempLayer = 0;
+	if (setLayer)
+	{
+		tempLayer = layer;
+	}
+	else
+	{
+		tempLayer = BottomPos();
+	}
+	engine->GetRenderSystem()->RenderWorld(sprite, engine->GetCamera(), owner->transform, tempLayer);
 }
 
 //void SpriteRender::InitSprite(SDL_Texture* sdl_texture)
@@ -53,4 +62,20 @@ void SpriteRender::SetSprite(Sprite* sprite)
 Sprite* SpriteRender::GetSprite()
 {
 	return sprite;
+}
+
+void SpriteRender::SetLayer(int layer)
+{
+	setLayer = true;
+	this->layer = layer;
+}
+
+int SpriteRender::Layer() const
+{
+	return layer;
+}
+
+int SpriteRender::BottomPos() const
+{
+	return static_cast<int>(owner->transform.position.y + sprite->Size().y);
 }

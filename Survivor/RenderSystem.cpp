@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include <algorithm>	//排序算法
+
 void RenderSystem::RenderWorld(Sprite* sprite, Camera* camera, const Transform& transform,
 	int layer)
 {
@@ -26,6 +28,7 @@ void RenderSystem::RenderWorld(Sprite* sprite, Camera* camera, const Transform& 
 	item.dstRect = dstRect;
 	item.camera = camera;
 	item.layer = layer;									//当前层级
+	item.order = this->order++;
 	worldQueue.push_back(item);
 }
 
@@ -41,6 +44,15 @@ void RenderSystem::RenderCollider(Camera* camera, const Transform& transform, co
 
 void RenderSystem::Render(float alpha) 
 {
+	//排序
+	std::sort(worldQueue.begin(), worldQueue.end(),
+		[](const RenderItem& a, const RenderItem& b) {
+			if (a.layer != b.layer)
+				return a.layer < b.layer;
+			return a.order < b.order;
+		});
+
+	this->order = 0;	//重置order
 
 	//渲染世界物体
 	for (auto& item : worldQueue) {

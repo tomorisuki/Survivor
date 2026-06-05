@@ -146,6 +146,7 @@
     <ClCompile Include="EnemyAI.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FMath.cpp" />
+    <ClCompile Include="FollowComponent.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Health.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="EnemyAI.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="FMath.h" />
+    <ClInclude Include="FollowComponent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Health.h" />

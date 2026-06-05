@@ -13,6 +13,7 @@ bool TextureManager::Init()
     if (!LoadTexture("background", "assets/background.png")) return false;
     if (!LoadTexture("enemy_fly", "assets/enemy_fly.png")) return false;
     if (!LoadTexture("enemy_die", "assets/enemy_die.png")) return false;
+    if (!LoadTexture("player_shadow", "assets/player_shadow.png")) return false;
     return true;
 }
 

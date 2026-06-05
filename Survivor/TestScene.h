@@ -11,6 +11,8 @@
 #include "DamageDealer.h"
 #include "Health.h"
 
+#include "FollowComponent.h"
+
 #include <iostream>
 class TestScene :
     public Scene
@@ -32,10 +34,7 @@ public:
 		auto background = CreateGameObject("background");
 		background->AddComponent<SpriteRender>(engine->GetTextureManager()->GetSprite("background"));
         background->transform.position = { 0.0f,0.0f };
-
-        
-
-        //testSprite = new Sprite(engine->GetTextureManager()->GetTexture("sunflower"));
+        background->GetComponent<SpriteRender>()->SetLayer(0);
 
         auto player = CreateGameObject("player");
 
@@ -48,7 +47,7 @@ public:
         player->GetComponent<RigidBody>()->SetLinearDamping(5.0f);
         player->GetComponent<RigidBody>()->SetMoveSpeed(1500.0f);
         player->AddComponent<Collider>();
-        player->GetComponent<Collider>()->SetEnableDebug(true);
+        //player->GetComponent<Collider>()->SetEnableDebug(true);
         player->GetComponent<Collider>()->SetSize(Vector2D{ 20.0f,20.0f });
         player->GetComponent<Collider>()->SetOffset(Vector2D{ 2.0f,2.0f });
         player->GetComponent<Collider>()->SetLayer(1);  //玩家
@@ -67,6 +66,14 @@ public:
         player->AddComponent<PlayerControl>();
         camera->SetFollowTarget(&player->transform);
         
+        auto shadow = CreateGameObject("shadow");
+        shadow->transform.scale = { 0.5f,0.5f };
+        shadow->AddComponent<SpriteRender>(engine->GetTextureManager()->GetSprite("player_shadow"));
+        shadow->AddComponent<FollowComponent>();
+        shadow->GetComponent<FollowComponent>()->SetTarget(player);
+        shadow->GetComponent<FollowComponent>()->SetOffset(Vector2D{ 4.0f,15.0f });
+        shadow->GetComponent<FollowComponent>()->SetLayerDifference(-1);
+
 
         engine->Input()->BindKeyCode("left", KeyCode::KEY_A);
         engine->Input()->BindKeyCode("right", KeyCode::KEY_D);
@@ -196,15 +203,13 @@ public:
         }
 
         if (engine->Input()->isDown("small")) {
-            camera->SetZoom(camera->GetZoom() - 0.02f);
+            camera->SetZoom(camera->GetZoom() - 0.01f);
         }
         if (engine->Input()->isDown("big")) {
-            camera->SetZoom(camera->GetZoom() + 0.02f);
+            camera->SetZoom(camera->GetZoom() + 0.01f);
         }
         
         camera->Update(deltaTime);
-        //std::cout << "obj count : " << gameObjects.size() << std::endl;
-        //std::cout << "collision size:" << engine->GetCollisionSystem()->Size() << std::endl;
     }
 
     void Render() override {

@@ -39,10 +39,19 @@ public:
 	//获取Sprite
 	Sprite* GetSprite();
 
+	void SetLayer(int layer);
+
+	//渲染层级
+	int Layer() const;
+
+	//以图片底部的y值为层级
+	int BottomPos() const;
+
 private:
 	//如果每次调用reset，会有delete的性能开销，所以此组件应该只有使用权
 	//std::unique_ptr<Sprite> spritePtr;			//SpriteRenderComponent拥有一个Sprite
-
+	int layer = 0;				//渲染层级
+	bool setLayer = false;		//是否指定层级
 	Sprite* sprite = nullptr;
 	class AnimatorComponent* animator = nullptr;
 };

@@ -122,6 +122,9 @@
     <ClCompile Include="DamageDealer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="FollowComponent.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -202,5 +205,6 @@
     <ClInclude Include="EnemyAI.h" />
     <ClInclude Include="Health.h" />
     <ClInclude Include="DamageDealer.h" />
+    <ClInclude Include="FollowComponent.h" />
   </ItemGroup>
 </Project>

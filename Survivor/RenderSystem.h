@@ -20,8 +20,7 @@ struct RenderItem
 	Vector2D prev_position;				//图片上一帧位置
 	SDL_FRect dstRect = { 0,0,0,0 };	//图片目标区域
 	int layer = 0;						//图片所在层级
-	
-	//bool isInterpolation;				//绘制是否需要插值
+	uint64_t order = 0;					//提交顺序
 };
 
 struct RenderColliderDebug
@@ -63,6 +62,6 @@ private:
 	std::vector<RenderItem> worldQueue;		//场景物体队列
 	std::vector<RenderColliderDebug> colliderQueue;		//碰撞箱队列
 	SDL_Renderer* sdl_renderer = nullptr;
-	
+	uint64_t order = 0;	//提交顺序
 };
 
