@@ -10,13 +10,6 @@
 class AnimationClip
 {
 public:
-	~AnimationClip()
-	{
-		std::cout
-			<< "Destroy Clip "
-			<< this
-			<< std::endl;
-	}
 
 	//添加一帧
 	void AddFrame(const AnimationFrame& frame);

@@ -112,3 +112,9 @@ void AnimatorComponent::Resume()
 {
 	stop = false;
 }
+
+Sprite* AnimatorComponent::GetFirstFrame() const
+{
+	if (!currentAnimation) return nullptr;
+	return currentAnimation->GetAnimationFrame(0).sprite;
+}

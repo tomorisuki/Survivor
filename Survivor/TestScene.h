@@ -13,6 +13,9 @@
 
 #include "FollowComponent.h"
 
+#include "Timer.h"
+#include "EnemySpawn.h"
+
 #include <iostream>
 class TestScene :
     public Scene
@@ -38,7 +41,7 @@ public:
 
         auto player = CreateGameObject("player");
 
-        player->AddComponent<SpriteRender>(engine->GetTextureManager()->GetSprite("sunflower"));
+        player->AddComponent<SpriteRender>();
         engine->GetTextureManager()->GetSprite("sunflower")->SetFlip(false);
         player->transform.position = { 500.0f,200.0f };
         player->AddComponent<RigidBody>();
@@ -68,7 +71,8 @@ public:
         
         auto shadow = CreateGameObject("shadow");
         shadow->transform.scale = { 0.5f,0.5f };
-        shadow->AddComponent<SpriteRender>(engine->GetTextureManager()->GetSprite("player_shadow"));
+        shadow->AddComponent<SpriteRender>(
+            engine->GetTextureManager()->GetSprite("player_shadow"));
         shadow->AddComponent<FollowComponent>();
         shadow->GetComponent<FollowComponent>()->SetTarget(player);
         shadow->GetComponent<FollowComponent>()->SetOffset(Vector2D{ 4.0f,15.0f });
@@ -160,29 +164,57 @@ public:
         oribitBullet3->AddComponent<DamageDealer>()->SetDamage(1.0f);
 
 
-
+/*
         auto enemy = CreateGameObject("enemy");
         enemy->transform.scale = { 0.5f,0.5f };
+        enemy->AddComponent<SpriteRender>();
         enemy->AddComponent<AnimatorComponent>();
         enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("fly",
             engine->GetAniClipMgr()->GetAnimationClip("enemy_fly"));
         enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("die",
             engine->GetAniClipMgr()->GetAnimationClip("enemy_die"));
         enemy->GetComponent<AnimatorComponent>()->Play("fly");
-        enemy->AddComponent<SpriteRender>();
+        
         enemy->AddComponent<RigidBody>();
         enemy->GetComponent<RigidBody>()->SetUseGravity(false);
         enemy->GetComponent<RigidBody>()->SetMoveSpeed(1000.0f);
         enemy->GetComponent<RigidBody>()->SetLinearDamping(4.2f);
+
         enemy->AddComponent<EnemyAI>();
         enemy->GetComponent<EnemyAI>()->SetAttackTarget(player);
         enemy->GetComponent<EnemyAI>()->SetInitialPosition(Vector2D{0.0f,0.0f});
+
         enemy->AddComponent<Collider>();
-        enemy->GetComponent<Collider>()->SetEnableDebug(true);
+        enemy->GetComponent<Collider>()->SetEnableDebug(false);
         enemy->GetComponent<Collider>()->SetLayer(2);
         enemy->GetComponent<Collider>()->SetSize(Vector2D{ 79.0f,69.0f });
+        enemy->GetComponent<Collider>()->SetEnable(true);
         enemy->AddComponent<Health>()->SetHp(5);
         
+		auto enemyShadow = CreateGameObject("enemyShadow");
+		enemyShadow->transform.scale = { 0.5f,0.5f };
+		enemyShadow->AddComponent<SpriteRender>(
+            engine->GetTextureManager()->GetSprite("player_shadow"));
+		enemyShadow->AddComponent<FollowComponent>();
+		enemyShadow->GetComponent<FollowComponent>()->SetTarget(enemy);
+		enemyShadow->GetComponent<FollowComponent>()->SetOffset(Vector2D{ 12.0f,32.0f });
+		enemyShadow->GetComponent<FollowComponent>()->SetLayerDifference(-1);
+*/
+		auto enemySpawn = std::make_unique<EnemySpawn>(engine);
+        enemySpawn->SetTarget(player);
+		enemySpawnPointer = enemySpawn.get();
+
+
+        auto enemySpawnTimer = std::make_unique<Timer>();
+        enemySpawnTimer->SetOnce(false);
+        enemySpawnTimer->SetElapsedTime(1.0f);
+        enemySpawnTimer->SetCallback([&]() {
+            addedGameObjects.push_back(enemySpawnPointer->SpawnEnemy("enemy"));
+            });
+
+        objects.push_back(std::move(enemySpawn));
+		objects.push_back(std::move(enemySpawnTimer));
+
         Scene::Start();
 
 
@@ -192,10 +224,17 @@ public:
     void Update(float deltaTime) override{   
         Scene::Update(deltaTime);
         engine->GetCollisionSystem()->ClearColliders();
+
+        
+
         for (auto& obj : gameObjects) {
             auto* collider = obj->GetComponent<Collider>();
             if (!collider) continue;
             engine->GetCollisionSystem()->RegisterCollider(collider);
+        }
+
+        for (auto& obj : objects) {
+            obj->Update(deltaTime);
         }
 
         for (auto& obj : gameObjects) {
@@ -219,10 +258,16 @@ public:
     void ProcessPendingOperations() override {
         
         CleanDestroyObjects();
+
+		for (auto& obj : addedGameObjects) {
+			gameObjects.emplace_back(std::move(obj));
+		}
+		addedGameObjects.clear();
     }
 
 private:
-
-
+    std::vector<std::unique_ptr<Object>> objects;
+	std::vector<GameObject*> addedGameObjects;
+	EnemySpawn* enemySpawnPointer = nullptr;
 };
 

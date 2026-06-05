@@ -22,6 +22,8 @@ public:
 		pendingDestroy = flag;
 	}
 
+	virtual void Update(float deltaTime) {}
+
 protected:
 	Engine* engine = nullptr;
 

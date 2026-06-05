@@ -12,13 +12,6 @@ class AnimatorComponent : public Component
 {
 	friend class GameObject;
 public:
-	~AnimatorComponent()
-	{
-		std::cout
-			<< "Destroy Animator "
-			<< this
-			<< std::endl;
-	}
 
 	void Start() override;
 
@@ -32,8 +25,6 @@ public:
 
 	bool isPlaying() const;
 
-
-
 	//TODO : 测试
 	//bool isEnd() const;
 
@@ -43,6 +34,9 @@ public:
 	void Stop();
 	
 	void Resume();
+
+	//获取当前动画的第一帧，用于初始化SpriteRender的Sprite
+	Sprite* GetFirstFrame() const;
 
 private:
 	std::unordered_map<std::string, AnimationClip*> animations;

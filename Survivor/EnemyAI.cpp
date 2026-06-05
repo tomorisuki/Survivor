@@ -33,7 +33,7 @@ void EnemyAI::Update(float deltaTime)
 	if (moveDirection.x > 0.0f) {
 		animator->SetFlip(true);
 	}
-	else if (moveDirection.x < 0.0f)
+	if (moveDirection.x < 0.0f)
 	{
 		animator->SetFlip(false);
 	}

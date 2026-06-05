@@ -1,16 +1,5 @@
 ﻿#include "GameObject.h"
 
-#include <iostream>
-
-GameObject::~GameObject()
-{
-	std::cout
-		<< "Destroy GameObject "
-		<< this
-		<< " "
-		<< name
-		<< std::endl;
-}
 
 void GameObject::Start()
 {
