@@ -16,25 +16,25 @@
 namespace FMath {
 
 	constexpr float PI = 3.1415926f;
-	/*
-	std::mt19937& GetRandomEngine() {
+	
+	_ALWAYS_INLINE_ std::mt19937& GetRandomEngine() {
 		static std::random_device rd;
 		static std::mt19937 engine(rd());
 		return engine;
 	}
 
 	//生成指定范围内的随机浮点数
-	float RandomFloat(float p_min, float p_max) {
+	_ALWAYS_INLINE_ float RandomFloat(float p_min, float p_max) {
 		std::uniform_real_distribution<float> dist(p_min, p_max);
 		return dist(GetRandomEngine());
 	}
 
 	//生成0到1之间的随机浮点数
-	float RandomRealFloat() {
+	_ALWAYS_INLINE_ float RandomRealFloat() {
 		std::uniform_real_distribution<float> dist(0.0f, 1.0f);
 		return dist(GetRandomEngine());
 	}
-	*/
+	
 	_ALWAYS_INLINE_ float Min(float p_val_a, float p_val_b) {
 		return p_val_a > p_val_b ? p_val_b : p_val_a;
 	}

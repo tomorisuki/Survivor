@@ -38,6 +38,9 @@ public:
 	//设置经验球存在时间
 	void SetLifeTime(float time);
 
+	//设置开始追击
+	void SetPursuit(bool flag);
+
 private:
 
 	int expValue = 1;

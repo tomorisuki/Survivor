@@ -28,8 +28,13 @@ void EnemyAI::Update(float deltaTime)
 		if (collider) collider->SetEnable(false);
 		if (rigidBody) rigidBody->SetEnable(false);
 		if (!animator->isPlaying()) {
-			expOrbFactory->GetScene()->AddGameObject(expOrbFactory->CreatExpOrb("expOrb",
-				owner->transform.position));
+			float result = FMath::RandomRealFloat();
+			if (result > 0.001f)
+				expOrbFactory->GetScene()->AddGameObject(expOrbFactory->CreatExpOrb("expOrb",
+					owner->transform.position));
+			else
+				expOrbFactory->GetScene()->AddGameObject(expOrbFactory->CreatClearAllItem("clearAll",
+					owner->transform.position));
 			owner->SetPendingDestroy(true);
 		}
 		return;

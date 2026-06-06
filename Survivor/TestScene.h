@@ -199,7 +199,7 @@ public:
 
         auto enemySpawnTimer = std::make_unique<Timer>();
         enemySpawnTimer->SetOnce(false);
-        enemySpawnTimer->SetElapsedTime(0.2f);
+        enemySpawnTimer->SetElapsedTime(0.01f);
         enemySpawnTimer->SetCallback([&]() {
             addedGameObjects.push_back(enemySpawnPointer->SpawnEnemy("enemy"));
             });
@@ -274,6 +274,13 @@ public:
         }
         if (engine->Input()->isDown("big")) {
             camera->SetZoom(camera->GetZoom() + 0.01f);
+        }
+
+        if (engine->Input()->isPress("clear")) {
+            auto allobj = FindGameObjectByName("expOrb");
+            for (auto& obj : allobj) {
+                obj->GetComponent<ExpOrbComponent>()->SetPursuit(true);
+            }
         }
 
   /*      if (engine->Input()->isPress("clear")) {

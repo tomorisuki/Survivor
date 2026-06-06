@@ -30,7 +30,7 @@ void ExperienceComponent::AddExp(int value)
     if (currentExp >= nextLevelExp) {
         level += 1;     //等级加一
         currentExp -= nextLevelExp;
-        nextLevelExp *= 2;
+        nextLevelExp *= 1.2;
         //TODO:需要一个数组记录每一个等级需要的经验值
     }
 }

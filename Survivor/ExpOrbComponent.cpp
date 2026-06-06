@@ -13,7 +13,7 @@ void ExpOrbComponent::Update(float deltaTime)
 {		
 	currentTime += deltaTime;
 	if (currentTime >= lifeTime) {
-		if (!absorbStart) {
+		if (!isPursuit) {
 			owner->SetPendingDestroy(true);
 			return;
 		}
@@ -83,4 +83,9 @@ void ExpOrbComponent::SetSpeed(float speed)
 void ExpOrbComponent::SetLifeTime(float time)
 {
 	lifeTime = time;
+}
+
+void ExpOrbComponent::SetPursuit(bool flag)
+{
+	isPursuit = flag;
 }
