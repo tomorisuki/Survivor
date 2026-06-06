@@ -9,12 +9,14 @@ void CollisionSystem::Init()
 	colliders.reserve(1000);
 
 
-	//建立碰撞对1玩家 2敌人 3玩家子弹 4敌人子弹
+	//建立碰撞对1玩家 2敌人 3玩家子弹 4敌人子弹 5经验球
 	collisionMatrix[1][2] = true;	//玩家碰敌人
 
 	collisionMatrix[1][4] = true;	//玩家碰敌人子弹
 
 	collisionMatrix[2][3] = true;	//敌人碰玩家子弹
+
+	collisionMatrix[1][5] = true;	//玩家碰经验球
 
 }
 
@@ -93,6 +95,28 @@ void CollisionSystem::UnregisterCollider(Collider* collider)
 
 	if (it != colliders.end()) {
 		colliders.erase(it);
+	}
+}
+
+void CollisionSystem::RemoveCollider(Collider* collider)
+{
+	auto it = std::find(colliders.begin(), colliders.end(), collider);
+	if (it != colliders.end()) {
+		colliders.erase(it);
+	}
+
+	for (const auto& pair : currentFrame) {
+		if (pair.a == collider || pair.b == collider) {
+			currentFrame.erase(pair);
+			break;
+		}
+	}
+
+	for (const auto& pair : lastFrame) {
+		if (pair.a == collider || pair.b == collider) {
+			lastFrame.erase(pair);
+			break;
+		}
 	}
 
 }

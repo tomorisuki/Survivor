@@ -29,6 +29,8 @@ bool AnimationClipManager::InitResources(class TextureManager* texture_manager)
 	if (!LoadAnimationClip("enemy_die", texture_manager->GetSprite("enemy_die"), 7, 1, 7, false))
 		return false;
 
+	if (!LoadAnimationClip("blue_bullet", texture_manager->GetSprite("blue_bullet"), 4, 1, 4, true))
+		return false;
 
 	return true;
 }

@@ -33,6 +33,8 @@ public:
 
 	void UnregisterCollider(Collider* collider);
 
+	void RemoveCollider(Collider* collider);
+
 	void AddColliderPair(int x, int y, bool flag);
 
 	void ClearColliders();

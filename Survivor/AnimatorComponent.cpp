@@ -59,6 +59,8 @@ void AnimatorComponent::Render()
 	//std::cout << tempSprite << std::endl;
 	//设置翻转
 	tempSprite->SetFlip(isFlip);
+
+	tempSprite->SetRotation(angle);
 	//设置翻转模式
 	//tempSprite->SetFlipMode(currentAnimation->FlipMode());
 	spriteRender->SetSprite(tempSprite);
@@ -113,6 +115,11 @@ void AnimatorComponent::SetFlip(bool flip)
 	this->isFlip = flip;
 }
 
+void AnimatorComponent::SetAngle(float angle)
+{
+	this->angle = angle;
+}
+
 void AnimatorComponent::Stop()
 {
 	stop = true;
@@ -122,6 +129,8 @@ void AnimatorComponent::Resume()
 {
 	stop = false;
 }
+
+
 
 Sprite* AnimatorComponent::GetFirstFrame() const
 {

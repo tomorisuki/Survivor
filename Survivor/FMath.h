@@ -68,6 +68,10 @@ namespace FMath {
 		return std::abs(p_val);
 	}
 
+	_ALWAYS_INLINE_ float Atan2(float p_y, float p_x) {
+		return std::atan2(p_y, p_x);
+	}
+
 };
 
 

@@ -71,6 +71,8 @@ bool Game::InitGame()
     scene->SetEngine(engine.get());
     scene->Start();
 
+    //engine->SetScene(scene);
+
     return true;
 }
 
@@ -139,6 +141,8 @@ void Game::Run()
 
 void Game::Clean()
 {
+    if (scene)
+        delete scene;
     if (sdl_renderer) SDL_DestroyRenderer(sdl_renderer);
     if (sdl_window) SDL_DestroyWindow(sdl_window);
 

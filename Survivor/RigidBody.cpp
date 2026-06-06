@@ -87,3 +87,8 @@ void RigidBody::SetEnable(bool enable)
 {
 	this->enable = enable;
 }
+
+Vector2D RigidBody::GetVelocity() const
+{
+	return velocity;
+}

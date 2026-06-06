@@ -39,6 +39,7 @@ public:
 		enemy->AddComponent<EnemyAI>();
 		enemy->GetComponent<EnemyAI>()->SetAttackTarget(target);
 		enemy->GetComponent<EnemyAI>()->SetInitialPosition(position);
+		enemy->GetComponent<EnemyAI>()->SetExpOrbFactory(expOrbFactory);
 
 		enemy->AddComponent<Collider>();
 		enemy->GetComponent<Collider>()->SetEnableDebug(false);
@@ -58,8 +59,14 @@ public:
 		this->target = target;
 	}
 
+	void SetExpOrbFactory(class ExpOrbFactory* factory)
+	{
+		expOrbFactory = factory;
+	}
+
 private:
 	Engine* engine = nullptr;
 	GameObject* target = nullptr;	//敌人攻击目标
+	class ExpOrbFactory* expOrbFactory = nullptr;
 };
 

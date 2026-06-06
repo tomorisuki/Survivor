@@ -23,6 +23,13 @@ struct RenderItem
 	uint64_t order = 0;					//提交顺序
 };
 
+struct UIElement
+{
+	Sprite* sprite = nullptr;			//图片
+	//Vector2D position;					//图片位置
+	SDL_FRect dstRect = { 0,0,0,0 };	//图片绘制目标区域
+};
+
 struct RenderColliderDebug
 {
 	
@@ -48,6 +55,9 @@ public:
 	//绘制碰撞箱矩形框
 	void RenderCollider(Camera* camera,const Transform& transform,const Vector2D& size);
 
+	//绘制界面UI
+	void RenderUI(Sprite* sprite, const Transform& transform);
+
 	//渲染
 	void Render(float alpha);
 
@@ -59,7 +69,8 @@ public:
 
 private:
 	//Camera* cameraZoom = nullptr;
-	std::vector<RenderItem> worldQueue;		//场景物体队列
+	std::vector<RenderItem> worldQueue;					//场景物体队列
+	std::vector<UIElement> uiQueue;						//界面UI队列
 	std::vector<RenderColliderDebug> colliderQueue;		//碰撞箱队列
 	SDL_Renderer* sdl_renderer = nullptr;
 	uint64_t order = 0;	//提交顺序

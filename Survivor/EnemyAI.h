@@ -3,6 +3,8 @@
 
 #include "Vector2D.h"
 
+
+
 class EnemyAI : public Component
 {
 	friend class GameObject;
@@ -20,11 +22,14 @@ public:
 	//设置初始位置
 	void SetInitialPosition(const Vector2D& position);
 
+	void SetExpOrbFactory(class ExpOrbFactory* factory);
+
 private:
 	class GameObject* attackTarget = nullptr;
 	class RigidBody* rigidBody = nullptr;
 	class AnimatorComponent* animator = nullptr;
 	class Health* health = nullptr;
 	class Collider* collider = nullptr;
+	class ExpOrbFactory* expOrbFactory = nullptr;
 };
 

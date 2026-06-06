@@ -5,6 +5,11 @@
 #include "OrbitBullet.h"
 
 
+Collider::~Collider()
+{
+	engine->GetCollisionSystem()->RemoveCollider(this);
+}
+
 void Collider::Start()
 {
 }

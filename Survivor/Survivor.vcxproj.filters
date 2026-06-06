@@ -137,6 +137,33 @@
     <ClCompile Include="EnemySpawn.cpp">
       <Filter>Engine\Object</Filter>
     </ClCompile>
+    <ClCompile Include="ExpOrbFactory.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="SpreadBullet.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpOrbComponent.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ExperienceComponent.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpBarUIComponent.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletFactory.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletSpawn.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearScreen.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -224,9 +251,6 @@
     <ClInclude Include="FollowComponent.h">
       <Filter>Engine\Component</Filter>
     </ClInclude>
-    <ClInclude Include="EnemySpawn.h">
-      <Filter>Engine\Component</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Engine\Object</Filter>
     </ClInclude>
@@ -239,5 +263,31 @@
     <ClInclude Include="Health.h">
       <Filter>Engine\Component</Filter>
     </ClInclude>
+    <ClInclude Include="ExpOrbFactory.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ExpOrbComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ExperienceComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ExpBarUIComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="SpreadBullet.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawn.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletFactory.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletSpawn.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearScreen.h" />
+    <ClInclude Include="GameState.h" />
   </ItemGroup>
 </Project>

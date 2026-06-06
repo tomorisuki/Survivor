@@ -31,3 +31,8 @@ void EnemySpawn::SetSpawnRadius(float radius)
 {
 	spawnRadius = radius;
 }
+
+void EnemySpawn::SetExpOrbFactory(class ExpOrbFactory* factory)
+{
+	enemyFactory->SetExpOrbFactory(factory);
+}

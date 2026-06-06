@@ -23,6 +23,8 @@ public:
 	//设置生成的半径
 	void SetSpawnRadius(float radius);
 
+	void SetExpOrbFactory(class ExpOrbFactory* factory);
+
 private:
 
 	//float spawnInterval = 5.0f;		//敌人生成间隔

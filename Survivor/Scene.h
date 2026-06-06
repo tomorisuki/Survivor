@@ -61,8 +61,25 @@ public:
 		this->engine = engine;
 	}
 
+	void AddGameObject(GameObject* gameObject) {
+		addedGameObjects.push_back(std::move(gameObject));	//????????
+	}
+
+	std::vector<GameObject*> FindGameObjectByName(const std::string& name)
+	{
+		std::vector<GameObject*> result;
+		for (auto& obj : gameObjects) {
+			if ((obj->GetName() == name) && (!obj->pendingDestroy)) {
+				result.push_back(obj.get());
+			}
+		}
+		return result;
+	}
+
 protected:
 	Engine* engine = nullptr;
 	std::unique_ptr<Camera> camera;
 	std::vector<std::unique_ptr<GameObject>> gameObjects;
+	std::vector<std::unique_ptr<Object>> objects;
+	std::vector<GameObject*> addedGameObjects;
 };

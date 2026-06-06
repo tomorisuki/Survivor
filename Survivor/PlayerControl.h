@@ -15,6 +15,7 @@ private:
 	class AnimatorComponent* animator = nullptr;
 	class InputSystem* input = nullptr;
 	class RigidBody* rigidBody = nullptr;
-
+	bool isClearScreen = false;
+	bool isAbsorb = false;
 };
 

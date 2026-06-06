@@ -19,6 +19,8 @@ class GameObject final : public Object
 {
 	friend class Scene;
 	friend class EnemyFactory;
+	friend class ExpOrbFactory;
+	friend class BulletFactory;
 private:
 	//构造函数私有化，其他地方不能随意创建
 	explicit GameObject(Engine* engine) {

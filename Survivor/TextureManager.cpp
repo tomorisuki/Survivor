@@ -16,6 +16,10 @@ bool TextureManager::Init()
     if (!LoadTexture("player_shadow", "assets/player_shadow.png")) return false;
     if (!LoadTexture("gold_apple", "assets/gold_apple.png")) return false;
     if (!LoadTexture("hamburger", "assets/hamburger.png")) return false;
+    if (!LoadTexture("exp_bar", "assets/exp_bar.png")) return false;
+    if (!LoadTexture("exp_bar_bg", "assets/exp_bar_bg.png")) return false;
+    if (!LoadTexture("blue_bullet", "assets/bullets/blue_bullet.png")) return false;
+    
     return true;
 }
 

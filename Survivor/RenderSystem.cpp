@@ -32,6 +32,27 @@ void RenderSystem::RenderWorld(Sprite* sprite, Camera* camera, const Transform& 
 	worldQueue.push_back(item);
 }
 
+
+void RenderSystem::RenderUI(Sprite* sprite, const Transform& transform)
+{
+	UIElement ui;
+	ui.sprite = sprite;
+	ui.dstRect.x = transform.position.x;
+	ui.dstRect.y = transform.position.y;
+	ui.dstRect.w = sprite->CropRect().w;
+	ui.dstRect.h = sprite->CropRect().h;
+
+	//应用图片缩放
+	ui.dstRect.w *= sprite->Scale().x;
+	ui.dstRect.h *= sprite->Scale().y;
+
+	//应用自身缩放
+	ui.dstRect.w *= transform.scale.x;
+	ui.dstRect.h *= transform.scale.y;
+
+	uiQueue.push_back(ui);
+}
+
 void RenderSystem::RenderCollider(Camera* camera, const Transform& transform, const Vector2D& size)
 {
 	RenderColliderDebug item;
@@ -41,6 +62,7 @@ void RenderSystem::RenderCollider(Camera* camera, const Transform& transform, co
 	item.size = size;
 	colliderQueue.push_back(item);
 }
+
 
 void RenderSystem::Render(float alpha) 
 {
@@ -115,6 +137,19 @@ void RenderSystem::Render(float alpha)
 		SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
 
 	}
+
+
+	//渲染UI，UI是最牛逼的，应该在画面最上面
+	for (auto& ui : uiQueue) {
+
+		SDL_FRect srcRect = ui.sprite->CropRect();
+		SDL_FRect dstRect = ui.dstRect;
+
+		SDL_RenderTexture(sdl_renderer, ui.sprite->GetTexture(), &srcRect, &dstRect);
+	}
+
+
+
 }
 
 SDL_Renderer* RenderSystem::GetSdlRenderer() 
@@ -124,6 +159,7 @@ SDL_Renderer* RenderSystem::GetSdlRenderer()
 
 void RenderSystem::RenderClear()
 {
+	uiQueue.clear();
 	worldQueue.clear();
 	colliderQueue.clear();
 }

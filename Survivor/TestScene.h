@@ -16,6 +16,18 @@
 #include "Timer.h"
 #include "EnemySpawn.h"
 
+#include "ExpOrbFactory.h"
+
+#include "Engine.h"
+
+#include "ExpBarUIComponent.h"
+
+#include "ExperienceComponent.h"
+
+#include "BulletSpawn.h"
+
+//#include "GameState.h"
+
 #include <iostream>
 class TestScene :
     public Scene
@@ -68,6 +80,11 @@ public:
 		player->GetComponent<AnimatorComponent>()->Play("idle");
 
         player->AddComponent<PlayerControl>();
+
+        player->AddComponent<ExperienceComponent>();
+
+
+
         camera->SetFollowTarget(&player->transform);
         
         auto shadow = CreateGameObject("shadow");
@@ -86,6 +103,7 @@ public:
         engine->Input()->BindKeyCode("down", KeyCode::KEY_S);
         engine->Input()->BindKeyCode("small", KeyCode::KEY_J);
         engine->Input()->BindKeyCode("big", KeyCode::KEY_K);
+        engine->Input()->BindKeyCode("clear", KeyCode::KEY_C);
 
         //effectSprite = new Sprite(engine->GetTextureManager()->GetTexture("effect"));
 
@@ -165,8 +183,15 @@ public:
         oribitBullet3->AddComponent<DamageDealer>()->SetDamage(1.0f);
 
 
+
+        expOrbFactory = std::make_unique<ExpOrbFactory>(engine);
+        expOrbFactory->SetScene(this);
+        expOrbFactory->SetTarget(player);
+
 		auto enemySpawn = std::make_unique<EnemySpawn>(engine);
         enemySpawn->SetTarget(player);
+        enemySpawn->SetExpOrbFactory(expOrbFactory.get());
+        
         enemySpawn->SetCirclrPoint(Vector2D{ 1280.0f,720.0f });
         enemySpawn->SetSpawnRadius(1500.0f);
 		enemySpawnPointer = enemySpawn.get();
@@ -179,8 +204,44 @@ public:
             addedGameObjects.push_back(enemySpawnPointer->SpawnEnemy("enemy"));
             });
 
+
+        auto bulletSpawn = std::make_unique<BulletSpawn>(engine);
+        bulletSpawn->SetBulletNumber(3);
+        bulletSpawn->SetScene(this);
+        bulletSpawn->SetTarget(player);
+        bulletSpawn->SetElapsedTime(2.0f);
+        bulletSpawn->SetEnable(true);
+        bulletSpawn->SetSpreadAngle(360.0f);
+        objects.push_back(std::move(bulletSpawn));
+
+
         objects.push_back(std::move(enemySpawn));
 		objects.push_back(std::move(enemySpawnTimer));
+
+        
+        /*---------------UI----------------*/
+
+        auto expBarBg = CreateGameObject("expBarBg");
+        expBarBg->transform.position = { 160.0f,684.0f };
+        expBarBg->transform.scale = { 1.0f,0.3f };
+        expBarBg->AddComponent<SpriteRender>(
+            engine->GetTextureManager()->GetSprite("exp_bar_bg"))->SetUIRender(true);   //设置为UI绘制
+
+        auto expBar = CreateGameObject("expBar");
+        expBar->transform.position = { 204.0f,699.0f };
+        expBar->transform.scale = { 1.0f,0.3f };
+        expBar->AddComponent<SpriteRender>(
+            engine->GetTextureManager()->GetSprite("exp_bar"));
+        expBar->AddComponent<ExpBarUIComponent>();
+        expBar->GetComponent<ExpBarUIComponent>()->SetTarget(player);
+
+
+
+
+        /*---------------UI----------------*/
+
+
+
 
         Scene::Start();
 
@@ -214,6 +275,20 @@ public:
         if (engine->Input()->isDown("big")) {
             camera->SetZoom(camera->GetZoom() + 0.01f);
         }
+
+  /*      if (engine->Input()->isPress("clear")) {
+            for (auto& obj : gameObjects) {
+                if (obj->GetName() == "enemy") {
+                    if (obj->HasComponent<Health>())
+                    {
+                        obj->GetComponent<Health>()->SetHp(0);
+                    }
+                    
+                }
+            }
+
+
+        }*/
         
         camera->Update(deltaTime);
     }
@@ -230,11 +305,11 @@ public:
 			gameObjects.emplace_back(std::move(obj));
 		}
 		addedGameObjects.clear();
+
     }
 
 private:
-    std::vector<std::unique_ptr<Object>> objects;
-	std::vector<GameObject*> addedGameObjects;
+    std::unique_ptr<ExpOrbFactory> expOrbFactory;
 	EnemySpawn* enemySpawnPointer = nullptr;
 };
 

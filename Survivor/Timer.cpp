@@ -1,4 +1,5 @@
-#include "Timer.h"
+﻿#include "Timer.h"
+#include "BulletSpawn.h"
 
 void Timer::Update(float deltaTime)
 {

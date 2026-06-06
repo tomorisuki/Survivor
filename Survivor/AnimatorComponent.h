@@ -32,6 +32,9 @@ public:
 	
 	void Resume();
 
+	//动画的旋转角度
+	void SetAngle(float angle);
+
 	//获取当前动画的第一帧，用于初始化SpriteRender的Sprite
 	Sprite* GetFirstFrame() const;
 
@@ -46,6 +49,8 @@ private:
 
 	bool stop = false;
 	bool isFlip = false;
+
+	float angle = 0.0f;
 
 	class SpriteRender* spriteRender = nullptr;
 };

@@ -39,6 +39,9 @@ public:
 	//设置是否启用
 	void SetEnable(bool enable);
 
+	//获取速度
+	Vector2D GetVelocity() const;
+
 public:
 
 	Vector2D velocity;					//速度

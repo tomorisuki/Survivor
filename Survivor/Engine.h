@@ -6,6 +6,8 @@
 #include "AnimationClipManager.h"
 #include "CollisionSystem.h"
 
+//#include "TestScene.h"
+
 #include "Camera.h"
 
 class Engine final
@@ -43,6 +45,12 @@ public:
 		this->camera = camera;
 	}
 
+
+	//void SetScene(Scene* scene)
+	//{
+	//	this->scene = scene;
+	//}
+
 	//void UpdateCamera(float alpha) {
 	//	if (!camera) return;
 	//	camera->zoom = camera->previousZoom + (camera->zoom - camera->previousZoom) * alpha;
@@ -65,6 +73,7 @@ private:
 	TextureManager* texture_manager = nullptr;
 	AnimationClipManager* aniClip_mgr = nullptr;
 	CollisionSystem* collisionSystem = nullptr;
+	//Scene* scene = nullptr;
 	Camera* camera = nullptr;
 };
 

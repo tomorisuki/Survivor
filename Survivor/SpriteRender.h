@@ -13,9 +13,6 @@ public:
 	SpriteRender() = default;
 	~SpriteRender() = default;
 
-	//调用初始化函数
-	//SpriteRender(SDL_Texture* sdl_texture);
-
 	SpriteRender(Sprite* sprite);
 
 	//开始函数：加载使用
@@ -26,9 +23,6 @@ public:
 
 	//渲染函数
 	void Render() override;
-
-	//初始化Sprite
-	//void InitSprite(SDL_Texture* sdl_texture);
 
 	//改变Sprite的Texture
 	void SetTexture(SDL_Texture* sdl_texture);
@@ -47,11 +41,15 @@ public:
 	//以图片底部的y值为层级
 	int BottomPos() const;
 
+	//设置是否为UI绘制
+	void SetUIRender(bool flag);
+
 private:
 	//如果每次调用reset，会有delete的性能开销，所以此组件应该只有使用权
 	//std::unique_ptr<Sprite> spritePtr;			//SpriteRenderComponent拥有一个Sprite
 	int layer = 0;				//渲染层级
 	bool setLayer = false;		//是否指定层级
+	bool isUI = false;			//是否为UI绘制
 	Sprite* sprite = nullptr;
 	class AnimatorComponent* animator = nullptr;
 };

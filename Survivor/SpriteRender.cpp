@@ -1,11 +1,6 @@
 ﻿#include "SpriteRender.h"
 
 #include "AnimatorComponent.h"
-//SpriteRender::SpriteRender(SDL_Texture* sdl_texture)
-//{
-//	//调用初始化函数
-//	InitSprite(sdl_texture);
-//}
 
 SpriteRender::SpriteRender(Sprite* sprite)
 {
@@ -17,8 +12,6 @@ SpriteRender::SpriteRender(Sprite* sprite)
 void SpriteRender::Start()
 {
 	animator = owner->GetComponent<AnimatorComponent>();
-	//if (animator)
-	//	sprite = animator->GetFirstFrame();
 }
 
 void SpriteRender::Update(float deltaTime)
@@ -29,6 +22,12 @@ void SpriteRender::Update(float deltaTime)
 void SpriteRender::Render()
 {
 	if (!sprite) return;
+	
+	if (isUI) {
+		engine->GetRenderSystem()->RenderUI(sprite, owner->transform);
+		return;
+	}
+	
 	int tempLayer = 0;
 	if (setLayer)
 	{
@@ -41,12 +40,6 @@ void SpriteRender::Render()
 	engine->GetRenderSystem()->RenderWorld(sprite, engine->GetCamera(), owner->transform, tempLayer);
 }
 
-//void SpriteRender::InitSprite(SDL_Texture* sdl_texture)
-//{
-//	//如果sprite已经存在，那么就不能进行初始化
-//	//if (sprite) return;
-//	//sprite = std::make_unique<Sprite>(sdl_texture);
-//}
 
 void SpriteRender::SetTexture(SDL_Texture* sdl_texture)
 {
@@ -80,4 +73,9 @@ int SpriteRender::Layer() const
 int SpriteRender::BottomPos() const
 {
 	return static_cast<int>(owner->transform.position.y + sprite->Size().y);
+}
+
+void SpriteRender::SetUIRender(bool flag)
+{
+	isUI = flag;
 }
