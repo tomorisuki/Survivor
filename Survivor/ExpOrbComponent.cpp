@@ -25,12 +25,15 @@ void ExpOrbComponent::Update(float deltaTime)
 		float distance = (target->transform.position - owner->transform.position).LengthSquared();
 		if (distance < radius * radius) {
 			absorbStart = true;
+			isPursuit = true;
 		}
 	}
 
-	Vector2D direction = (target->transform.position - owner->transform.position).Normalized();
+	if (isPursuit) {
+		Vector2D direction = (target->transform.position - owner->transform.position).Normalized();
 
-	owner->transform.position += direction * speed * deltaTime;
+		owner->transform.position += direction * speed * deltaTime;
+	}
 }
 
 void ExpOrbComponent::Render()

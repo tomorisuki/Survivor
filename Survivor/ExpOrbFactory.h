@@ -28,7 +28,8 @@ public:
 		GameObject* expOrb = new GameObject(engine);
 		expOrb->name = name;
 		expOrb->transform.scale = { 0.2f,0.2f };
-		expOrb->transform.position = position;
+		Vector2D offset = { 20.0f,20.0f };
+		expOrb->transform.position = position + offset;
 		expOrb->AddComponent<SpriteRender>(engine->GetTextureManager()->GetSprite("gold_apple"));
 		expOrb->GetComponent<SpriteRender>()->SetLayer(1);
 		
@@ -42,9 +43,9 @@ public:
 
 		expOrb->AddComponent<ExpOrbComponent>()->SetExpValue(1);
 		expOrb->GetComponent<ExpOrbComponent>()->SetTarget(target);
-		expOrb->GetComponent<ExpOrbComponent>()->SetAbsorbEnable(false);	//关闭经验球吸附
+		expOrb->GetComponent<ExpOrbComponent>()->SetAbsorbEnable(true);	//关闭经验球吸附
 		expOrb->GetComponent<ExpOrbComponent>()->SetLifeTime(8.0f);
-		expOrb->GetComponent<ExpOrbComponent>()->SetRadius(50.0f);
+		expOrb->GetComponent<ExpOrbComponent>()->SetRadius(80.0f);
 		expOrb->GetComponent<ExpOrbComponent>()->SetSpeed(300.0f);
 		
 		expOrb->Start();

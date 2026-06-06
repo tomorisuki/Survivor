@@ -51,6 +51,7 @@ private:
 
 	bool absorbEnable = false;			//是否启用吸附功能
 	bool absorbStart = false;			//是否开始吸附
+	bool isPursuit = false;				//是否追击
 
 	float speed = 800.0f;				//吸附速度
 };

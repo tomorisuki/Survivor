@@ -222,13 +222,13 @@ public:
         /*---------------UI----------------*/
 
         auto expBarBg = CreateGameObject("expBarBg");
-        expBarBg->transform.position = { 160.0f,684.0f };
+        expBarBg->transform.position = { 160.0f,734.0f };
         expBarBg->transform.scale = { 1.0f,0.3f };
         expBarBg->AddComponent<SpriteRender>(
             engine->GetTextureManager()->GetSprite("exp_bar_bg"))->SetUIRender(true);   //设置为UI绘制
 
         auto expBar = CreateGameObject("expBar");
-        expBar->transform.position = { 204.0f,699.0f };
+        expBar->transform.position = { 204.0f,749.0f };
         expBar->transform.scale = { 1.0f,0.3f };
         expBar->AddComponent<SpriteRender>(
             engine->GetTextureManager()->GetSprite("exp_bar"));

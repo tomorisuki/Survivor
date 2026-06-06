@@ -28,7 +28,6 @@ void ExpBarUIComponent::Render()
 	float width = spriteRender->GetSprite()->Size().x;
 	cropRect.w = width * expCompoennt->GetExpPercent();
 	spriteRender->GetSprite()->SetCropRect(cropRect);
-	std::cout << expCompoennt->GetExpPercent() << std::endl;
 }
 
 
