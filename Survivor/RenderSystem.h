@@ -26,19 +26,23 @@ struct RenderItem
 struct UIElement
 {
 	Sprite* sprite = nullptr;			//图片
-	//Vector2D position;					//图片位置
 	SDL_FRect dstRect = { 0,0,0,0 };	//图片绘制目标区域
 };
 
 struct RenderColliderDebug
 {
-	
 	Vector2D position;
 	Vector2D prev_position;
 	Vector2D size;
 	Camera* camera = nullptr;
 };
 
+struct UIText
+{
+	SDL_Texture* texture = nullptr;
+	SDL_FRect srcRect = { 0,0,0,0 };
+	SDL_FRect dstRect = { 0,0,0,0 };
+};
 
 
 //渲染系统，所有渲染操作都将通过渲染系统执行
@@ -58,6 +62,9 @@ public:
 	//绘制界面UI
 	void RenderUI(Sprite* sprite, const Transform& transform);
 
+	//绘制文本
+	void RenderUIText(SDL_Texture* texture, const Transform& transform);
+
 	//渲染
 	void Render(float alpha);
 
@@ -72,6 +79,7 @@ private:
 	std::vector<RenderItem> worldQueue;					//场景物体队列
 	std::vector<UIElement> uiQueue;						//界面UI队列
 	std::vector<RenderColliderDebug> colliderQueue;		//碰撞箱队列
+	std::vector<UIText> uiTextQueue;					//UI文本队列
 	SDL_Renderer* sdl_renderer = nullptr;
 	uint64_t order = 0;	//提交顺序
 };

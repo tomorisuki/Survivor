@@ -164,6 +164,21 @@
     <ClCompile Include="GameState.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="LifeTimeComponent.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRender.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectOther.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UpdateExpText.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -289,5 +304,10 @@
     </ClInclude>
     <ClInclude Include="ClearScreen.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="LifeTimeComponent.h" />
+    <ClInclude Include="FontManager.h" />
+    <ClInclude Include="TextRender.h" />
+    <ClInclude Include="ConnectOther.h" />
+    <ClInclude Include="UpdateExpText.h" />
   </ItemGroup>
 </Project>

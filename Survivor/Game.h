@@ -44,6 +44,7 @@ private:
 	std::unique_ptr<RenderSystem> render;
 	std::unique_ptr<AnimationClipManager> aniClipMgr;
 	std::unique_ptr<CollisionSystem> collisionSystem;
+	std::unique_ptr<FontManager> font_manager;
 
 	SDL_Event sdl_event;
 	bool running = true;

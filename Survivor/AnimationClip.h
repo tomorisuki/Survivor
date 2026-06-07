@@ -16,7 +16,7 @@ public:
 
 	//Sprite源，总共帧数，行数，单行多少帧
 	void LoadSpriteSheet(Sprite* sprite,int totalFrame,int rows,int oneRowCount,
-		float duration = 0.1f,float offsetX = 0.0f,float w = 0.0f ,float h = 0.0f);
+		float duration = 0.1f,const Vector2D& offset = {0.0f,0.0f}, float w = 0.0f, float h = 0.0f);
 
 	void LoadSpriteSet(std::vector<Sprite*> sprites,float duration = 0.1f);
 

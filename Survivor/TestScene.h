@@ -26,6 +26,10 @@
 
 #include "BulletSpawn.h"
 
+#include "TextRender.h"
+
+#include "UpdateExpText.h"
+
 //#include "GameState.h"
 
 #include <iostream>
@@ -199,7 +203,7 @@ public:
 
         auto enemySpawnTimer = std::make_unique<Timer>();
         enemySpawnTimer->SetOnce(false);
-        enemySpawnTimer->SetElapsedTime(0.01f);
+        enemySpawnTimer->SetElapsedTime(0.1f);
         enemySpawnTimer->SetCallback([&]() {
             addedGameObjects.push_back(enemySpawnPointer->SpawnEnemy("enemy"));
             });
@@ -211,7 +215,7 @@ public:
         bulletSpawn->SetTarget(player);
         bulletSpawn->SetElapsedTime(2.0f);
         bulletSpawn->SetEnable(true);
-        bulletSpawn->SetSpreadAngle(360.0f);
+        bulletSpawn->SetSpreadAngle(90.0f);
         objects.push_back(std::move(bulletSpawn));
 
 
@@ -235,12 +239,15 @@ public:
         expBar->AddComponent<ExpBarUIComponent>();
         expBar->GetComponent<ExpBarUIComponent>()->SetTarget(player);
 
-
+		auto expText = CreateGameObject("expText");
+		expText->transform.position = { 160.0f,700.0f };
+        expText->AddComponent<TextRender>(
+            engine->GetFontManager()->GetFont("silver"));
+		expText->AddComponent<UpdateExpText>();
+		expText->GetComponent<UpdateExpText>()->SetTarget(player);
 
 
         /*---------------UI----------------*/
-
-
 
 
         Scene::Start();
@@ -282,20 +289,6 @@ public:
                 obj->GetComponent<ExpOrbComponent>()->SetPursuit(true);
             }
         }
-
-  /*      if (engine->Input()->isPress("clear")) {
-            for (auto& obj : gameObjects) {
-                if (obj->GetName() == "enemy") {
-                    if (obj->HasComponent<Health>())
-                    {
-                        obj->GetComponent<Health>()->SetHp(0);
-                    }
-                    
-                }
-            }
-
-
-        }*/
         
         camera->Update(deltaTime);
     }

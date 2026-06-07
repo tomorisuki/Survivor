@@ -5,6 +5,7 @@
 #include "RenderSystem.h"
 #include "AnimationClipManager.h"
 #include "CollisionSystem.h"
+#include "FontManager.h"
 
 //#include "TestScene.h"
 
@@ -36,6 +37,10 @@ public:
 		this->collisionSystem = collisionSystem;
 	}
 
+	void RegisterFontManager(FontManager* font_manager) {
+		this->font_manager = font_manager;
+	}
+
 	void SetWindowSize(const Vector2D& windowSize) {
 		this->windowSize = windowSize;
 	}
@@ -63,6 +68,7 @@ public:
 	TextureManager* GetTextureManager() { return texture_manager; }
 	Camera* GetCamera() { return camera; }
 	CollisionSystem* GetCollisionSystem() { return collisionSystem; }
+	FontManager* GetFontManager() { return font_manager; }
 
 	Vector2D WindowSize() const { return windowSize; }
 
@@ -73,6 +79,7 @@ private:
 	TextureManager* texture_manager = nullptr;
 	AnimationClipManager* aniClip_mgr = nullptr;
 	CollisionSystem* collisionSystem = nullptr;
+	FontManager* font_manager = nullptr;
 	//Scene* scene = nullptr;
 	Camera* camera = nullptr;
 };

@@ -46,6 +46,8 @@ bool Game::InitGame()
 
     collisionSystem = std::make_unique<CollisionSystem>();
 
+	font_manager = std::make_unique<FontManager>();
+
     /*------------分配内存------------*/
 
 
@@ -56,6 +58,7 @@ bool Game::InitGame()
     engine->RegisterTextureManager(texture_manager.get());
     engine->RegisterAnimationClipMgr(aniClipMgr.get());
     engine->RegisterCollisionSystem(collisionSystem.get());
+    engine->RegisterFontManager(font_manager.get());
     engine->SetWindowSize({ WINDOW_WIDTH,WINDOW_HEIGHT });
     /*-----------设置参数-----------*/
 
@@ -65,6 +68,7 @@ bool Game::InitGame()
     texture_manager->Init();
     aniClipMgr->InitResources(texture_manager.get());
     collisionSystem->Init();
+    font_manager->InitResources();
 
     /*------------初始化------------*/
     scene = new TestScene();
@@ -145,6 +149,8 @@ void Game::Clean()
         delete scene;
     if (sdl_renderer) SDL_DestroyRenderer(sdl_renderer);
     if (sdl_window) SDL_DestroyWindow(sdl_window);
+    
+	font_manager->Clear();  //提前清理字体资源
 
     TTF_Quit();
     SDL_Quit();

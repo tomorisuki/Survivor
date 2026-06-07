@@ -4,6 +4,10 @@
 
 #include "SpriteRender.h"
 
+#include <iostream>
+
+//Bug:跟随组件的更新逻辑
+
 void FollowComponent::Start()
 {
 	if (!target) return;
@@ -27,6 +31,9 @@ void FollowComponent::Update(float deltaTime)
 	//跟随目标
 	owner->transform.position = target->transform.position + offset;
 
+	//std::cout << owner->GetName() << std::endl;
+	
+	//下面一行有bug
 	spriteRender->SetLayer(targetSpriteRender->BottomPos() + layerDifference);
 }
 

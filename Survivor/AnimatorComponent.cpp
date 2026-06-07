@@ -99,6 +99,9 @@ void AnimatorComponent::Play(const std::string& name)
 	//重置当前累计时间
 	currentTime = 0.0f;
 
+	//重置状态
+	stop = false;
+
 	//设置当前帧间隔
 	currentDuration = animations[name]->GetAnimationFrame(currentIndex).duration;
 
@@ -135,5 +138,9 @@ void AnimatorComponent::Resume()
 Sprite* AnimatorComponent::GetFirstFrame() const
 {
 	if (!currentAnimation) return nullptr;
-	return currentAnimation->GetSprite();
+	auto tempSprite = currentAnimation->GetSprite();
+	tempSprite->SetCropRect(currentAnimation->GetAnimationFrame(0).cropRect);
+	tempSprite->SetFlip(isFlip);
+	tempSprite->SetRotation(angle);
+	return tempSprite;
 }

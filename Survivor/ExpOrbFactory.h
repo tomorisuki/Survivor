@@ -57,7 +57,7 @@ public:
 	GameObject* CreatClearAllItem(const std::string& name, const Vector2D& position) {
 		GameObject* item = new GameObject(engine);
 		item->name = name;
-		item->transform.scale = { 0.05f,0.05f };
+		item->transform.scale = { 0.04f,0.04f };
 		item->transform.position = position;
 
 		item->AddComponent<SpriteRender>(engine->GetTextureManager()->GetSprite("hamburger"));
@@ -66,7 +66,7 @@ public:
 		item->AddComponent<Collider>();
 		item->GetComponent<Collider>()->SetEnableDebug(true);
 		item->GetComponent<Collider>()->SetEnable(true);
-		item->GetComponent<Collider>()->SetSize(Vector2D{ 13.68f,11.88f });
+		item->GetComponent<Collider>()->SetSize(Vector2D{ 456.0f,396.0f });
 		item->GetComponent<Collider>()->SetLayer(5);
 		item->AddComponent<ClearScreen>()->SetScene(scene);
 

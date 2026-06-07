@@ -12,6 +12,7 @@ SpriteRender::SpriteRender(Sprite* sprite)
 void SpriteRender::Start()
 {
 	animator = owner->GetComponent<AnimatorComponent>();
+	if (animator) this->sprite = animator->GetFirstFrame();
 }
 
 void SpriteRender::Update(float deltaTime)
@@ -50,7 +51,6 @@ void SpriteRender::SetTexture(SDL_Texture* sdl_texture)
 
 void SpriteRender::SetSprite(Sprite* sprite)
 {
-	//this->sprite.reset(sprite);
 	this->sprite = sprite;
 }
 

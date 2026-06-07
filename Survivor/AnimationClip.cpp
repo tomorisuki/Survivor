@@ -10,7 +10,7 @@ void AnimationClip::AddFrame(const AnimationFrame& frame)
 }
 
 void AnimationClip::LoadSpriteSheet(Sprite* sprite, int totalFrame, int rows, int oneRowCount
-          , float duration,float offsetX,float w,float h)
+          , float duration, const Vector2D& offset,float w,float h)
 {
     aniFrames.clear();
 
@@ -36,8 +36,8 @@ void AnimationClip::LoadSpriteSheet(Sprite* sprite, int totalFrame, int rows, in
         }
         AnimationFrame frame;
         
-        frame.cropRect.x = oneFrameWidth * currentRowcount + offsetX;
-        frame.cropRect.y = oneFrameHeight * currentRow;
+        frame.cropRect.x = oneFrameWidth * currentRowcount + offset.x;
+        frame.cropRect.y = oneFrameHeight * currentRow + offset.y;
         frame.cropRect.w = oneFrameWidth;
         frame.cropRect.h = oneFrameHeight;
         frame.duration = duration;

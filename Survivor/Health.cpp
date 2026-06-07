@@ -21,6 +21,7 @@ void Health::Render()
 
 void Health::OnCollisionEnter(Collider* collider)
 {
+	//if (!owner->GetComponent<Collider>()->Enable())return;
 	auto* damageDealer = collider->Owner()->GetComponent<DamageDealer>();
 
 	if (!damageDealer) return;

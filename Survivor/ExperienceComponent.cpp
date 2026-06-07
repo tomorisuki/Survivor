@@ -46,3 +46,13 @@ int ExperienceComponent::GetLevel() const
 {
     return level;
 }
+
+int ExperienceComponent::CurrentExp() const
+{
+    return currentExp;
+}
+
+int ExperienceComponent::NextLevelExp() const
+{
+    return nextLevelExp;
+}

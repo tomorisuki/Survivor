@@ -21,8 +21,6 @@ void EnemyAI::Update(float deltaTime)
 {
 	if (!rigidBody || !attackTarget || !health) return;
 
-
-
 	if (health->GetHp() == 0) {
 		animator->Play("die");
 		if (collider) collider->SetEnable(false);
@@ -39,6 +37,18 @@ void EnemyAI::Update(float deltaTime)
 		}
 		return;
 	}
+
+	if (isHurt) {
+		if (!animator->isPlaying())
+		{
+			isHurt = false;
+			collider->SetEnable(true);
+			animator->Play("fly");
+		}
+		else
+			return;
+	}
+
 
 	//获取一个指向目标的向量
 	Vector2D moveDirection = (attackTarget->transform.position - owner->transform.position).Normalized();
@@ -65,6 +75,15 @@ void EnemyAI::SetInitialPosition(const Vector2D& position)
 {
 	owner->transform.position = position;
 	owner->transform.previousPosition = position;
+}
+
+void EnemyAI::OnCollisionEnter(Collider* collider)
+{
+	if (collider->Layer() == 3 && !isHurt) {
+		animator->Play("hurt");
+		this->collider->SetEnable(false);
+		isHurt = true;
+	}
 }
 
 void EnemyAI::SetExpOrbFactory(ExpOrbFactory* factory)

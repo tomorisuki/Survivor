@@ -53,6 +53,31 @@ void RenderSystem::RenderUI(Sprite* sprite, const Transform& transform)
 	uiQueue.push_back(ui);
 }
 
+void RenderSystem::RenderUIText(SDL_Texture* texture, const Transform& transform)
+{
+	UIText text;
+
+	float w, h;
+	SDL_GetTextureSize(texture, &w, &h);
+	SDL_FRect srcRect = {
+		0.0f,0.0f,w,h
+	};
+
+	SDL_FRect dstRect = {
+		transform.position.x,transform.position.y,
+		w,h
+	};
+
+	dstRect.w = dstRect.w * transform.scale.x;
+	dstRect.h = dstRect.h * transform.scale.y;
+
+	text.texture = texture;
+	text.srcRect = srcRect;
+	text.dstRect = dstRect;
+
+	uiTextQueue.push_back(text);
+}
+
 void RenderSystem::RenderCollider(Camera* camera, const Transform& transform, const Vector2D& size)
 {
 	RenderColliderDebug item;
@@ -148,8 +173,12 @@ void RenderSystem::Render(float alpha)
 		SDL_RenderTexture(sdl_renderer, ui.sprite->GetTexture(), &srcRect, &dstRect);
 	}
 
-
-
+	//渲染UI文本，UI文本更牛逼，应该在最上面
+	for (auto& text : uiTextQueue) {
+		SDL_FRect srcRect = text.srcRect;
+		SDL_FRect dstRect = text.dstRect;
+		SDL_RenderTexture(sdl_renderer, text.texture, &srcRect, &dstRect);
+	}
 }
 
 SDL_Renderer* RenderSystem::GetSdlRenderer() 
@@ -162,4 +191,5 @@ void RenderSystem::RenderClear()
 	uiQueue.clear();
 	worldQueue.clear();
 	colliderQueue.clear();
+	uiTextQueue.clear();
 }

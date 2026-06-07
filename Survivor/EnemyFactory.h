@@ -29,6 +29,8 @@ public:
 			engine->GetAniClipMgr()->GetAnimationClip("enemy_fly"));
 		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("die",
 			engine->GetAniClipMgr()->GetAnimationClip("enemy_die"));
+		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("hurt",
+			engine->GetAniClipMgr()->GetAnimationClip("enemy_hurt"));
 		enemy->GetComponent<AnimatorComponent>()->Play("fly");
 
 		enemy->AddComponent<RigidBody>();
@@ -36,18 +38,23 @@ public:
 		enemy->GetComponent<RigidBody>()->SetMoveSpeed(500.0f);
 		enemy->GetComponent<RigidBody>()->SetLinearDamping(4.2f);
 
-		enemy->AddComponent<EnemyAI>();
-		enemy->GetComponent<EnemyAI>()->SetAttackTarget(target);
-		enemy->GetComponent<EnemyAI>()->SetInitialPosition(position);
-		enemy->GetComponent<EnemyAI>()->SetExpOrbFactory(expOrbFactory);
+
 
 		enemy->AddComponent<Collider>();
 		enemy->GetComponent<Collider>()->SetEnableDebug(false);
 		enemy->GetComponent<Collider>()->SetLayer(2);
 		enemy->GetComponent<Collider>()->SetSize(Vector2D{ 79.0f,69.0f });
 		enemy->GetComponent<Collider>()->SetEnable(true);
-		enemy->AddComponent<Health>()->SetHp(1);
+
+
+
+		enemy->AddComponent<Health>()->SetHp(2);
 		
+		enemy->AddComponent<EnemyAI>();
+		enemy->GetComponent<EnemyAI>()->SetAttackTarget(target);
+		enemy->GetComponent<EnemyAI>()->SetInitialPosition(position);
+		enemy->GetComponent<EnemyAI>()->SetExpOrbFactory(expOrbFactory);
+
 		enemy->Start();
 		enemy->transform.UpdatePrevPosition();
 

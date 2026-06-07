@@ -22,6 +22,8 @@ public:
 	//设置初始位置
 	void SetInitialPosition(const Vector2D& position);
 
+	void OnCollisionEnter(class Collider* collider) override;
+
 	void SetExpOrbFactory(class ExpOrbFactory* factory);
 
 private:
@@ -31,5 +33,7 @@ private:
 	class Health* health = nullptr;
 	class Collider* collider = nullptr;
 	class ExpOrbFactory* expOrbFactory = nullptr;
+
+	bool isHurt = false;
 };
 

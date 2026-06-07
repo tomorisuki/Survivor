@@ -14,19 +14,22 @@ bool AnimationClipManager::InitResources(class TextureManager* texture_manager)
 	if (!LoadAnimationClip("effect", texture_manager->GetSprite("effect"), 17, 1, 17, true))
 		return false;
 
-	if (!LoadAnimationClip("dinosaur_idle", texture_manager->GetSprite("dinosaur"), 4, 1, 4, true,0.1f,0.0f,24.0f,24.0f))
+	if (!LoadAnimationClip("dinosaur_idle", texture_manager->GetSprite("dinosaur"), 4, 1, 4, true, 0.1f, { 0.0f,0.0f }, 24.0f, 24.0f))
 		return false;
 
-	if (!LoadAnimationClip("dinosaur_move", texture_manager->GetSprite("dinosaur"), 6, 1, 6, true,0.1f,96.0f,24.0f,24.0f))
+	if (!LoadAnimationClip("dinosaur_move", texture_manager->GetSprite("dinosaur"), 6, 1, 6, true, 0.1f, { 96.0f,0.0f }, 24.0f, 24.0f))
 		return false;
 	
-	if (!LoadAnimationClip("dinosaur_attack", texture_manager->GetSprite("dinosaur"), 4, 1, 4, false, 0.1f, 240.0f,24.0f,24.0f))
+	if (!LoadAnimationClip("dinosaur_attack", texture_manager->GetSprite("dinosaur"), 4, 1, 4, false, 0.1f, { 240.0f,0.0f }, 24.0f, 24.0f))
 		return false;
 
 	if (!LoadAnimationClip("enemy_fly", texture_manager->GetSprite("enemy_fly"), 4, 1, 4, true))
 		return false;
 
 	if (!LoadAnimationClip("enemy_die", texture_manager->GetSprite("enemy_die"), 7, 1, 7, false))
+		return false;
+	
+	if (!LoadAnimationClip("enemy_hurt", texture_manager->GetSprite("enemy_hurt"), 4, 1, 4, false))
 		return false;
 
 	if (!LoadAnimationClip("blue_bullet", texture_manager->GetSprite("blue_bullet"), 4, 1, 4, true))
@@ -38,12 +41,12 @@ bool AnimationClipManager::InitResources(class TextureManager* texture_manager)
 
 
 bool AnimationClipManager::LoadAnimationClip(const std::string& name, Sprite* sprite,
-	int totalFrame,int rows,int oneRowCount, bool isLoop,float duration,float offsetX,
+	int totalFrame,int rows,int oneRowCount, bool isLoop,float duration, const Vector2D& offset,
 	float w,float h)
 {
 	auto aniClip = std::make_unique<AnimationClip>();
 	if (!aniClip) return false;
-	aniClip->LoadSpriteSheet(sprite, totalFrame, rows, oneRowCount, duration,offsetX,w,h);
+	aniClip->LoadSpriteSheet(sprite, totalFrame, rows, oneRowCount, duration,offset,w,h);
 	aniClip->SetLoop(isLoop);
 
 	aniClip_pool.insert({name,std::move(aniClip)});

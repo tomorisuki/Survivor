@@ -28,6 +28,12 @@ public:
 	//获取玩家当前等级
 	int GetLevel() const;
 
+	//获取当前等级的经验值
+	int CurrentExp() const;
+
+	//获取升到下一个等级的经验值
+	int NextLevelExp() const;
+
 private:
 
 	int level = 1;			//玩家等级
@@ -36,6 +42,6 @@ private:
 
 	int nextLevelExp = 10;	//升到下一个等级的经验值
 
-	Collider* collider;
+	//Collider* collider;
 };
 

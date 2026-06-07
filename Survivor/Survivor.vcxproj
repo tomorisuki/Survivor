@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\SDL3Project\Survivor\Survivor\thirdparty\SDL3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SDL3Project\Survivor\Survivor\thirdparty\SDL3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -131,7 +131,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_mixer.lib;SDL3_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>F:\SDL3Project\Survivor\Survivor\thirdparty\SDL3\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\SDL3Project\Survivor\Survivor\thirdparty\SDL3\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -145,6 +145,7 @@
     <ClCompile Include="ClearScreen.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
+    <ClCompile Include="ConnectOther.cpp" />
     <ClCompile Include="DamageDealer.cpp" />
     <ClCompile Include="EnemyAI.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
@@ -156,12 +157,14 @@
     <ClCompile Include="ExpOrbFactory.cpp" />
     <ClCompile Include="FMath.cpp" />
     <ClCompile Include="FollowComponent.cpp" />
+    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Health.cpp" />
     <ClCompile Include="ICollisionListener.cpp" />
     <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="LifeTimeComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OrbitBullet.cpp" />
     <ClCompile Include="PlayerControl.cpp" />
@@ -169,10 +172,12 @@
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="SpreadBullet.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="TextRender.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="SpriteRender.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="UpdateExpText.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +192,7 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ConnectOther.h" />
     <ClInclude Include="DamageDealer.h" />
     <ClInclude Include="EnemyAI.h" />
     <ClInclude Include="EnemyFactory.h" />
@@ -198,12 +204,14 @@
     <ClInclude Include="ExpOrbFactory.h" />
     <ClInclude Include="FMath.h" />
     <ClInclude Include="FollowComponent.h" />
+    <ClInclude Include="FontManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Health.h" />
     <ClInclude Include="ICollisionListener.h" />
     <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="LifeTimeComponent.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="OrbitBullet.h" />
     <ClInclude Include="PlayerControl.h" />
@@ -213,11 +221,13 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SpreadBullet.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="TextRender.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="SpriteRender.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="UpdateExpText.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

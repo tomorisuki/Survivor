@@ -62,7 +62,7 @@ public:
 	}
 
 	void AddGameObject(GameObject* gameObject) {
-		addedGameObjects.push_back(std::move(gameObject));	//????????
+		addedGameObjects.push_back(gameObject);	//????????
 	}
 
 	std::vector<GameObject*> FindGameObjectByName(const std::string& name)
@@ -75,6 +75,18 @@ public:
 		}
 		return result;
 	}
+
+	int GetGameObjectCountByName(const std::string& name) {
+		int count = 0;
+		for (auto& obj : gameObjects) {
+			if ((obj->GetName() == name) && (!obj->pendingDestroy)) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+
 
 protected:
 	Engine* engine = nullptr;

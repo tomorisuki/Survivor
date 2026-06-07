@@ -22,7 +22,7 @@ public:
 
 	bool LoadAnimationClip(const std::string& name, Sprite* sprite,
 		int totalFrame, int rows, int oneRowCount, bool isLoop, float duration = 0.1f,
-		float offsetX = 0.0f, float w = 0.0f , float h = 0.0f);
+		const Vector2D& offset = {0.0f,0.0f}, float w = 0.0f, float h = 0.0f);
 
 
 	AnimationClip* GetAnimationClip(const std::string& name);
