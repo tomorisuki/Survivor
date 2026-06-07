@@ -30,6 +30,14 @@
 
 #include "UpdateExpText.h"
 
+#include "BossAI.h"
+
+#include "LifeTimeComponent.h"
+
+#include "LifeBindComponent.h"
+
+#include "BossHpText.h"
+
 //#include "GameState.h"
 
 #include <iostream>
@@ -87,7 +95,7 @@ public:
 
         player->AddComponent<ExperienceComponent>();
 
-
+        target = player;
 
         camera->SetFollowTarget(&player->transform);
         
@@ -210,10 +218,10 @@ public:
 
 
         auto bulletSpawn = std::make_unique<BulletSpawn>(engine);
-        bulletSpawn->SetBulletNumber(3);
+        bulletSpawn->SetBulletNumber(100);
         bulletSpawn->SetScene(this);
         bulletSpawn->SetTarget(player);
-        bulletSpawn->SetElapsedTime(2.0f);
+        bulletSpawn->SetElapsedTime(1.0f);
         bulletSpawn->SetEnable(true);
         bulletSpawn->SetSpreadAngle(90.0f);
         objects.push_back(std::move(bulletSpawn));
@@ -246,6 +254,109 @@ public:
 		expText->AddComponent<UpdateExpText>();
 		expText->GetComponent<UpdateExpText>()->SetTarget(player);
 
+        auto objCount = CreateGameObject("objCount");
+        objCount->transform.position = { 20.0f,20.0f };
+        objCount->AddComponent<TextRender>(
+            engine->GetFontManager()->GetFont("silver"));
+
+        auto gameTime = CreateGameObject("gameTime");
+        gameTime->transform.position = { 550.0f,20.0f };
+        gameTime->AddComponent<TextRender>(
+            engine->GetFontManager()->GetFont("silver"));
+
+        /*------------Boss Test-------------
+
+        auto boss = CreateGameObject("boss");
+        boss->transform.scale = { 2.0f,2.0f };
+        boss->AddComponent<SpriteRender>();
+        boss->AddComponent<AnimatorComponent>();
+        boss->GetComponent<AnimatorComponent>()->AddAnimationClip("idle",
+            engine->GetAniClipMgr()->GetAnimationClip("boss_idle"));
+        boss->GetComponent<AnimatorComponent>()->AddAnimationClip("move",
+            engine->GetAniClipMgr()->GetAnimationClip("boss_move"));
+        boss->GetComponent<AnimatorComponent>()->AddAnimationClip("attack",
+            engine->GetAniClipMgr()->GetAnimationClip("boss_attack"));
+        boss->GetComponent<AnimatorComponent>()->AddAnimationClip("die",
+            engine->GetAniClipMgr()->GetAnimationClip("boss_die"));
+        boss->GetComponent<AnimatorComponent>()->Play("idle");
+
+        boss->AddComponent<Collider>();
+        boss->GetComponent<Collider>()->SetEnableDebug(true);
+        boss->GetComponent<Collider>()->SetEnable(true);
+        boss->GetComponent<Collider>()->SetSize(Vector2D{ 140.0f,93.0f });
+        boss->GetComponent<Collider>()->SetLayer(2);        //敌人层
+
+        boss->AddComponent<Health>();
+        boss->GetComponent<Health>()->SetHp(100);
+        
+        boss->AddComponent<RigidBody>();
+        boss->GetComponent<RigidBody>()->SetEnable(true);
+        boss->GetComponent<RigidBody>()->SetMoveSpeed(300.0f);
+        boss->GetComponent<RigidBody>()->SetUseGravity(false);
+        boss->GetComponent<RigidBody>()->SetLinearDamping(2.0f);
+
+
+        ------------Boss Test-------------*/    
+
+        auto bossSpawn = std::make_unique<Timer>();
+        bossSpawn->SetElapsedTime(60.0f);
+        bossSpawn->SetOnce(true);
+        bossSpawn->SetCallback([&]() {
+            auto boss = CreateGameObject("boss");
+            boss->transform.position = { 200.0f,200.0f };
+            boss->transform.scale = { 2.0f,2.0f };
+            boss->AddComponent<SpriteRender>();
+            boss->GetComponent<SpriteRender>()->SetLayer(1000);
+            boss->AddComponent<AnimatorComponent>();
+            boss->GetComponent<AnimatorComponent>()->AddAnimationClip("idle",
+                engine->GetAniClipMgr()->GetAnimationClip("wizard_idle"));
+            boss->GetComponent<AnimatorComponent>()->AddAnimationClip("walk",
+                engine->GetAniClipMgr()->GetAnimationClip("wizard_walk"));
+            //boss->GetComponent<AnimatorComponent>()->AddAnimationClip("attack",
+            //    engine->GetAniClipMgr()->GetAnimationClip("boss_attack"));
+            boss->GetComponent<AnimatorComponent>()->AddAnimationClip("run",
+                engine->GetAniClipMgr()->GetAnimationClip("wizard_run"));
+            boss->GetComponent<AnimatorComponent>()->AddAnimationClip("die",
+                engine->GetAniClipMgr()->GetAnimationClip("wizard_die"));
+            boss->GetComponent<AnimatorComponent>()->Play("idle");
+
+            boss->AddComponent<Collider>();
+            boss->GetComponent<Collider>()->SetEnableDebug(false);
+            boss->GetComponent<Collider>()->SetEnable(true);
+            boss->GetComponent<Collider>()->SetSize(Vector2D{ 34.0f,56.0f });
+            boss->GetComponent<Collider>()->SetOffset(Vector2D{ 100.0f,83.0f });
+            boss->GetComponent<Collider>()->SetLayer(2);        //敌人层
+
+            boss->AddComponent<Health>();
+            boss->GetComponent<Health>()->SetHp(100);
+
+            boss->AddComponent<RigidBody>();
+            boss->GetComponent<RigidBody>()->SetEnable(true);
+            boss->GetComponent<RigidBody>()->SetMoveSpeed(300.0f);
+            boss->GetComponent<RigidBody>()->SetUseGravity(false);
+            boss->GetComponent<RigidBody>()->SetLinearDamping(3.5f);
+
+            boss->AddComponent<BossAI>();
+            boss->GetComponent<BossAI>()->SetAttackTarget(target);
+            
+            boss->transform.UpdatePrevPosition();
+            boss->Start();
+
+            auto bossHp = CreateGameObject("bossHp");
+
+            bossHp->transform.position = { 550.0f, 50.0f };
+
+            bossHp->AddComponent<TextRender>()->SetFont(
+                engine->GetFontManager()->GetFont("silver"));
+            bossHp->GetComponent<TextRender>()->SetColor({ 255,0,0,255 });
+            bossHp->AddComponent<LifeBindComponent>()->SetTarget(boss);
+            bossHp->AddComponent<BossHpText>()->SetTarget(boss);
+            bossHp->transform.UpdatePrevPosition();
+            bossHp->Start();
+            });
+
+
+        objects.push_back(std::move(bossSpawn));
 
         /*---------------UI----------------*/
 
@@ -257,6 +368,11 @@ public:
     }
 
     void Update(float deltaTime) override{   
+        
+        //累计游戏时间
+        gameTotalTime += deltaTime;
+
+
         Scene::Update(deltaTime);
         engine->GetCollisionSystem()->ClearColliders();
 
@@ -274,6 +390,19 @@ public:
 
         for (auto& obj : gameObjects) {
             obj->Update(deltaTime);
+            if (obj->GetName() == "objCount") {
+                obj->GetComponent<TextRender>()->SetText(std::to_string(gameObjects.size()));
+            }
+            if (obj->GetName() == "gameTime") {
+                int totalScecond = static_cast<int>(gameTotalTime);
+                int minutes = totalScecond / 60;
+                int scecond = totalScecond % 60;
+                char buffer[16];
+                sprintf_s(buffer, "%02d:%02d", minutes, scecond);
+                std::string time(buffer);
+                time = "Time: " + time;
+                obj->GetComponent<TextRender>()->SetText(time);
+            }
         }
 
         if (engine->Input()->isDown("small")) {
@@ -310,6 +439,8 @@ public:
 
 private:
     std::unique_ptr<ExpOrbFactory> expOrbFactory;
+    GameObject* target = nullptr;
 	EnemySpawn* enemySpawnPointer = nullptr;
+    double gameTotalTime = 0.0;
 };
 

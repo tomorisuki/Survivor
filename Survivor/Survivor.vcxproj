@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\SDL3Project\Survivor\Survivor\thirdparty\SDL3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\SDL3Project\Survivor\Survivor\thirdparty\SDL3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -131,7 +131,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_mixer.lib;SDL3_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\SDL3Project\Survivor\Survivor\thirdparty\SDL3\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>F:\SDL3Project\Survivor\Survivor\thirdparty\SDL3\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -139,6 +139,8 @@
     <ClCompile Include="AnimationClipManager.cpp" />
     <ClCompile Include="AnimationFrame.cpp" />
     <ClCompile Include="AnimatorComponent.cpp" />
+    <ClCompile Include="BossAI.cpp" />
+    <ClCompile Include="BossHpText.cpp" />
     <ClCompile Include="BulletFactory.cpp" />
     <ClCompile Include="BulletSpawn.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -164,6 +166,7 @@
     <ClCompile Include="Health.cpp" />
     <ClCompile Include="ICollisionListener.cpp" />
     <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="LifeBindComponent.cpp" />
     <ClCompile Include="LifeTimeComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OrbitBullet.cpp" />
@@ -185,6 +188,8 @@
     <ClInclude Include="AnimationClipManager.h" />
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="AnimatorComponent.h" />
+    <ClInclude Include="BossAI.h" />
+    <ClInclude Include="BossHpText.h" />
     <ClInclude Include="BulletFactory.h" />
     <ClInclude Include="BulletSpawn.h" />
     <ClInclude Include="Camera.h" />
@@ -211,6 +216,7 @@
     <ClInclude Include="Health.h" />
     <ClInclude Include="ICollisionListener.h" />
     <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="LifeBindComponent.h" />
     <ClInclude Include="LifeTimeComponent.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="OrbitBullet.h" />

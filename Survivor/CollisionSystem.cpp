@@ -25,6 +25,7 @@ void CollisionSystem::Init()
 
 void CollisionSystem::Update(float deltaTime)
 {
+
 	currentFrame.clear();
 
 	std::size_t ColliderVecSize = colliders.size();

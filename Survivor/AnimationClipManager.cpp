@@ -35,6 +35,25 @@ bool AnimationClipManager::InitResources(class TextureManager* texture_manager)
 	if (!LoadAnimationClip("blue_bullet", texture_manager->GetSprite("blue_bullet"), 4, 1, 4, true))
 		return false;
 
+	//boss
+	if (!LoadAnimationClip("boss_idle", texture_manager->GetSprite("boss"), 8, 1, 8, true, 0.1f, { 0.0f,0.0f }, 140.f, 93.0f))
+		return false;
+	if (!LoadAnimationClip("boss_move", texture_manager->GetSprite("boss"), 8, 1, 8, true, 0.1f, { 0.0f,93.0f }, 140.0f, 93.0f))
+		return false;
+	if (!LoadAnimationClip("boss_attack", texture_manager->GetSprite("boss"), 9, 2, 8, false, 0.1f, { 0.0f,186.0f }, 140.0f, 93.0f))
+		return false;
+	if (!LoadAnimationClip("boss_die", texture_manager->GetSprite("boss"), 14, 2, 7, false, 0.1f, { 140.0f,279.0f }, 140.0f, 93.0f))
+		return false;
+
+	if (!LoadAnimationClip("wizard_idle", texture_manager->GetSprite("boss_idle"), 10, 1, 10, true))
+		return false;
+	if (!LoadAnimationClip("wizard_run", texture_manager->GetSprite("boss_run"), 8, 1, 8, true))
+		return false;
+	if (!LoadAnimationClip("wizard_walk", texture_manager->GetSprite("boss_walk"), 8, 1, 8, true))
+		return false;
+	if (!LoadAnimationClip("wizard_die", texture_manager->GetSprite("boss_die"), 18, 1, 18, false))
+		return false;
+
 	return true;
 }
 

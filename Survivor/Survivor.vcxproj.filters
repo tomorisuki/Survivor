@@ -179,6 +179,15 @@
     <ClCompile Include="UpdateExpText.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="BossAI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeBindComponent.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BossHpText.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -309,5 +318,8 @@
     <ClInclude Include="TextRender.h" />
     <ClInclude Include="ConnectOther.h" />
     <ClInclude Include="UpdateExpText.h" />
+    <ClInclude Include="BossAI.h" />
+    <ClInclude Include="LifeBindComponent.h" />
+    <ClInclude Include="BossHpText.h" />
   </ItemGroup>
 </Project>

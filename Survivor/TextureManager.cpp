@@ -20,6 +20,11 @@ bool TextureManager::Init()
     if (!LoadTexture("exp_bar", "assets/exp_bar.png")) return false;
     if (!LoadTexture("exp_bar_bg", "assets/exp_bar_bg.png")) return false;
     if (!LoadTexture("blue_bullet", "assets/bullets/blue_bullet.png")) return false;
+    if (!LoadTexture("boss", "assets/boss/boss_sheet.png")) return false;
+    if (!LoadTexture("boss_idle", "assets/boss/Idle.png")) return false;
+    if (!LoadTexture("boss_walk", "assets/boss/Walk.png")) return false;
+    if (!LoadTexture("boss_run", "assets/boss/Run.png")) return false;
+    if (!LoadTexture("boss_die", "assets/boss/Death.png")) return false;
     
     return true;
 }
