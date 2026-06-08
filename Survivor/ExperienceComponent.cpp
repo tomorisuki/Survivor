@@ -28,6 +28,7 @@ void ExperienceComponent::AddExp(int value)
 {
     this->currentExp += value;
     if (currentExp >= nextLevelExp) {
+        isUpgrade = true;
         level += 1;     //等级加一
         currentExp -= nextLevelExp;
         nextLevelExp *= 1.2;
@@ -55,4 +56,14 @@ int ExperienceComponent::CurrentExp() const
 int ExperienceComponent::NextLevelExp() const
 {
     return nextLevelExp;
+}
+
+bool ExperienceComponent::Upgrade() const
+{
+    return isUpgrade;
+}
+
+void ExperienceComponent::ResetUpgrade()
+{
+    isUpgrade = false;
 }

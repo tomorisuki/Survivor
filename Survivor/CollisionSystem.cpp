@@ -135,5 +135,5 @@ void CollisionSystem::ClearColliders()
 //test
 int CollisionSystem::Size() const
 {
-	return colliders.size();
+	return static_cast<int>(colliders.size());
 }

@@ -6,6 +6,20 @@
 void InputSystem::Input(SDL_Event& sdl_event)
 {
     switch (sdl_event.type) {
+    case SDL_EVENT_MOUSE_MOTION:
+        mousePosition.x = sdl_event.motion.x;
+        mousePosition.y = sdl_event.motion.y;
+        break;
+    case SDL_EVENT_MOUSE_BUTTON_DOWN:
+        mousePosition.x = sdl_event.motion.x;
+        mousePosition.y = sdl_event.motion.y;
+        mouseClick = true;
+        break;
+    case SDL_EVENT_MOUSE_BUTTON_UP:
+        mousePosition.x = sdl_event.motion.x;
+        mousePosition.y = sdl_event.motion.y;
+        mouseClick = false;
+        break;
     case SDL_EVENT_KEY_DOWN:
         switch (sdl_event.key.key) {
         case SDLK_A:      KeyStateRequire[static_cast<int>(KeyCode::KEY_A)] = true; break;
@@ -145,6 +159,21 @@ bool InputSystem::isUp(const std::string& name)
 bool InputSystem::isUp(KeyCode key_code)
 {
     return false;
+}
+
+Vector2D InputSystem::MousePos() const
+{
+    return mousePosition;
+}
+
+bool InputSystem::MouseLeftDown() const
+{
+    return mouseClick;
+}
+
+bool InputSystem::MouseLeftUp() const
+{
+    return mouseClick;
 }
 
 

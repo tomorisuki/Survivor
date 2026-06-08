@@ -34,6 +34,12 @@ public:
 	//获取升到下一个等级的经验值
 	int NextLevelExp() const;
 
+	//是否刚刚升级
+	bool Upgrade() const;
+
+	//重置升级状态
+	void ResetUpgrade();
+
 private:
 
 	int level = 1;			//玩家等级
@@ -42,6 +48,7 @@ private:
 
 	int nextLevelExp = 10;	//升到下一个等级的经验值
 
+	bool isUpgrade = false;
 	//Collider* collider;
 };
 

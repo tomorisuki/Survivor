@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include <string>
 
+#include "Vector2D.h"
+
 enum class KeyCode {
     KEY_A,
     KEY_B,
@@ -83,9 +85,19 @@ public:
     bool isUp(const std::string& name);
     bool isUp(KeyCode key_code);
 
+    //返回鼠标位置
+    Vector2D MousePos() const;
+
+    bool MouseLeftDown() const;
+
+    bool MouseLeftUp() const;
+
 private:
 	//SDL_Event* sdl_event = nullptr;
     std::unordered_map<std::string, Key> keyMap;
+
+    Vector2D mousePosition;     //鼠标位置
+    bool mouseClick = false;
 
     Key keyArr[34];
     bool KeyStateRequire[34] = { false };

@@ -17,7 +17,7 @@ void BulletSpawn::Update(float deltaTime)
 
 	currentTime += deltaTime;
 
-	bulletNumber = target->GetComponent<ExperienceComponent>()->GetLevel();
+	//bulletNumber = target->GetComponent<ExperienceComponent>()->GetLevel();
 
 	if (currentTime >= elapsedTime) 
 	{

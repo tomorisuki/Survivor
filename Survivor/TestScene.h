@@ -38,6 +38,12 @@
 
 #include "BossHpText.h"
 
+#include "ButtonComponent.h"
+
+#include "PlayerState.h"
+
+#include "UpgradeManager.h"
+
 //#include "GameState.h"
 
 #include <iostream>
@@ -94,6 +100,8 @@ public:
         player->AddComponent<PlayerControl>();
 
         player->AddComponent<ExperienceComponent>();
+
+        player->AddComponent<PlayerState>();
 
         target = player;
 
@@ -212,13 +220,14 @@ public:
         auto enemySpawnTimer = std::make_unique<Timer>();
         enemySpawnTimer->SetOnce(false);
         enemySpawnTimer->SetElapsedTime(0.1f);
-        enemySpawnTimer->SetCallback([&]() {
+        enemySpawnTimer->SetCallback([this]() {
             addedGameObjects.push_back(enemySpawnPointer->SpawnEnemy("enemy"));
             });
 
 
         auto bulletSpawn = std::make_unique<BulletSpawn>(engine);
-        bulletSpawn->SetBulletNumber(100);
+        bulletSpawn->SetName("bulletSpawn");
+        bulletSpawn->SetBulletNumber(0);
         bulletSpawn->SetScene(this);
         bulletSpawn->SetTarget(player);
         bulletSpawn->SetElapsedTime(1.0f);
@@ -301,7 +310,7 @@ public:
         auto bossSpawn = std::make_unique<Timer>();
         bossSpawn->SetElapsedTime(60.0f);
         bossSpawn->SetOnce(true);
-        bossSpawn->SetCallback([&]() {
+        bossSpawn->SetCallback([this]() {
             auto boss = CreateGameObject("boss");
             boss->transform.position = { 200.0f,200.0f };
             boss->transform.scale = { 2.0f,2.0f };
@@ -342,6 +351,9 @@ public:
             boss->transform.UpdatePrevPosition();
             boss->Start();
 
+
+
+
             auto bossHp = CreateGameObject("bossHp");
 
             bossHp->transform.position = { 550.0f, 50.0f };
@@ -358,12 +370,42 @@ public:
 
         objects.push_back(std::move(bossSpawn));
 
+        auto buttonTimer = std::make_unique<Timer>();
+        buttonTimer->SetOnce(true);
+        buttonTimer->SetElapsedTime(10.0f);
+        buttonTimer->SetCallback([this]()
+            {
+                auto button = CreateGameObject("button");
+                button->transform.position = { 576.0f,296.0f };
+                button->AddComponent<SpriteRender>(
+                    engine->GetTextureManager()->GetSprite("card"));
+                button->GetComponent<SpriteRender>()->SetUIRender(true);
+                button->GetComponent<SpriteRender>()->GetSprite()->SetCropRect({
+                    0.0f,0.0f,64.0f,64.0f
+                    });
+                button->AddComponent<ButtonComponent>();
+                button->GetComponent<ButtonComponent>()->SetButtonRect({
+                    0.0f,0.0f,64.0f,64.0f
+                    });
+                button->GetComponent<ButtonComponent>()->SetCallback([button]() {
+                    std::cout << "点击了按钮" << std::endl;
+                    button->SetPendingDestroy(true);
+                    });
+                button->transform.UpdatePrevPosition();
+                button->Start();
+
+            });
+
+        objects.push_back(std::move(buttonTimer));
+
+        auto gameManager = CreateGameObject("gameManager");
+        gameManager->AddComponent<UpgradeManager>();
+        gameManager->GetComponent<UpgradeManager>()->SetPlayer(player);
+        gameManager->GetComponent<UpgradeManager>()->SetScene(this);
+
         /*---------------UI----------------*/
 
-
         Scene::Start();
-
-
 
     }
 

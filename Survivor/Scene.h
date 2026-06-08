@@ -76,6 +76,15 @@ public:
 		return result;
 	}
 
+	Object* FindFirstObjectByName(const std::string& name) {
+		for (auto& obj : objects) {
+			if ((obj->GetName() == name) && (!obj->GetPendingDestroy())) {
+				return obj.get();
+			}
+		}
+		return nullptr;
+	}
+
 	int GetGameObjectCountByName(const std::string& name) {
 		int count = 0;
 		for (auto& obj : gameObjects) {

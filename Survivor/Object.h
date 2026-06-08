@@ -12,6 +12,10 @@ public:
 		return name;
 	}
 
+	void SetName(std::string name) {
+		this->name = name;
+	}
+
 	bool GetPendingDestroy() const
 	{
 		return pendingDestroy;
@@ -27,7 +31,7 @@ public:
 protected:
 	Engine* engine = nullptr;
 
-	std::string name;
+	std::string name = "";
 
 	bool pendingDestroy = false;
 };
