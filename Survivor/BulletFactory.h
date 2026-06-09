@@ -22,12 +22,14 @@ public:
 		GameObject* bullet = new GameObject(engine);
 		bullet->transform.position = position;
 		bullet->AddComponent<SpriteRender>();
+		bullet->GetComponent<SpriteRender>()->SetIsIgnorePause(true);
 
 		bullet->AddComponent<AnimatorComponent>();
 		bullet->GetComponent<AnimatorComponent>()->AddAnimationClip("defalut",
 			engine->GetAniClipMgr()->GetAnimationClip("blue_bullet"));
 		bullet->GetComponent<AnimatorComponent>()->Play("defalut");
 		bullet->GetComponent<AnimatorComponent>()->SetAngle(angle);
+		bullet->GetComponent<AnimatorComponent>()->SetIsIgnorePause(true);
 
 		bullet->AddComponent<DamageDealer>();
 		bullet->GetComponent<DamageDealer>()->SetDamage(1.0f);

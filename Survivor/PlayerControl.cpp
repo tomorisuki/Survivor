@@ -4,15 +4,29 @@
 #include "RigidBody.h"
 #include "AnimatorComponent.h"
 
+#include "SpriteRender.h"
+#include "Health.h"
+
+
 void PlayerControl::Start()
 {
 	input = engine->Input();
 	rigidBody = owner->GetComponent<RigidBody>();
 	animator = owner->GetComponent<AnimatorComponent>();
+	health = owner->GetComponent<Health>();
+	spriteRender = owner->GetComponent<SpriteRender>();
 }
 
 void PlayerControl::Update(float deltaTime)
 {
+	if (health->GetHp() == 0) {
+		spriteRender->SetIsIgnorePause(false);
+		animator->SetIsIgnorePause(false);
+		//owner->SetPause(true);	//直接暂停玩家
+		return;
+	}
+
+
 	Vector2D moveDir = { 0.0f,0.0f };
 	if (input->isDown("up")) {
 		moveDir.y = -1.0f;
@@ -43,5 +57,9 @@ void PlayerControl::Update(float deltaTime)
 }
 
 void PlayerControl::Render()
+{
+}
+
+void PlayerControl::OnCollisionEnter(Collider* collider)
 {
 }

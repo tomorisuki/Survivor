@@ -27,7 +27,7 @@ void EnemyAI::Update(float deltaTime)
 		if (rigidBody) rigidBody->SetEnable(false);
 		if (!animator->isPlaying()) {
 			float result = FMath::RandomRealFloat();
-			if (result > 0.001f)
+			if (result > 0.008f)
 				expOrbFactory->GetScene()->AddGameObject(expOrbFactory->CreatExpOrb("expOrb",
 					owner->transform.position));
 			else

@@ -2,6 +2,15 @@
 
 #include "Object.h"
 class GameObject;
+
+/*
+enum class UpdateMode 
+{
+	Normal,
+	IgnorePause
+};
+*/
+
 class Component : public Object
 {
 	friend class GameObject;
@@ -24,6 +33,15 @@ public:
 		return owner;
 	}
 
+	bool IsIgnorePause() const {
+		return ignorePause;
+	}
+
+	void SetIsIgnorePause(bool flag) {
+		ignorePause = flag;
+	}
+
 protected:
 	class GameObject* owner = nullptr;
+	bool ignorePause = false;
 };

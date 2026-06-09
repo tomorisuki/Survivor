@@ -114,10 +114,12 @@ public:
 
 	void OnCollisionExit(class Collider* collider);
 
+	void SetIgnorePause(bool flag);
 
 private:
 	std::unordered_map<std::type_index, Component*> componentMap;
 	std::vector<std::unique_ptr<Component>> components;
 	bool started = false;
+	bool ignorePause = false;
 };
 

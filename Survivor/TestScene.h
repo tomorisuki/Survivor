@@ -44,7 +44,13 @@
 
 #include "UpgradeManager.h"
 
-//#include "GameState.h"
+#include "PlayerHpTextComponent.h"
+
+struct GameState{
+    int enemyHp = 2;
+    float enemySpawnSpeed = 0.5f;
+};
+
 
 #include <iostream>
 class TestScene :
@@ -72,7 +78,7 @@ public:
 
         auto player = CreateGameObject("player");
 
-        player->AddComponent<SpriteRender>();
+        player->AddComponent<SpriteRender>()->SetIsIgnorePause(true);
         engine->GetTextureManager()->GetSprite("sunflower")->SetFlip(false);
         player->transform.position = { 500.0f,200.0f };
         player->AddComponent<RigidBody>();
@@ -96,10 +102,13 @@ public:
 		player->GetComponent<AnimatorComponent>()->AddAnimationClip("attack",
 			engine->GetAniClipMgr()->GetAnimationClip("dinosaur_attack"));
 		player->GetComponent<AnimatorComponent>()->Play("idle");
+        player->GetComponent<AnimatorComponent>()->SetIsIgnorePause(true);
 
         player->AddComponent<PlayerControl>();
 
         player->AddComponent<ExperienceComponent>();
+
+        player->AddComponent<Health>()->SetHp(5);
 
         player->AddComponent<PlayerState>();
 
@@ -127,7 +136,7 @@ public:
 
         //effectSprite = new Sprite(engine->GetTextureManager()->GetTexture("effect"));
 
-
+        /*
         auto effect = CreateGameObject("effect");
         effect->AddComponent<AnimatorComponent>();
         effect->GetComponent<AnimatorComponent>()->AddAnimationClip("effect", 
@@ -141,6 +150,7 @@ public:
 
         effect->AddComponent<SpriteRender>();
         effect->transform.position = {600.0f,400.0f };
+        */
 
         auto oribitBullet1 = CreateGameObject("oribitBullet");
         oribitBullet1->transform.scale = { 0.5f,0.5f };
@@ -148,7 +158,8 @@ public:
         oribitBullet1->GetComponent<AnimatorComponent>()->AddAnimationClip("effect",
             engine->GetAniClipMgr()->GetAnimationClip("effect"));
         oribitBullet1->GetComponent<AnimatorComponent>()->Play("effect");
-        oribitBullet1->AddComponent<SpriteRender>();
+        oribitBullet1->GetComponent<AnimatorComponent>()->SetIsIgnorePause(true);
+        oribitBullet1->AddComponent<SpriteRender>()->SetIsIgnorePause(true);
         oribitBullet1->AddComponent<OrbitBullet>();
         oribitBullet1->GetComponent<OrbitBullet>()->SetFollowTarget(player);
         oribitBullet1->GetComponent<OrbitBullet>()->SetSpeed(5.0f);
@@ -167,7 +178,8 @@ public:
         oribitBullet2->GetComponent<AnimatorComponent>()->AddAnimationClip("effect",
             engine->GetAniClipMgr()->GetAnimationClip("effect"));
         oribitBullet2->GetComponent<AnimatorComponent>()->Play("effect");
-        oribitBullet2->AddComponent<SpriteRender>();
+        oribitBullet2->GetComponent<AnimatorComponent>()->SetIsIgnorePause(true);
+        oribitBullet2->AddComponent<SpriteRender>()->SetIsIgnorePause(true);
         oribitBullet2->AddComponent<OrbitBullet>();
         oribitBullet2->GetComponent<OrbitBullet>()->SetFollowTarget(player);
         oribitBullet2->GetComponent<OrbitBullet>()->SetSpeed(5.0f);
@@ -187,7 +199,8 @@ public:
         oribitBullet3->GetComponent<AnimatorComponent>()->AddAnimationClip("effect",
             engine->GetAniClipMgr()->GetAnimationClip("effect"));
         oribitBullet3->GetComponent<AnimatorComponent>()->Play("effect");
-        oribitBullet3->AddComponent<SpriteRender>();
+        oribitBullet3->GetComponent<AnimatorComponent>()->SetIsIgnorePause(true);
+        oribitBullet3->AddComponent<SpriteRender>()->SetIsIgnorePause(true);
         oribitBullet3->AddComponent<OrbitBullet>();
         oribitBullet3->GetComponent<OrbitBullet>()->SetFollowTarget(player);
         oribitBullet3->GetComponent<OrbitBullet>()->SetSpeed(5.0f);
@@ -219,10 +232,51 @@ public:
 
         auto enemySpawnTimer = std::make_unique<Timer>();
         enemySpawnTimer->SetOnce(false);
-        enemySpawnTimer->SetElapsedTime(0.1f);
+        enemySpawnTimer->SetElapsedTime(gameState.enemySpawnSpeed);
         enemySpawnTimer->SetCallback([this]() {
             addedGameObjects.push_back(enemySpawnPointer->SpawnEnemy("enemy"));
             });
+
+        auto enemySpawnTimerPtr = enemySpawnTimer.get();
+
+        auto updateGame = std::make_unique<Timer>();
+        updateGame->SetOnce(false);
+        updateGame->SetElapsedTime(120.0f);
+        updateGame->SetCallback([enemySpawnTimerPtr,this]() {
+            gameState.enemySpawnSpeed -= 0.1f;
+            enemySpawnTimerPtr->SetElapsedTime(gameState.enemySpawnSpeed);
+            gameState.enemyHp += 2;
+            enemySpawnPointer->SetEnemyHp(gameState.enemyHp);
+            });
+
+        objects.push_back(std::move(updateGame));
+
+        
+        auto warningTextTimer = std::make_unique<Timer>();
+        warningTextTimer->SetOnce(false);
+        warningTextTimer->SetElapsedTime(120.0f);
+        warningTextTimer->SetCallback([this]() {
+            auto warningText = CreateGameObject("warningText");
+            warningText->transform.position = { 350.0f,350.0f };
+            warningText->AddComponent<TextRender>()->SetFont(
+                engine->GetFontManager()->GetFont("silver"));
+            warningText->GetComponent<TextRender>()->SetColor({ 255,165,0,255 });   //橙色
+            warningText->GetComponent<TextRender>()->SetText("Enemy health increases.Enemy spawns speed increases!");
+            warningText->AddComponent<LifeTimeComponent>()->SetLifeTime(5.0f);
+            warningText->transform.UpdatePrevPosition();
+            warningText->Start();
+            });
+        
+        objects.push_back(std::move(warningTextTimer));
+
+        auto playerHpText = CreateGameObject("playerHpText");
+        playerHpText->transform.position = { 20.0f,40.0f };
+        playerHpText->AddComponent<TextRender>()->SetFont(
+            engine->GetFontManager()->GetFont("silver"));
+        playerHpText->AddComponent<PlayerHpTextComponent>()->SetPlayer(player);
+
+
+
 
 
         auto bulletSpawn = std::make_unique<BulletSpawn>(engine);
@@ -232,7 +286,7 @@ public:
         bulletSpawn->SetTarget(player);
         bulletSpawn->SetElapsedTime(1.0f);
         bulletSpawn->SetEnable(true);
-        bulletSpawn->SetSpreadAngle(90.0f);
+        bulletSpawn->SetSpreadAngle(30.0f);
         objects.push_back(std::move(bulletSpawn));
 
 
@@ -264,6 +318,7 @@ public:
 		expText->GetComponent<UpdateExpText>()->SetTarget(player);
 
         auto objCount = CreateGameObject("objCount");
+        objCount->SetIgnorePause(true);
         objCount->transform.position = { 20.0f,20.0f };
         objCount->AddComponent<TextRender>(
             engine->GetFontManager()->GetFont("silver"));
@@ -271,41 +326,7 @@ public:
         auto gameTime = CreateGameObject("gameTime");
         gameTime->transform.position = { 550.0f,20.0f };
         gameTime->AddComponent<TextRender>(
-            engine->GetFontManager()->GetFont("silver"));
-
-        /*------------Boss Test-------------
-
-        auto boss = CreateGameObject("boss");
-        boss->transform.scale = { 2.0f,2.0f };
-        boss->AddComponent<SpriteRender>();
-        boss->AddComponent<AnimatorComponent>();
-        boss->GetComponent<AnimatorComponent>()->AddAnimationClip("idle",
-            engine->GetAniClipMgr()->GetAnimationClip("boss_idle"));
-        boss->GetComponent<AnimatorComponent>()->AddAnimationClip("move",
-            engine->GetAniClipMgr()->GetAnimationClip("boss_move"));
-        boss->GetComponent<AnimatorComponent>()->AddAnimationClip("attack",
-            engine->GetAniClipMgr()->GetAnimationClip("boss_attack"));
-        boss->GetComponent<AnimatorComponent>()->AddAnimationClip("die",
-            engine->GetAniClipMgr()->GetAnimationClip("boss_die"));
-        boss->GetComponent<AnimatorComponent>()->Play("idle");
-
-        boss->AddComponent<Collider>();
-        boss->GetComponent<Collider>()->SetEnableDebug(true);
-        boss->GetComponent<Collider>()->SetEnable(true);
-        boss->GetComponent<Collider>()->SetSize(Vector2D{ 140.0f,93.0f });
-        boss->GetComponent<Collider>()->SetLayer(2);        //敌人层
-
-        boss->AddComponent<Health>();
-        boss->GetComponent<Health>()->SetHp(100);
-        
-        boss->AddComponent<RigidBody>();
-        boss->GetComponent<RigidBody>()->SetEnable(true);
-        boss->GetComponent<RigidBody>()->SetMoveSpeed(300.0f);
-        boss->GetComponent<RigidBody>()->SetUseGravity(false);
-        boss->GetComponent<RigidBody>()->SetLinearDamping(2.0f);
-
-
-        ------------Boss Test-------------*/    
+            engine->GetFontManager()->GetFont("silver")); 
 
         auto bossSpawn = std::make_unique<Timer>();
         bossSpawn->SetElapsedTime(60.0f);
@@ -335,6 +356,8 @@ public:
             boss->GetComponent<Collider>()->SetSize(Vector2D{ 34.0f,56.0f });
             boss->GetComponent<Collider>()->SetOffset(Vector2D{ 100.0f,83.0f });
             boss->GetComponent<Collider>()->SetLayer(2);        //敌人层
+
+            boss->AddComponent<DamageDealer>()->SetDamage(2.0f);
 
             boss->AddComponent<Health>();
             boss->GetComponent<Health>()->SetHp(100);
@@ -396,7 +419,7 @@ public:
 
             });
 
-        objects.push_back(std::move(buttonTimer));
+        //objects.push_back(std::move(buttonTimer));
 
         auto gameManager = CreateGameObject("gameManager");
         gameManager->AddComponent<UpgradeManager>();
@@ -412,7 +435,8 @@ public:
     void Update(float deltaTime) override{   
         
         //累计游戏时间
-        gameTotalTime += deltaTime;
+        if (!gamePause)
+            gameTotalTime += deltaTime;
 
 
         Scene::Update(deltaTime);
@@ -421,17 +445,20 @@ public:
         
 
         for (auto& obj : gameObjects) {
+            //if (gamePause) break;
             auto* collider = obj->GetComponent<Collider>();
             if (!collider) continue;
             engine->GetCollisionSystem()->RegisterCollider(collider);
         }
 
         for (auto& obj : objects) {
-            obj->Update(deltaTime);
+            if (!obj->GetPause())
+                obj->Update(deltaTime);
         }
 
         for (auto& obj : gameObjects) {
             obj->Update(deltaTime);
+            //if (gamePause) continue;
             if (obj->GetName() == "objCount") {
                 obj->GetComponent<TextRender>()->SetText(std::to_string(gameObjects.size()));
             }
@@ -446,21 +473,21 @@ public:
                 obj->GetComponent<TextRender>()->SetText(time);
             }
         }
+        if (!gamePause) {
+            if (engine->Input()->isDown("small")) {
+                camera->SetZoom(camera->GetZoom() - 0.01f);
+            }
+            if (engine->Input()->isDown("big")) {
+                camera->SetZoom(camera->GetZoom() + 0.01f);
+            }
 
-        if (engine->Input()->isDown("small")) {
-            camera->SetZoom(camera->GetZoom() - 0.01f);
-        }
-        if (engine->Input()->isDown("big")) {
-            camera->SetZoom(camera->GetZoom() + 0.01f);
-        }
-
-        if (engine->Input()->isPress("clear")) {
-            auto allobj = FindGameObjectByName("expOrb");
-            for (auto& obj : allobj) {
-                obj->GetComponent<ExpOrbComponent>()->SetPursuit(true);
+            if (engine->Input()->isPress("clear")) {
+                auto allobj = FindGameObjectByName("expOrb");
+                for (auto& obj : allobj) {
+                    obj->GetComponent<ExpOrbComponent>()->SetPursuit(true);
+                }
             }
         }
-        
         camera->Update(deltaTime);
     }
 
@@ -469,7 +496,8 @@ public:
     }
 
     void ProcessPendingOperations() override {
-        
+        //if (gamePause) return;
+
         CleanDestroyObjects();
 
 		for (auto& obj : addedGameObjects) {
@@ -479,10 +507,13 @@ public:
 
     }
 
+    
+
 private:
     std::unique_ptr<ExpOrbFactory> expOrbFactory;
     GameObject* target = nullptr;
 	EnemySpawn* enemySpawnPointer = nullptr;
     double gameTotalTime = 0.0;
+    GameState gameState;
 };
 

@@ -25,6 +25,9 @@ public:
 
 	void SetExpOrbFactory(class ExpOrbFactory* factory);
 
+	//设置敌人血量
+	void SetEnemyHp(int hp);
+
 private:
 
 	//float spawnInterval = 5.0f;		//敌人生成间隔
@@ -33,6 +36,7 @@ private:
 	//Vector2D horizontal;			//敌人生成位置
 	//Vector2D vertical;				//敌人生成位置
 
+	int enemyHp = 2;		//敌人生命值
 	GameObject* target = nullptr;			//敌人目标
 	std::unique_ptr<EnemyFactory> enemyFactory;	//敌人工厂
 	Vector2D point;

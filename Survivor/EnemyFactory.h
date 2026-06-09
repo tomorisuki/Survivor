@@ -17,12 +17,13 @@ public:
 
 	EnemyFactory(Engine* engine) : engine(engine) {}
 
-	GameObject* CreateEnemy(const std::string& name, const Vector2D& position)
+	GameObject* CreateEnemy(const std::string& name, const Vector2D& position,int hp = 2)
 	{
 		GameObject* enemy = new GameObject(engine);
 		enemy->name = name;	//敌人名字
 		enemy->transform.scale = { 0.5f,0.5f };
 		enemy->AddComponent<SpriteRender>();	//渲染组件
+		enemy->AddComponent<SpriteRender>()->SetIsIgnorePause(true);
 
 		enemy->AddComponent<AnimatorComponent>();	//动画组件
 		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("fly",
@@ -32,13 +33,14 @@ public:
 		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("hurt",
 			engine->GetAniClipMgr()->GetAnimationClip("enemy_hurt"));
 		enemy->GetComponent<AnimatorComponent>()->Play("fly");
+		enemy->GetComponent<AnimatorComponent>()->SetIsIgnorePause(true);
 
 		enemy->AddComponent<RigidBody>();
 		enemy->GetComponent<RigidBody>()->SetUseGravity(false);
 		enemy->GetComponent<RigidBody>()->SetMoveSpeed(500.0f);
 		enemy->GetComponent<RigidBody>()->SetLinearDamping(4.2f);
 
-
+		enemy->AddComponent<DamageDealer>()->SetDamage(1.0f);
 
 		enemy->AddComponent<Collider>();
 		enemy->GetComponent<Collider>()->SetEnableDebug(false);
@@ -48,7 +50,7 @@ public:
 
 
 
-		enemy->AddComponent<Health>()->SetHp(2);
+		enemy->AddComponent<Health>()->SetHp(hp);
 		
 		enemy->AddComponent<EnemyAI>();
 		enemy->GetComponent<EnemyAI>()->SetAttackTarget(target);

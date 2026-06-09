@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Component.h"
 
@@ -15,7 +15,7 @@ public:
 
 	void SetPlayer(class GameObject* player);
 
-	//ÉèÖÃÓÎÏ·³¡¾°
+	//è®¾ç½®æ¸¸æˆåœºæ™¯
 	void SetScene(class Scene* scene);
 
 private:
@@ -23,6 +23,7 @@ private:
 	class PlayerState* state = nullptr;
 	class RigidBody* rigidBody = nullptr;
 	class ExperienceComponent* expComponent = nullptr;
+	class Health* health = nullptr;
 	class Scene* scene = nullptr;
 };
 

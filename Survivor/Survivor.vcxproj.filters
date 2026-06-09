@@ -164,29 +164,41 @@
     <ClCompile Include="GameState.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="LifeTimeComponent.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="FontManager.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="TextRender.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ConnectOther.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="UpdateExpText.cpp">
+    <ClCompile Include="PlayerState.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="BossAI.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="LifeBindComponent.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Engine\Component</Filter>
     </ClCompile>
     <ClCompile Include="BossHpText.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonComponent.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectOther.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeBindComponent.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeTimeComponent.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHpTextComponent.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRender.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="UpdateExpText.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="UpgradeManager.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>Engine\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -313,13 +325,41 @@
     </ClInclude>
     <ClInclude Include="ClearScreen.h" />
     <ClInclude Include="GameState.h" />
-    <ClInclude Include="LifeTimeComponent.h" />
-    <ClInclude Include="FontManager.h" />
-    <ClInclude Include="TextRender.h" />
-    <ClInclude Include="ConnectOther.h" />
-    <ClInclude Include="UpdateExpText.h" />
-    <ClInclude Include="BossAI.h" />
-    <ClInclude Include="LifeBindComponent.h" />
-    <ClInclude Include="BossHpText.h" />
+    <ClInclude Include="PlayerState.h">
+      <Filter>Project\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="BossAI.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="BossHpText.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeBindComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeTimeComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHpTextComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRender.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="UpdateExpText.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="UpgradeManager.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectOther.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

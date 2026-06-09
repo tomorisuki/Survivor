@@ -14,6 +14,7 @@ BulletSpawn::BulletSpawn(Engine* engine)
 void BulletSpawn::Update(float deltaTime)
 {
 	if (!enable) return;
+	if (bulletNumber == 0) return;
 
 	currentTime += deltaTime;
 

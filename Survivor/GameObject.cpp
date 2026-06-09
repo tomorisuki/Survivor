@@ -11,6 +11,7 @@ void GameObject::Start()
 void GameObject::Update(float deltaTime) 
 {
 	for (auto& component : components) {
+		if (pause && !component->ignorePause) continue;
 		component->Update(deltaTime);
 	}
 }
@@ -18,6 +19,8 @@ void GameObject::Update(float deltaTime)
 void GameObject::Render()
 {
 	for (auto& component : components) {
+		//绘制不应该暂停
+		//if (isPause && !component->ignorePause) continue;
 		component->Render();
 	}
 }
@@ -26,6 +29,7 @@ void GameObject::Render()
 void GameObject::OnCollisionEnter(Collider* collider)
 {
 	for (auto& component : components) {
+		if (pause && !component->ignorePause) continue;
 		component->OnCollisionEnter(collider);
 	}
 }
@@ -33,10 +37,19 @@ void GameObject::OnCollisionEnter(Collider* collider)
 void GameObject::OnCollisionExit(Collider* collider)
 {
 	for (auto& component : components) {
+		if (pause && !component->ignorePause) continue;
 		component->OnCollisionExit(collider);
 	}
 }
 
+void GameObject::SetIgnorePause(bool flag)
+{
+	ignorePause = flag;
+
+	for (auto& component : components) {
+		component->SetIsIgnorePause(flag);
+	}
+}
 
 
 

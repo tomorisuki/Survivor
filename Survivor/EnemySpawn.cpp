@@ -19,7 +19,7 @@ GameObject* EnemySpawn::SpawnEnemy(const std::string& enemyName)
 	Vector2D spawnPosition;
 	spawnPosition.x = point.x + FMath::Cos(angle) * spawnRadius;
 	spawnPosition.y = point.y + FMath::Sin(angle) * spawnRadius;
-	return enemyFactory->CreateEnemy(enemyName, spawnPosition);
+	return enemyFactory->CreateEnemy(enemyName, spawnPosition, enemyHp);
 }
 
 void EnemySpawn::SetCirclrPoint(Vector2D point)
@@ -35,4 +35,9 @@ void EnemySpawn::SetSpawnRadius(float radius)
 void EnemySpawn::SetExpOrbFactory(class ExpOrbFactory* factory)
 {
 	enemyFactory->SetExpOrbFactory(factory);
+}
+
+void EnemySpawn::SetEnemyHp(int hp)
+{
+	enemyHp = hp;
 }

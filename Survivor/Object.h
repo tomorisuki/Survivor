@@ -26,12 +26,22 @@ public:
 		pendingDestroy = flag;
 	}
 
+	bool GetPause() const {
+		return pause;
+	}
+
+	void SetPause(bool pause) {
+		this->pause = pause;
+	}
+
 	virtual void Update(float deltaTime) {}
 
 protected:
 	Engine* engine = nullptr;
 
 	std::string name = "";
+
+	bool pause = false;
 
 	bool pendingDestroy = false;
 };

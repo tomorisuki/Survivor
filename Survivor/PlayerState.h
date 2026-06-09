@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Component.h"
 
@@ -12,7 +12,7 @@ public:
 
 public:
 
-	int bulletNumber = 3;
+	int bulletNumber = 0;
 
 	int hp = 3;
 

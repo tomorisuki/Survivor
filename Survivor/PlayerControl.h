@@ -9,12 +9,14 @@ public:
 	void Update(float deltaTime) override;
 	void Render() override;
 
-	
+	void OnCollisionEnter(class Collider* collider) override;
 
 private:
 	class AnimatorComponent* animator = nullptr;
 	class InputSystem* input = nullptr;
 	class RigidBody* rigidBody = nullptr;
+	class Health* health = nullptr;
+	class SpriteRender* spriteRender = nullptr;
 	bool isClearScreen = false;
 	bool isAbsorb = false;
 };

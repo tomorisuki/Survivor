@@ -1,4 +1,4 @@
-#include "UpgradeManager.h"
+ï»¿#include "UpgradeManager.h"
 #include "GameObject.h"
 
 #include "PlayerState.h"
@@ -13,83 +13,154 @@
 #include "BulletSpawn.h"
 
 #include "Scene.h"
+#include "PlayerHpTextComponent.h"
+#include "Health.h"
 
 void UpgradeManager::Start()
 {
 	state = player->GetComponent<PlayerState>();
 	rigidBody = player->GetComponent<RigidBody>();
 	expComponent = player->GetComponent<ExperienceComponent>();
+
+	health = player->GetComponent<Health>();
+
 }
 
 void UpgradeManager::Update(float deltaTime)
 {
+	if (health->GetHp() == 0) {
+		scene->GamePause();
+
+		auto gameOverText = scene->CreateGameObject("gameOverText");
+		gameOverText->transform.position = { 400.0f,350.0f };
+		gameOverText->transform.scale = { 4.0f,4.0f };
+		gameOverText->AddComponent<TextRender>()->SetFont(
+			engine->GetFontManager()->GetFont("silver"));
+
+		
+		gameOverText->GetComponent<TextRender>()->SetText("Game Over!");
+
+		gameOverText->transform.UpdatePrevPosition();
+		gameOverText->Start();
+
+		return;
+	}
+
 	if (expComponent->Upgrade()) {
 		expComponent->ResetUpgrade();
 
-		//ÏÔÊ¾ÔöÒæÑ¡Ôñ½çÃæ
+		scene->GamePause();	//æ¸¸æˆæš‚åœ
+		//æ˜¾ç¤ºå¢žç›Šé€‰æ‹©ç•Œé¢
 		auto buff1 = scene->CreateGameObject("buff1");
 		auto buff2 = scene->CreateGameObject("buff2");
+		auto buff3 = scene->CreateGameObject("buff3");
 
-		buff1->transform.position = { 510.0f,350.0f };
-		buff1->transform.scale = { 1.0f,2.0f };
+		buff1->SetIgnorePause(true);
+		buff2->SetIgnorePause(true);
+		buff3->SetIgnorePause(true);
+
+		buff1->transform.position = { 305.5f,350.0f };
+		buff1->transform.scale = { 3.0f,2.0f };
 
 		buff1->AddComponent<SpriteRender>(
 			engine->GetTextureManager()->GetSprite("card"));
 		buff1->GetComponent<SpriteRender>()->GetSprite()->SetCropRect(
-			{ 0.0f,0.0f,64.0f,64.0f });
-		buff1->GetComponent<SpriteRender>()->SetUIRender(true);	//UI»æÖÆ
+			{ 0.0f,0.0f,63.0f,64.0f });
+		buff1->GetComponent<SpriteRender>()->SetUIRender(true);	//UIç»˜åˆ¶
 
 		buff1->AddComponent<ButtonComponent>()->SetButtonRect({
 			0.0f,0.0f,64.0f,64.0f});
-		buff1->GetComponent<ButtonComponent>()->SetCallback([this,buff1,buff2]() {
-			rigidBody->SetMoveSpeed(rigidBody->moveSpeed * 1.2f);
+		buff1->GetComponent<ButtonComponent>()->SetCallback([this,buff1,buff2,buff3]() {
+			rigidBody->SetMoveSpeed(rigidBody->moveSpeed * 1.1f);
 			buff1->SetPendingDestroy(true);
 			buff2->SetPendingDestroy(true);
+			buff3->SetPendingDestroy(true);
+			scene->GameResume();	//æ¸¸æˆç»§ç»­
 			});
+		//buff1->GetComponent<ButtonComponent>()->SetIsIgnorePause(true);
+
 		buff1->transform.UpdatePrevPosition();
 		buff1->Start();
 
 		auto buffText1 = scene->CreateGameObject("buffText1");
-		buffText1->transform.position = { 515.0f,380.0f };
+		buffText1->transform.position = { 330.5f,380.0f };
 		buffText1->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));
-		buffText1->AddComponent<TextRender>()->SetText("MoveSpeed + 20%");
+		buffText1->AddComponent<TextRender>()->SetText("MoveSpeed +10%");
 		buffText1->AddComponent<LifeBindComponent>()->SetTarget(buff1);
 		buffText1->transform.UpdatePrevPosition();
 		buffText1->Start();
 
 
 		
-		buff2->transform.position = { 640.0f,350.0f };
-		buff2->transform.scale = { 1.0f,2.0f };
+		buff2->transform.position = { 524.5f,350.0f };
+		buff2->transform.scale = { 3.0f,2.0f };
 
 		buff2->AddComponent<SpriteRender>(
 			engine->GetTextureManager()->GetSprite("card"));
 		buff2->GetComponent<SpriteRender>()->GetSprite()->SetCropRect(
-			{ 0.0f,0.0f,64.0f,64.0f });
-		buff2->GetComponent<SpriteRender>()->SetUIRender(true);	//UI»æÖÆ
+			{ 0.0f,0.0f,63.0f,64.0f });
+		buff2->GetComponent<SpriteRender>()->SetUIRender(true);	//UIç»˜åˆ¶
 
 		buff2->AddComponent<ButtonComponent>()->SetButtonRect({
 			0.0f,0.0f,64.0f,64.0f });
-		buff2->GetComponent<ButtonComponent>()->SetCallback([this, buff2,buff1]() {
+		buff2->GetComponent<ButtonComponent>()->SetCallback([this, buff2,buff1,buff3]() {
 			BulletSpawn* bulletSpawn = dynamic_cast<BulletSpawn*>(scene->FindFirstObjectByName("bulletSpawn"));
-			state->bulletNumber += 3;
+			state->bulletNumber += 1;
 			bulletSpawn->SetBulletNumber(state->bulletNumber);
 			buff2->SetPendingDestroy(true);
 			buff1->SetPendingDestroy(true);
+			buff3->SetPendingDestroy(true);
+			scene->GameResume();		//æ¸¸æˆç»§ç»­
 			});
+		buff2->GetComponent<ButtonComponent>()->SetIsIgnorePause(true);
 		buff2->transform.UpdatePrevPosition();
 		buff2->Start();
 
 		auto buffText2 = scene->CreateGameObject("buffText2");
-		buffText2->transform.position = { 655.0f,380.0f };
+		buffText2->transform.position = { 549.5f,380.0f };
 		buffText2->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));
-		buffText2->AddComponent<TextRender>()->SetText("Bullet Number + 20%");
-		buffText2->AddComponent<LifeBindComponent>()->SetTarget(buff1);
+		buffText2->AddComponent<TextRender>()->SetText("BulletNumber +1");
+		buffText2->AddComponent<LifeBindComponent>()->SetTarget(buff2);
 		buffText2->transform.UpdatePrevPosition();
 		buffText2->Start();
 
+
+
+
+		buff3->transform.position = { 743.5f,350.0f };
+		buff3->transform.scale = { 3.0f,2.0f };
+
+		buff3->AddComponent<SpriteRender>(
+			engine->GetTextureManager()->GetSprite("card"));
+		buff3->GetComponent<SpriteRender>()->GetSprite()->SetCropRect(
+			{ 0.0f,0.0f,63.0f,64.0f });
+		buff3->GetComponent<SpriteRender>()->SetUIRender(true);	//UIç»˜åˆ¶
+
+		buff3->AddComponent<ButtonComponent>()->SetButtonRect({
+			0.0f,0.0f,64.0f,64.0f });
+		buff3->GetComponent<ButtonComponent>()->SetCallback([this, buff2, buff1,buff3]() {
+			BulletSpawn* bulletSpawn = dynamic_cast<BulletSpawn*>(scene->FindFirstObjectByName("bulletSpawn"));
+			state->spreadAngle += 30;
+			bulletSpawn->SetSpreadAngle(state->spreadAngle);
+			buff2->SetPendingDestroy(true);
+			buff1->SetPendingDestroy(true);
+			buff3->SetPendingDestroy(true);
+			scene->GameResume();		//æ¸¸æˆç»§ç»­
+			});
+		buff3->GetComponent<ButtonComponent>()->SetIsIgnorePause(true);
+		buff3->transform.UpdatePrevPosition();
+		buff3->Start();
+
+		auto buffText3 = scene->CreateGameObject("buffText3");
+		buffText3->transform.position = { 768.5f,380.0f };
+		buffText3->AddComponent<TextRender>()->SetFont(
+			engine->GetFontManager()->GetFont("silver"));
+		buffText3->AddComponent<TextRender>()->SetText("SpreadAngle +30");
+		buffText3->AddComponent<LifeBindComponent>()->SetTarget(buff3);
+		buffText3->transform.UpdatePrevPosition();
+		buffText3->Start();
 	}
 }
 

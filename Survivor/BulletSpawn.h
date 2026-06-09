@@ -43,7 +43,7 @@ private:
 	float spreadAngle = 60.0f;		//发射角度
 
 	int damage = 1;					//子弹伤害
-	int bulletNumber = 1;			//子弹数量
+	int bulletNumber = 0;			//子弹数量
 	bool enable = false;			//是否启用
 
 };
