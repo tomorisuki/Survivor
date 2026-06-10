@@ -21,6 +21,7 @@ public:
 			obj->transform.UpdatePrevPosition();	//正式更新前，先初始化一下物体的位置
 		}
 	}
+
 	virtual void Update(float deltaTime)
 	{
 		for (auto& obj : gameObjects) {
@@ -71,6 +72,14 @@ public:
 		GameObject* ptr = obj.get();
 		gameObjects.push_back(std::move(obj));
 		return ptr;
+	}
+
+	GameObject* CreateGameObjectLater(const std::string& name)
+	{
+		auto obj = new GameObject(engine);
+		obj->name = name;
+		addedGameObjects.push_back(obj);
+		return obj;
 	}
 
 	void SetEngine(Engine* engine) {

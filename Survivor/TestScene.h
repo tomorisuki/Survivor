@@ -66,7 +66,7 @@ public:
 
         camera = std::make_unique<Camera>();
         camera->SetCameraSize(engine->WindowSize());
-        //camera->SetClamp({ 0.0f,1280.0f },{0.0f,0.0f});
+        camera->SetClamp({ 0.0f,1360.0f },{0.0f,640.0f});
 
         engine->SetCamera(camera.get());
 
@@ -77,17 +77,14 @@ public:
         background->GetComponent<SpriteRender>()->SetLayer(0);
 
         auto player = CreateGameObject("player");
-
         player->AddComponent<SpriteRender>()->SetIsIgnorePause(true);
         engine->GetTextureManager()->GetSprite("sunflower")->SetFlip(false);
         player->transform.position = { 500.0f,200.0f };
         player->AddComponent<RigidBody>();
         player->GetComponent<RigidBody>()->SetUseGravity(false);
-        //player->GetComponent<RigidBody>()->SetFriction(Vector2D{0.98f,0.98f});
         player->GetComponent<RigidBody>()->SetLinearDamping(5.0f);
         player->GetComponent<RigidBody>()->SetMoveSpeed(1500.0f);
         player->AddComponent<Collider>();
-        //player->GetComponent<Collider>()->SetEnableDebug(true);
         player->GetComponent<Collider>()->SetSize(Vector2D{ 20.0f,20.0f });
         player->GetComponent<Collider>()->SetOffset(Vector2D{ 2.0f,2.0f });
         player->GetComponent<Collider>()->SetLayer(1);  //玩家
@@ -98,7 +95,6 @@ public:
             engine->GetAniClipMgr()->GetAnimationClip("dinosaur_idle"));
 		player->GetComponent<AnimatorComponent>()->AddAnimationClip("move",
 			engine->GetAniClipMgr()->GetAnimationClip("dinosaur_move"));
-		//engine->GetAniClipMgr()->GetAnimationClip("dinosaur_move")->SetFlip(true);
 		player->GetComponent<AnimatorComponent>()->AddAnimationClip("attack",
 			engine->GetAniClipMgr()->GetAnimationClip("dinosaur_attack"));
 		player->GetComponent<AnimatorComponent>()->Play("idle");
@@ -125,7 +121,6 @@ public:
         shadow->GetComponent<FollowComponent>()->SetOffset(Vector2D{ 4.0f,15.0f });
         shadow->GetComponent<FollowComponent>()->SetLayerDifference(-1);
 
-
         engine->Input()->BindKeyCode("left", KeyCode::KEY_A);
         engine->Input()->BindKeyCode("right", KeyCode::KEY_D);
         engine->Input()->BindKeyCode("up", KeyCode::KEY_W);
@@ -133,24 +128,6 @@ public:
         engine->Input()->BindKeyCode("small", KeyCode::KEY_J);
         engine->Input()->BindKeyCode("big", KeyCode::KEY_K);
         engine->Input()->BindKeyCode("clear", KeyCode::KEY_C);
-
-        //effectSprite = new Sprite(engine->GetTextureManager()->GetTexture("effect"));
-
-        /*
-        auto effect = CreateGameObject("effect");
-        effect->AddComponent<AnimatorComponent>();
-        effect->GetComponent<AnimatorComponent>()->AddAnimationClip("effect", 
-            engine->GetAniClipMgr()->GetAnimationClip("effect"));
-        effect->GetComponent<AnimatorComponent>()->Play("effect");
-        effect->AddComponent<Collider>();
-        effect->GetComponent<Collider>()->SetLayer(4);
-        effect->GetComponent<Collider>()->SetSize(Vector2D{ 64.0f,64.0f });
-        //effect->GetComponent<Collider>()->EnableDebug(true);
-
-
-        effect->AddComponent<SpriteRender>();
-        effect->transform.position = {600.0f,400.0f };
-        */
 
         auto oribitBullet1 = CreateGameObject("oribitBullet");
         oribitBullet1->transform.scale = { 0.5f,0.5f };
@@ -165,10 +142,8 @@ public:
         oribitBullet1->GetComponent<OrbitBullet>()->SetSpeed(5.0f);
         oribitBullet1->GetComponent<OrbitBullet>()->SetAngle(0.0f);
         oribitBullet1->GetComponent<OrbitBullet>()->SetRadius(50.0f);
-        //oribitBullet1->GetComponent<OrbitBullet>()->SetOffset(Vector2D{ -24.0f,-24.0f });
         oribitBullet1->AddComponent<Collider>();
         oribitBullet1->GetComponent<Collider>()->SetLayer(3);
-        //oribitBullet1->GetComponent<Collider>()->EnableDebug(true);
         oribitBullet1->GetComponent<Collider>()->SetSize(Vector2D{ 64.0f,64.0f });
         oribitBullet1->AddComponent<DamageDealer>()->SetDamage(1.0f);
 
@@ -256,7 +231,7 @@ public:
         warningTextTimer->SetOnce(false);
         warningTextTimer->SetElapsedTime(120.0f);
         warningTextTimer->SetCallback([this]() {
-            auto warningText = CreateGameObject("warningText");
+            auto warningText = CreateGameObjectLater("warningText");
             warningText->transform.position = { 350.0f,350.0f };
             warningText->AddComponent<TextRender>()->SetFont(
                 engine->GetFontManager()->GetFont("silver"));
@@ -332,7 +307,7 @@ public:
         bossSpawn->SetElapsedTime(60.0f);
         bossSpawn->SetOnce(true);
         bossSpawn->SetCallback([this]() {
-            auto boss = CreateGameObject("boss");
+            auto boss = CreateGameObjectLater("boss");
             boss->transform.position = { 200.0f,200.0f };
             boss->transform.scale = { 2.0f,2.0f };
             boss->AddComponent<SpriteRender>();
@@ -377,7 +352,7 @@ public:
 
 
 
-            auto bossHp = CreateGameObject("bossHp");
+            auto bossHp = CreateGameObjectLater("bossHp");
 
             bossHp->transform.position = { 550.0f, 50.0f };
 
@@ -392,34 +367,6 @@ public:
 
 
         objects.push_back(std::move(bossSpawn));
-
-        auto buttonTimer = std::make_unique<Timer>();
-        buttonTimer->SetOnce(true);
-        buttonTimer->SetElapsedTime(10.0f);
-        buttonTimer->SetCallback([this]()
-            {
-                auto button = CreateGameObject("button");
-                button->transform.position = { 576.0f,296.0f };
-                button->AddComponent<SpriteRender>(
-                    engine->GetTextureManager()->GetSprite("card"));
-                button->GetComponent<SpriteRender>()->SetUIRender(true);
-                button->GetComponent<SpriteRender>()->GetSprite()->SetCropRect({
-                    0.0f,0.0f,64.0f,64.0f
-                    });
-                button->AddComponent<ButtonComponent>();
-                button->GetComponent<ButtonComponent>()->SetButtonRect({
-                    0.0f,0.0f,64.0f,64.0f
-                    });
-                button->GetComponent<ButtonComponent>()->SetCallback([button]() {
-                    std::cout << "点击了按钮" << std::endl;
-                    button->SetPendingDestroy(true);
-                    });
-                button->transform.UpdatePrevPosition();
-                button->Start();
-
-            });
-
-        //objects.push_back(std::move(buttonTimer));
 
         auto gameManager = CreateGameObject("gameManager");
         gameManager->AddComponent<UpgradeManager>();
@@ -437,7 +384,6 @@ public:
         //累计游戏时间
         if (!gamePause)
             gameTotalTime += deltaTime;
-
 
         Scene::Update(deltaTime);
         engine->GetCollisionSystem()->ClearColliders();
@@ -458,7 +404,6 @@ public:
 
         for (auto& obj : gameObjects) {
             obj->Update(deltaTime);
-            //if (gamePause) continue;
             if (obj->GetName() == "objCount") {
                 obj->GetComponent<TextRender>()->SetText(std::to_string(gameObjects.size()));
             }
@@ -496,7 +441,6 @@ public:
     }
 
     void ProcessPendingOperations() override {
-        //if (gamePause) return;
 
         CleanDestroyObjects();
 

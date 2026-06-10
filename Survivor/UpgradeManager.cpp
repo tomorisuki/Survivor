@@ -31,7 +31,7 @@ void UpgradeManager::Update(float deltaTime)
 	if (health->GetHp() == 0) {
 		scene->GamePause();
 
-		auto gameOverText = scene->CreateGameObject("gameOverText");
+		auto gameOverText = scene->CreateGameObjectLater("gameOverText");
 		gameOverText->transform.position = { 400.0f,350.0f };
 		gameOverText->transform.scale = { 4.0f,4.0f };
 		gameOverText->AddComponent<TextRender>()->SetFont(
@@ -51,9 +51,9 @@ void UpgradeManager::Update(float deltaTime)
 
 		scene->GamePause();	//游戏暂停
 		//显示增益选择界面
-		auto buff1 = scene->CreateGameObject("buff1");
-		auto buff2 = scene->CreateGameObject("buff2");
-		auto buff3 = scene->CreateGameObject("buff3");
+		auto buff1 = scene->CreateGameObjectLater("buff1");
+		auto buff2 = scene->CreateGameObjectLater("buff2");
+		auto buff3 = scene->CreateGameObjectLater("buff3");
 
 		buff1->SetIgnorePause(true);
 		buff2->SetIgnorePause(true);
@@ -82,7 +82,7 @@ void UpgradeManager::Update(float deltaTime)
 		buff1->transform.UpdatePrevPosition();
 		buff1->Start();
 
-		auto buffText1 = scene->CreateGameObject("buffText1");
+		auto buffText1 = scene->CreateGameObjectLater("buffText1");
 		buffText1->transform.position = { 330.5f,380.0f };
 		buffText1->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));
@@ -117,7 +117,7 @@ void UpgradeManager::Update(float deltaTime)
 		buff2->transform.UpdatePrevPosition();
 		buff2->Start();
 
-		auto buffText2 = scene->CreateGameObject("buffText2");
+		auto buffText2 = scene->CreateGameObjectLater("buffText2");
 		buffText2->transform.position = { 549.5f,380.0f };
 		buffText2->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));
@@ -153,7 +153,7 @@ void UpgradeManager::Update(float deltaTime)
 		buff3->transform.UpdatePrevPosition();
 		buff3->Start();
 
-		auto buffText3 = scene->CreateGameObject("buffText3");
+		auto buffText3 = scene->CreateGameObjectLater("buffText3");
 		buffText3->transform.position = { 768.5f,380.0f };
 		buffText3->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));

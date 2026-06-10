@@ -36,7 +36,7 @@ public:
 
 		bullet->AddComponent<Collider>();
 		bullet->GetComponent<Collider>()->SetEnable(true);
-		bullet->GetComponent<Collider>()->SetEnableDebug(false);
+		bullet->GetComponent<Collider>()->SetEnableDebug(true);
 		bullet->GetComponent<Collider>()->SetSize({ 30.0f,30.0f });
 		bullet->GetComponent<Collider>()->SetLayer(3);
 
@@ -46,6 +46,25 @@ public:
 		bullet->GetComponent<SpreadBullet>()->SetLifeTime(6.0f);
 		bullet->transform.UpdatePrevPosition();
 		bullet->Start();
+
+		
+		//图片的中心位置
+		float centerX = bullet->transform.position.x + bullet->GetComponent<SpriteRender>()->GetSprite()->CropRect().x / 2;
+		float centerY = bullet->transform.position.y + bullet->GetComponent<SpriteRender>()->GetSprite()->CropRect().y / 2;
+
+		float dx = bullet->transform.position.x + 15.0f - centerX;
+		float dy = bullet->transform.position.y + 15.0f - centerY;
+
+		float tempAngle = angle;
+		float rad = tempAngle * FMath::PI / 180.0f;
+
+		float c = FMath::Cos(rad);
+		float s = FMath::Sin(rad);
+
+		Vector2D offset = { centerX + dx * c + dy * s,centerY + dx * s + dy * c };
+		bullet->GetComponent<Collider>()->SetOffset(offset);
+		
+		bullet->transform.UpdatePrevPosition();
 
 		return bullet;
 	}

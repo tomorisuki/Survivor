@@ -31,7 +31,7 @@ void ExperienceComponent::AddExp(int value)
         isUpgrade = true;
         level += 1;     //等级加一
         currentExp -= nextLevelExp;
-        nextLevelExp *= 1.2;
+        nextLevelExp = static_cast<int>(nextLevelExp * 1.2f);
         //TODO:需要一个数组记录每一个等级需要的经验值
     }
 }
@@ -40,7 +40,7 @@ float ExperienceComponent::GetExpPercent() const
 {
     float currExp = static_cast<float>(currentExp);
     float nextExp = static_cast<float>(nextLevelExp);
-    return static_cast<float>(currExp / nextExp);
+    return (currExp / nextExp);
 }
 
 int ExperienceComponent::GetLevel() const

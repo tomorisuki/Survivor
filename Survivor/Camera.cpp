@@ -30,11 +30,11 @@ void Camera::Update(float deltaTime)
 	}
 
 	if (!vertical.IsZero()) {
-		if (transform.position.y < horizontal.x) {
-			transform.position.y = horizontal.x;
+		if (transform.position.y < vertical.x) {
+			transform.position.y = vertical.x;
 		}
-		if (transform.position.y > horizontal.y) {
-			transform.position.y = horizontal.y;
+		if (transform.position.y > vertical.y) {
+			transform.position.y = vertical.y;
 		}
 	}
 
