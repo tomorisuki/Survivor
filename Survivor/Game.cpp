@@ -64,6 +64,8 @@ bool Game::InitGame()
 
 	font_manager = std::make_unique<FontManager>();
 
+    collisionSystem->SetEngine(engine.get());
+
     /*------------分配内存------------*/
 
 

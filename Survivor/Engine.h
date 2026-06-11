@@ -6,6 +6,8 @@
 #include "AnimationClipManager.h"
 #include "CollisionSystem.h"
 #include "FontManager.h"
+#include "SpatialGrid.h"
+
 
 //#include "TestScene.h"
 
@@ -41,6 +43,12 @@ public:
 		this->font_manager = font_manager;
 	}
 
+	void RegisterSpatialGrid(SpatialGrid* grid) {
+		this->spatialGrid = grid;
+	}
+
+
+
 	void SetWindowSize(const Vector2D& windowSize) {
 		this->windowSize = windowSize;
 	}
@@ -51,24 +59,16 @@ public:
 	}
 
 
-	//void SetScene(Scene* scene)
-	//{
-	//	this->scene = scene;
-	//}
 
-	//void UpdateCamera(float alpha) {
-	//	if (!camera) return;
-	//	camera->zoom = camera->previousZoom + (camera->zoom - camera->previousZoom) * alpha;
+	InputSystem* Input() const { return input; }
+	RenderSystem* GetRenderSystem() const { return render; }
+	AnimationClipManager* GetAniClipMgr() const { return aniClip_mgr; }
+	TextureManager* GetTextureManager() const { return texture_manager; }
+	Camera* GetCamera() const { return camera; }
+	CollisionSystem* GetCollisionSystem() const { return collisionSystem; }
+	FontManager* GetFontManager() const { return font_manager; }
 
-	//}
-
-	InputSystem* Input() { return input; }
-	RenderSystem* GetRenderSystem() { return render; }
-	AnimationClipManager* GetAniClipMgr() { return aniClip_mgr; }
-	TextureManager* GetTextureManager() { return texture_manager; }
-	Camera* GetCamera() { return camera; }
-	CollisionSystem* GetCollisionSystem() { return collisionSystem; }
-	FontManager* GetFontManager() { return font_manager; }
+	SpatialGrid* GetSpatialGrid() const { return spatialGrid; }
 
 	Vector2D WindowSize() const { return windowSize; }
 
@@ -98,6 +98,7 @@ private:
 	AnimationClipManager* aniClip_mgr = nullptr;
 	CollisionSystem* collisionSystem = nullptr;
 	FontManager* font_manager = nullptr;
+	SpatialGrid* spatialGrid = nullptr;
 	//Scene* scene = nullptr;
 	Camera* camera = nullptr;
 

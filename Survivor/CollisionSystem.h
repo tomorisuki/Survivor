@@ -8,6 +8,9 @@
 
 #include <unordered_set>
 
+#include "SpatialGrid.h"
+
+
 class CollisionSystem
 {
 private:
@@ -39,6 +42,10 @@ public:
 
 	void ClearColliders();
 
+	void SetEngine(class Engine* engine);
+
+	void Build(const std::vector<Collider*>& colliders);
+
 	int Size() const;
 private:
 
@@ -46,7 +53,12 @@ private:
 
 	std::vector<Collider*> colliders;
 
+	std::vector<Collider*> nearby;
+
+	std::unique_ptr<SpatialGrid> spatialGrid;
+
 	std::unordered_set<CollisionPair, CollisionPairHash> currentFrame;
 	std::unordered_set<CollisionPair, CollisionPairHash> lastFrame;
+	class Engine* engine = nullptr;
 };
 

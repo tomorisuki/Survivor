@@ -108,7 +108,7 @@ public:
 
         player->AddComponent<ExperienceComponent>();
 
-        //player->AddComponent<Health>()->SetHp(5);
+        player->AddComponent<Health>()->SetHp(5);
 
         player->AddComponent<PlayerState>();
 
@@ -211,8 +211,8 @@ public:
 
         auto enemySpawnTimer = std::make_unique<Timer>();
         enemySpawnTimer->SetOnce(false);
-        //enemySpawnTimer->SetElapsedTime(gameState.enemySpawnSpeed);
-        enemySpawnTimer->SetElapsedTime(0.0001f);
+        enemySpawnTimer->SetElapsedTime(gameState.enemySpawnSpeed);
+        //enemySpawnTimer->SetElapsedTime(0.0001f);
         enemySpawnTimer->SetCallback([this]() {
             addedGameObjects.push_back(enemySpawnPointer->SpawnEnemy("enemy"));
             });
@@ -264,7 +264,7 @@ public:
         bulletSpawn->SetBulletNumber(0);
         bulletSpawn->SetScene(this);
         bulletSpawn->SetTarget(player);
-        bulletSpawn->SetElapsedTime(0.05f);
+        bulletSpawn->SetElapsedTime(0.8f);
         bulletSpawn->SetEnable(true);
         bulletSpawn->SetSpreadAngle(30.0f);
         objects.push_back(std::move(bulletSpawn));
@@ -411,7 +411,6 @@ public:
         engine->GetCollisionSystem()->ClearColliders();
 
         
-
         for (auto& obj : gameObjects) {
             //if (gamePause) break;
             auto* collider = obj->GetComponent<Collider>();

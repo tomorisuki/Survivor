@@ -1,5 +1,6 @@
 ﻿#include "CollisionSystem.h"
 #include "GameObject.h"
+#include "Engine.h"
 
 #include <iostream>	//打印消息
 
@@ -7,6 +8,9 @@ void CollisionSystem::Init()
 {
 	//预先分配1000容量，防止运行时扩容
 	colliders.reserve(1000);
+
+	spatialGrid = std::make_unique<SpatialGrid>();
+
 
 
 	//建立碰撞对1玩家 2敌人 3玩家子弹 4敌人子弹 5经验球
@@ -27,9 +31,40 @@ void CollisionSystem::Update(float deltaTime)
 {
 
 	currentFrame.clear();
+	
+	spatialGrid->Build(colliders);
 
 	std::size_t ColliderVecSize = colliders.size();
 
+	for (auto* a : colliders) {
+		if (!a->Enable()) continue;
+
+		SDL_FRect area = {
+			a->ComputedPosition().x,a->ComputedPosition().y,
+			a->Size().x, a->Size().y
+		};
+		
+		spatialGrid->Query(area, nearby);
+		for (auto* b : nearby) {
+			if (!b->Enable()) continue;
+			if (a == b || a > b) continue;
+			if (!collisionMatrix[a->Layer()][b->Layer()] &&
+				!collisionMatrix[b->Layer()][a->Layer()]) continue;
+			Rect rectA;
+			rectA.position = a->ComputedPosition();
+			rectA.size = a->Size();
+			Rect rectB;
+			rectB.position = b->ComputedPosition();
+			rectB.size = b->Size();
+
+			//发生碰撞
+			if (rectA.IsCollision(rectB)) {
+				currentFrame.emplace(a, b);
+			}
+		}
+	}
+
+	/*
 	for (std::size_t i = 0; i < ColliderVecSize; i++) {
 		for (std::size_t j = i + 1; j < ColliderVecSize; j++) {
 
@@ -56,7 +91,7 @@ void CollisionSystem::Update(float deltaTime)
 			}
 		}
 	}
-
+	*/
 	//二段
 
 	for (const auto& pair : currentFrame)
@@ -132,8 +167,18 @@ void CollisionSystem::ClearColliders()
 	colliders.clear();
 }
 
+void CollisionSystem::Build(const std::vector<Collider*>& colliders)
+{
+	spatialGrid->Build(colliders);
+}
+
 //test
 int CollisionSystem::Size() const
 {
 	return static_cast<int>(colliders.size());
+}
+
+void CollisionSystem::SetEngine(class Engine* engine)
+{
+	this->engine = engine;
 }

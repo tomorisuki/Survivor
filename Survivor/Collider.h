@@ -106,6 +106,9 @@ public:
 	//设置是否启用
 	void SetEnable(bool enable);
 
+public:
+	uint32_t lastQueryStamp = 0;
+
 private:
 	int layer = 0;
 	bool isTrigger = false;
