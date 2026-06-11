@@ -28,24 +28,25 @@ void UpgradeManager::Start()
 
 void UpgradeManager::Update(float deltaTime)
 {
-	if (health->GetHp() == 0) {
-		scene->GamePause();
+	if (health) {
+		if (health->GetHp() == 0) {
+			scene->GamePause();
 
-		auto gameOverText = scene->CreateGameObjectLater("gameOverText");
-		gameOverText->transform.position = { 400.0f,350.0f };
-		gameOverText->transform.scale = { 4.0f,4.0f };
-		gameOverText->AddComponent<TextRender>()->SetFont(
-			engine->GetFontManager()->GetFont("silver"));
+			auto gameOverText = scene->CreateGameObjectLater("gameOverText");
+			gameOverText->transform.position = { 400.0f,350.0f };
+			gameOverText->transform.scale = { 4.0f,4.0f };
+			gameOverText->AddComponent<TextRender>()->SetFont(
+				engine->GetFontManager()->GetFont("silver"));
 
-		
-		gameOverText->GetComponent<TextRender>()->SetText("Game Over!");
 
-		gameOverText->transform.UpdatePrevPosition();
-		gameOverText->Start();
+			gameOverText->GetComponent<TextRender>()->SetText("Game Over!");
 
-		return;
+			gameOverText->transform.UpdatePrevPosition();
+			gameOverText->Start();
+
+			return;
+		}
 	}
-
 	if (expComponent->Upgrade()) {
 		expComponent->ResetUpgrade();
 

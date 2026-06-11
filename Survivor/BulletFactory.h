@@ -38,7 +38,7 @@ public:
 
 		bullet->AddComponent<Collider>();
 		bullet->GetComponent<Collider>()->SetEnable(true);
-		bullet->GetComponent<Collider>()->SetEnableDebug(true);
+		bullet->GetComponent<Collider>()->SetEnableDebug(false);
 		bullet->GetComponent<Collider>()->SetSize({ 30.0f,30.0f });
 		bullet->GetComponent<Collider>()->SetLayer(3);
 
@@ -49,23 +49,17 @@ public:
 		bullet->GetComponent<SpreadBullet>()->SetLifeTime(6.0f);
 
 		bullet->Start();
+		
+		Vector2D point = bullet->GetComponent<Collider>()->Size() * 0.5f;
+		Vector2D pivot;
+		pivot.x += bullet->GetComponent<SpriteRender>()->GetSprite()->CropRect().w * 0.5f;
+		pivot.y += bullet->GetComponent<SpriteRender>()->GetSprite()->CropRect().h * 0.5f;
 
-		float centerX = bullet->transform.position.x + bullet->GetComponent<SpriteRender>()->GetSprite()->CropRect().w * 0.5f;
-		float centerY = bullet->transform.position.y + bullet->GetComponent<SpriteRender>()->GetSprite()->CropRect().h * 0.5f;
-
-		float localX = -bullet->GetComponent<SpriteRender>()->GetSprite()->CropRect().w * 0.5f;
-		float localY = -bullet->GetComponent<SpriteRender>()->GetSprite()->CropRect().h * 0.5f;
-
-		float tempAngle = (angle + 180.0f) / 180.0f * FMath::PI;
-
-		float newX = centerX + localX * FMath::Cos(tempAngle) - localY * FMath::Sin(tempAngle);
-		float newY = centerY + localX * FMath::Sin(tempAngle) + localY * FMath::Cos(tempAngle);
-
-		float offsetX = newX - bullet->transform.position.x;
-		float offsetY = newY - bullet->transform.position.y;
-
-		//bullet->GetComponent<Collider>()->SetOffset(Vector2D{ offsetX,offsetY });
-
+		float tAngle = angle;
+		Vector2D offset = FMath::RotateAroundPivot(point, pivot, tAngle);
+		offset = offset - point;
+		bullet->GetComponent<Collider>()->SetOffset(offset);
+		
 		bullet->transform.UpdatePrevPosition();
 
 		return bullet;

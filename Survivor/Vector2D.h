@@ -74,6 +74,7 @@ public:
 		return Vector2D{ x * rhs.x, y * rhs.y };
 	}
 
+
 	bool operator==(const Vector2D& rhs) const {
 		return (FMath::Abs(x - rhs.x) < Epsilon) &&
 			(FMath::Abs(y - rhs.y) < Epsilon);
@@ -143,12 +144,25 @@ inline Vector2D operator*(float scalar, const Vector2D& v) {
 	return v * scalar;
 }
 
-//namespace FMath {
-//
-//	Vector2D Clamp(const Vector2D& p_vec, const Vector2D& p_min, const Vector2D& p_max)
-//	{
-//		return { FMath::Clamp(p_vec.x, p_min.x, p_max.x) ,FMath::Clamp(p_vec.y, p_min.y, p_max.y) };
-//	}
-//
-//
-//};
+namespace FMath {
+
+	_ALWAYS_INLINE_ Vector2D RotateVector(const Vector2D& vec, float degree) {
+		float radian = degree * FMath::PI / 180.0f;
+		float cosA = FMath::Cos(radian);
+		float sinA = FMath::Sin(radian);
+		return { vec.x * cosA - vec.y - sinA,vec.x * sinA + vec.y * cosA };
+	}
+
+	//绕非原点旋转，point绕pivot旋转
+	_ALWAYS_INLINE_ Vector2D RotateAroundPivot(const Vector2D& point, const Vector2D& pivot, float degree)
+	{
+		Vector2D relative = point - pivot;
+		Vector2D rotated = RotateVector(relative, degree);
+		return pivot + rotated;
+	}
+
+	//Vector2D Clamp(const Vector2D& p_vec, const Vector2D& p_min, const Vector2D& p_max)
+	//{
+	//	return { FMath::Clamp(p_vec.x, p_min.x, p_max.x) ,FMath::Clamp(p_vec.y, p_min.y, p_max.y) };
+	//}
+};

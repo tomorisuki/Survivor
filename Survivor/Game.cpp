@@ -1,6 +1,9 @@
 ﻿#include "Game.h"
 #include <chrono>
 
+#include <imm.h>        //使用禁用输入法API
+#pragma comment(lib, "imm32.lib")
+
 
 bool Game::InitGame()
 {
@@ -21,8 +24,21 @@ bool Game::InitGame()
     SDL_CreateWindowAndRenderer("Survivor", WINDOW_WIDTH, WINDOW_HEIGHT,
         SDL_WINDOW_RESIZABLE, &sdl_window, &sdl_renderer);
 
+    SDL_SetRenderLogicalPresentation(sdl_renderer, WINDOW_WIDTH, WINDOW_HEIGHT,
+        SDL_LOGICAL_PRESENTATION_LETTERBOX);
+
     // 设置垂直同步（可选）
     SDL_SetRenderVSync(sdl_renderer, 1);
+
+    SDL_PropertiesID windowProps = SDL_GetWindowProperties(sdl_window);
+
+    hwnd = (HWND)SDL_GetPointerProperty(windowProps, SDL_PROP_WINDOW_WIN32_HWND_POINTER, NULL);
+
+    //禁用输入法
+    HIMC himc = ImmAssociateContext(hwnd, NULL);
+
+    //启用输入法
+    //ImmAssociateContext(hwnd, himc);
 
 
     texture_manager = std::make_unique<TextureManager>(sdl_renderer);
@@ -92,6 +108,10 @@ void Game::Run()
     constexpr double fixed_dt = 1.0 / 60.0;
     double accumulator = 0.0;
     auto last = std::chrono::steady_clock::now();
+
+    double fps_timer = 0.0;
+    int logic_fps = 0;
+    int render_fps = 0;
     
 	while (running) {
 
@@ -104,16 +124,19 @@ void Game::Run()
             input->Input(sdl_event);
         }
         if (!running) break;
-        input->Update();
+       
         
         auto current = std::chrono::steady_clock::now();
         double frame_time = std::chrono::duration<double>(current - last).count();
         last = current;
 
         accumulator += frame_time;
+        fps_timer += frame_time;
+
         while (accumulator >= fixed_dt) {
             
             float game_delta = static_cast<float>(fixed_dt);
+            input->Update();    //输入系统的更新
 
             scene->Update(game_delta);
 
@@ -123,22 +146,39 @@ void Game::Run()
             scene->ProcessPendingOperations();
 
             accumulator -= fixed_dt;
+            logic_fps++;
         }
         float alpha = static_cast<float>(accumulator / fixed_dt);
+        
+
+
         SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
         SDL_RenderClear(sdl_renderer);
+        
+        
         render->RenderClear();
+
+
 
         scene->Render();
 
         
         render->Render(alpha);
-        /*--------测试-------*/
-        //engine->UpdateCamera(alpha);
-        /*--------测试-------*/
-
+        render_fps++;
         SDL_RenderPresent(sdl_renderer);
+
         
+        if (fps_timer >= 1.0) {
+            engine->UpdateLogicFPS(logic_fps);
+            logic_fps = 0;
+
+
+            engine->UpdateRenderFPS(render_fps);
+            render_fps = 0;
+
+            fps_timer -= 1.0;
+        }
+
 	}
     Clean();
 }

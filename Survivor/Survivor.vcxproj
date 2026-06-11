@@ -172,11 +172,13 @@
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="LifeBindComponent.cpp" />
     <ClCompile Include="LifeTimeComponent.cpp" />
+    <ClCompile Include="LogicFPSText.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OrbitBullet.cpp" />
     <ClCompile Include="PlayerControl.cpp" />
     <ClCompile Include="PlayerHpTextComponent.cpp" />
     <ClCompile Include="PlayerState.cpp" />
+    <ClCompile Include="RenderFPSText.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="SpreadBullet.cpp" />
@@ -226,11 +228,13 @@
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="LifeBindComponent.h" />
     <ClInclude Include="LifeTimeComponent.h" />
+    <ClInclude Include="LogicFPSText.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="OrbitBullet.h" />
     <ClInclude Include="PlayerControl.h" />
     <ClInclude Include="PlayerHpTextComponent.h" />
     <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="RenderFPSText.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="RigidBody.h" />

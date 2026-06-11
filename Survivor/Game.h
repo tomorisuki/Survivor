@@ -1,8 +1,13 @@
 ﻿#pragma once
+#define WIN32_LEAN_AND_MEAN
+
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_properties.h>
 #include <SDL3_image/SDL_image.h>
 #include <SDL3_mixer/SDL_mixer.h>
 #include <SDL3_ttf/SDL_ttf.h>
+
+#include <windows.h>
 
 #include "TextureManager.h"
 #include "Sprite.h"
@@ -34,7 +39,9 @@ public:
 private:
 	SDL_Window* sdl_window = nullptr;
 	SDL_Renderer* sdl_renderer = nullptr;
-
+	
+	//窗口句柄
+	HWND hwnd = nullptr;
 
 	std::unique_ptr<TextureManager> texture_manager;
 	std::unique_ptr<Sprite> sprite;

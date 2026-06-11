@@ -13,6 +13,7 @@ void PlayerHpTextComponent::Start()
 
 void PlayerHpTextComponent::Update(float deltaTime)
 {
+	if (!health) return;
 	std::string playerHp = "Player Hp:" + std::to_string(health->GetHp());
 	textRender->SetText(playerHp);
 }

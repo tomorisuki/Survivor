@@ -72,6 +72,24 @@ public:
 
 	Vector2D WindowSize() const { return windowSize; }
 
+	void UpdateLogicFPS(int fps)
+	{
+		logicFPS = fps;
+	}
+
+	void UpdateRenderFPS(int fps)
+	{
+		renderFPS = fps;
+	}
+
+	int LogicFPS() const {
+		return logicFPS;
+	}
+
+	int RenderFPS() const {
+		return renderFPS;
+	}
+
 private:
 	Vector2D windowSize;
 	InputSystem* input = nullptr;
@@ -82,5 +100,8 @@ private:
 	FontManager* font_manager = nullptr;
 	//Scene* scene = nullptr;
 	Camera* camera = nullptr;
+
+	int logicFPS = 0;	//游戏逻辑更新
+	int renderFPS = 0;	//渲染更新
 };
 

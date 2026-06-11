@@ -19,13 +19,14 @@ void PlayerControl::Start()
 
 void PlayerControl::Update(float deltaTime)
 {
-	if (health->GetHp() == 0) {
-		spriteRender->SetIsIgnorePause(false);
-		animator->SetIsIgnorePause(false);
-		//owner->SetPause(true);	//直接暂停玩家
-		return;
+	if (health) {
+		if (health->GetHp() == 0) {
+			spriteRender->SetIsIgnorePause(false);
+			animator->SetIsIgnorePause(false);
+			//owner->SetPause(true);	//直接暂停玩家
+			return;
+		}
 	}
-
 
 	Vector2D moveDir = { 0.0f,0.0f };
 	if (input->isDown("up")) {

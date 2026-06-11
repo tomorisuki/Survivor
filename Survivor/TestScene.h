@@ -46,6 +46,10 @@
 
 #include "PlayerHpTextComponent.h"
 
+#include "LogicFPSText.h"
+
+#include "RenderFPSText.h"
+
 struct GameState{
     int enemyHp = 2;
     float enemySpawnSpeed = 0.5f;
@@ -104,7 +108,7 @@ public:
 
         player->AddComponent<ExperienceComponent>();
 
-        player->AddComponent<Health>()->SetHp(5);
+        //player->AddComponent<Health>()->SetHp(5);
 
         player->AddComponent<PlayerState>();
 
@@ -207,7 +211,8 @@ public:
 
         auto enemySpawnTimer = std::make_unique<Timer>();
         enemySpawnTimer->SetOnce(false);
-        enemySpawnTimer->SetElapsedTime(gameState.enemySpawnSpeed);
+        //enemySpawnTimer->SetElapsedTime(gameState.enemySpawnSpeed);
+        enemySpawnTimer->SetElapsedTime(0.0001f);
         enemySpawnTimer->SetCallback([this]() {
             addedGameObjects.push_back(enemySpawnPointer->SpawnEnemy("enemy"));
             });
@@ -245,7 +250,7 @@ public:
         objects.push_back(std::move(warningTextTimer));
 
         auto playerHpText = CreateGameObject("playerHpText");
-        playerHpText->transform.position = { 20.0f,40.0f };
+        playerHpText->transform.position = { 20.0f,60.0f };
         playerHpText->AddComponent<TextRender>()->SetFont(
             engine->GetFontManager()->GetFont("silver"));
         playerHpText->AddComponent<PlayerHpTextComponent>()->SetPlayer(player);
@@ -259,7 +264,7 @@ public:
         bulletSpawn->SetBulletNumber(0);
         bulletSpawn->SetScene(this);
         bulletSpawn->SetTarget(player);
-        bulletSpawn->SetElapsedTime(1.0f);
+        bulletSpawn->SetElapsedTime(0.05f);
         bulletSpawn->SetEnable(true);
         bulletSpawn->SetSpreadAngle(30.0f);
         objects.push_back(std::move(bulletSpawn));
@@ -294,7 +299,7 @@ public:
 
         auto objCount = CreateGameObject("objCount");
         objCount->SetIgnorePause(true);
-        objCount->transform.position = { 20.0f,20.0f };
+        objCount->transform.position = { 20.0f,80.0f };
         objCount->AddComponent<TextRender>(
             engine->GetFontManager()->GetFont("silver"));
 
@@ -368,6 +373,23 @@ public:
 
         objects.push_back(std::move(bossSpawn));
 
+
+        auto logicFPS = CreateGameObject("logicFPS");
+        logicFPS->transform.position = { 20.0f,20.0f };
+        logicFPS->SetIgnorePause(true);
+        logicFPS->AddComponent<TextRender>()->SetFont(
+            engine->GetFontManager()->GetFont("silver"));
+        logicFPS->GetComponent<TextRender>()->SetColor({ 0,255,0,255 });
+        logicFPS->AddComponent<LogicFPSText>()->SetDebug(true);
+        
+        auto renderFPS = CreateGameObject("renderFPS");
+        renderFPS->transform.position = { 20.0f,40.0f };
+        renderFPS->SetIgnorePause(true);
+        renderFPS->AddComponent<TextRender>()->SetFont(
+            engine->GetFontManager()->GetFont("silver"));
+        renderFPS->GetComponent<TextRender>()->SetColor({ 0,255,0,255 });
+        renderFPS->AddComponent<RenderFPSText>();
+
         auto gameManager = CreateGameObject("gameManager");
         gameManager->AddComponent<UpgradeManager>();
         gameManager->GetComponent<UpgradeManager>()->SetPlayer(player);
@@ -405,7 +427,8 @@ public:
         for (auto& obj : gameObjects) {
             obj->Update(deltaTime);
             if (obj->GetName() == "objCount") {
-                obj->GetComponent<TextRender>()->SetText(std::to_string(gameObjects.size()));
+                std::string objCountStr = "GameObject Count: " + std::to_string(gameObjects.size());
+                obj->GetComponent<TextRender>()->SetText(objCountStr);
             }
             if (obj->GetName() == "gameTime") {
                 int totalScecond = static_cast<int>(gameTotalTime);
