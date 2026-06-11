@@ -21,8 +21,7 @@ public:
 	GameObject* CreatBullet(const Vector2D& position,const Vector2D& direction,float angle = 0.0f) {
 		GameObject* bullet = new GameObject(engine);
 		bullet->transform.position = position;
-		bullet->AddComponent<SpriteRender>();
-		bullet->GetComponent<SpriteRender>()->SetIsIgnorePause(true);
+
 
 		bullet->AddComponent<AnimatorComponent>();
 		bullet->GetComponent<AnimatorComponent>()->AddAnimationClip("defalut",
@@ -30,6 +29,9 @@ public:
 		bullet->GetComponent<AnimatorComponent>()->Play("defalut");
 		bullet->GetComponent<AnimatorComponent>()->SetAngle(angle);
 		bullet->GetComponent<AnimatorComponent>()->SetIsIgnorePause(true);
+
+		bullet->AddComponent<SpriteRender>();
+		bullet->GetComponent<SpriteRender>()->SetIsIgnorePause(true);
 
 		bullet->AddComponent<DamageDealer>();
 		bullet->GetComponent<DamageDealer>()->SetDamage(1.0f);
@@ -40,30 +42,30 @@ public:
 		bullet->GetComponent<Collider>()->SetSize({ 30.0f,30.0f });
 		bullet->GetComponent<Collider>()->SetLayer(3);
 
+
 		bullet->AddComponent<SpreadBullet>();
 		bullet->GetComponent<SpreadBullet>()->SetBulletSpeed(500.0f);
 		bullet->GetComponent<SpreadBullet>()->SetDirection(direction);
 		bullet->GetComponent<SpreadBullet>()->SetLifeTime(6.0f);
-		bullet->transform.UpdatePrevPosition();
+
 		bullet->Start();
 
-		
-		//图片的中心位置
-		float centerX = bullet->transform.position.x + bullet->GetComponent<SpriteRender>()->GetSprite()->CropRect().x / 2;
-		float centerY = bullet->transform.position.y + bullet->GetComponent<SpriteRender>()->GetSprite()->CropRect().y / 2;
+		float centerX = bullet->transform.position.x + bullet->GetComponent<SpriteRender>()->GetSprite()->CropRect().w * 0.5f;
+		float centerY = bullet->transform.position.y + bullet->GetComponent<SpriteRender>()->GetSprite()->CropRect().h * 0.5f;
 
-		float dx = bullet->transform.position.x + 15.0f - centerX;
-		float dy = bullet->transform.position.y + 15.0f - centerY;
+		float localX = -bullet->GetComponent<SpriteRender>()->GetSprite()->CropRect().w * 0.5f;
+		float localY = -bullet->GetComponent<SpriteRender>()->GetSprite()->CropRect().h * 0.5f;
 
-		float tempAngle = angle;
-		float rad = tempAngle * FMath::PI / 180.0f;
+		float tempAngle = (angle + 180.0f) / 180.0f * FMath::PI;
 
-		float c = FMath::Cos(rad);
-		float s = FMath::Sin(rad);
+		float newX = centerX + localX * FMath::Cos(tempAngle) - localY * FMath::Sin(tempAngle);
+		float newY = centerY + localX * FMath::Sin(tempAngle) + localY * FMath::Cos(tempAngle);
 
-		Vector2D offset = { centerX + dx * c + dy * s,centerY + dx * s + dy * c };
-		bullet->GetComponent<Collider>()->SetOffset(offset);
-		
+		float offsetX = newX - bullet->transform.position.x;
+		float offsetY = newY - bullet->transform.position.y;
+
+		//bullet->GetComponent<Collider>()->SetOffset(Vector2D{ offsetX,offsetY });
+
 		bullet->transform.UpdatePrevPosition();
 
 		return bullet;
