@@ -21,6 +21,12 @@ bool Game::InitGame()
         return false;
     }
 
+    // SDL_mixer初始化
+    if (!MIX_Init()) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_mixer初始化失败: %s", SDL_GetError());
+        return false;
+    }
+
     SDL_CreateWindowAndRenderer("Survivor", WINDOW_WIDTH, WINDOW_HEIGHT,
         SDL_WINDOW_RESIZABLE, &sdl_window, &sdl_renderer);
 
@@ -64,6 +70,8 @@ bool Game::InitGame()
 
 	font_manager = std::make_unique<FontManager>();
 
+    audioManager = std::make_unique<AudioManager>();
+
     collisionSystem->SetEngine(engine.get());
 
     /*------------分配内存------------*/
@@ -77,6 +85,7 @@ bool Game::InitGame()
     engine->RegisterAnimationClipMgr(aniClipMgr.get());
     engine->RegisterCollisionSystem(collisionSystem.get());
     engine->RegisterFontManager(font_manager.get());
+    engine->RegisterAudioManager(audioManager.get());
     engine->SetWindowSize({ WINDOW_WIDTH,WINDOW_HEIGHT });
     /*-----------设置参数-----------*/
 
@@ -87,6 +96,7 @@ bool Game::InitGame()
     aniClipMgr->InitResources(texture_manager.get());
     collisionSystem->Init();
     font_manager->InitResources();
+    audioManager->InitResources();
 
     /*------------初始化------------*/
     scene = new TestScene();
@@ -193,7 +203,9 @@ void Game::Clean()
     if (sdl_window) SDL_DestroyWindow(sdl_window);
     
 	font_manager->Clear();  //提前清理字体资源
+    audioManager.reset();
 
+    MIX_Quit();
     TTF_Quit();
     SDL_Quit();
 }

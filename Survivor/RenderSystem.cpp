@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include <SDL3_ttf/SDL_ttf.h>
+
 #include <algorithm>	//排序算法
 
 void RenderSystem::RenderWorld(Sprite* sprite, Camera* camera, const Transform& transform,

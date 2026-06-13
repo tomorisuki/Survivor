@@ -3,6 +3,7 @@
 #include "RigidBody.h"
 #include "GameObject.h"
 #include "ExperienceComponent.h"
+#include "PlayerControl.h"
 
 #include "Scene.h"
 
@@ -22,7 +23,8 @@ void BulletSpawn::Update(float deltaTime)
 
 	if (currentTime >= elapsedTime) 
 	{
-		Vector2D direction = target->GetComponent<RigidBody>()->GetVelocity().Normalized();
+		//Vector2D direction = target->GetComponent<RigidBody>()->GetVelocity().Normalized();
+		Vector2D direction = target->GetComponent<PlayerControl>()->GetDirection();
 		
 		//不是零向量就更新
 		if (!direction.IsZero())

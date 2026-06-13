@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Component.h"
 #include "Engine.h"
@@ -19,16 +19,16 @@ public:
 
 	void Render() override;
 
-	//ÉèÖÃÎÄ±¾ÄÚÈİ
+	//è®¾ç½®æ–‡æœ¬å†…å®¹
 	void SetText(const std::string& text);
 
-	//ÉèÖÃ×ÖÌå
+	//è®¾ç½®å­—ä½“
 	void SetFont(TTF_Font* font);
 
-	//ÉèÖÃÎÄ±¾ÑÕÉ«
+	//è®¾ç½®æ–‡æœ¬é¢œè‰²
 	void SetColor(const SDL_Color& color);
 
-	//ÉèÖÃÊÇ·ñÆôÓÃÎÄ±¾äÖÈ¾
+	//è®¾ç½®æ˜¯å¦å¯ç”¨æ–‡æœ¬æ¸²æŸ“
 	void SetEnable(bool enable);
 
 
@@ -41,10 +41,10 @@ private:
 
 	SDL_Texture* texture = nullptr;
 
-	SDL_Color color = { 255,255,255,255 };	//Ä¬ÈÏ°×É«
+	SDL_Color color = { 255,255,255,255 };	//é»˜è®¤ç™½è‰²
 
 	bool enable = true;
 
-	bool isDirty = true;	//ÎÄ±¾ÄÚÈİ»ò×ÖÌå·¢Éú±ä»¯Ê±ĞèÒªÖØĞÂÉú³ÉÎÆÀí
+	bool isDirty = true;	//æ–‡æœ¬å†…å®¹æˆ–å­—ä½“å‘ç”Ÿå˜åŒ–æ—¶éœ€è¦é‡æ–°ç”Ÿæˆçº¹ç†
 };
 

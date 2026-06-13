@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include "Component.h"
+#include "Vector2D.h"
+
 class PlayerControl : public Component
 {
 	friend class GameObject;
@@ -11,6 +13,8 @@ public:
 
 	void OnCollisionEnter(class Collider* collider) override;
 
+	Vector2D GetDirection() const;
+
 private:
 	class AnimatorComponent* animator = nullptr;
 	class InputSystem* input = nullptr;
@@ -19,5 +23,6 @@ private:
 	class SpriteRender* spriteRender = nullptr;
 	bool isClearScreen = false;
 	bool isAbsorb = false;
+	Vector2D direction;
 };
 

@@ -51,7 +51,16 @@ void PlayerControl::Update(float deltaTime)
 		animator->Play("idle");
 	}
 
+	/*
+	if (!moveDir.IsZero()) {
+		if (!engine->GetAudioManager()->IsPlaying("grass_walk"))
+			engine->GetAudioManager()->PlayAudio("grass_walk", 1);
+	}
+		*/
+	if (!moveDir.IsZero())
+		direction = moveDir;
 	moveDir.Normalize();
+
 
 	rigidBody->AddForce(moveDir);
 
@@ -63,4 +72,9 @@ void PlayerControl::Render()
 
 void PlayerControl::OnCollisionEnter(Collider* collider)
 {
+}
+
+Vector2D PlayerControl::GetDirection() const
+{
+	return direction;
 }

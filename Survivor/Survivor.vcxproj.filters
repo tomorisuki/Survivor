@@ -200,6 +200,21 @@
     <ClCompile Include="FontManager.cpp">
       <Filter>Engine\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="LogicFPSText.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderFPSText.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SpatialGrid.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Delegate.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -361,5 +376,10 @@
     <ClInclude Include="ConnectOther.h">
       <Filter>Engine\Component</Filter>
     </ClInclude>
+    <ClInclude Include="LogicFPSText.h" />
+    <ClInclude Include="RenderFPSText.h" />
+    <ClInclude Include="SpatialGrid.h" />
+    <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="Delegate.h" />
   </ItemGroup>
 </Project>

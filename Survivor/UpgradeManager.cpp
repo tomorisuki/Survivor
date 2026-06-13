@@ -24,6 +24,18 @@ void UpgradeManager::Start()
 
 	health = player->GetComponent<Health>();
 
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 void UpgradeManager::Update(float deltaTime)
@@ -87,7 +99,7 @@ void UpgradeManager::Update(float deltaTime)
 		buffText1->transform.position = { 330.5f,380.0f };
 		buffText1->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));
-		buffText1->AddComponent<TextRender>()->SetText("MoveSpeed +10%");
+		buffText1->AddComponent<TextRender>()->SetText("移动速度+10%");
 		buffText1->AddComponent<LifeBindComponent>()->SetTarget(buff1);
 		buffText1->transform.UpdatePrevPosition();
 		buffText1->Start();
@@ -122,7 +134,7 @@ void UpgradeManager::Update(float deltaTime)
 		buffText2->transform.position = { 549.5f,380.0f };
 		buffText2->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));
-		buffText2->AddComponent<TextRender>()->SetText("BulletNumber +1");
+		buffText2->AddComponent<TextRender>()->SetText("子弹数量+1");
 		buffText2->AddComponent<LifeBindComponent>()->SetTarget(buff2);
 		buffText2->transform.UpdatePrevPosition();
 		buffText2->Start();
@@ -158,7 +170,7 @@ void UpgradeManager::Update(float deltaTime)
 		buffText3->transform.position = { 768.5f,380.0f };
 		buffText3->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));
-		buffText3->AddComponent<TextRender>()->SetText("SpreadAngle +30");
+		buffText3->AddComponent<TextRender>()->SetText("发射角度+30");
 		buffText3->AddComponent<LifeBindComponent>()->SetTarget(buff3);
 		buffText3->transform.UpdatePrevPosition();
 		buffText3->Start();

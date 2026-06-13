@@ -241,7 +241,7 @@ public:
             warningText->AddComponent<TextRender>()->SetFont(
                 engine->GetFontManager()->GetFont("silver"));
             warningText->GetComponent<TextRender>()->SetColor({ 255,165,0,255 });   //橙色
-            warningText->GetComponent<TextRender>()->SetText("Enemy health increases.Enemy spawns speed increases!");
+            warningText->GetComponent<TextRender>()->SetText("敌人血量增加，敌人生成速度加快！");
             warningText->AddComponent<LifeTimeComponent>()->SetLifeTime(5.0f);
             warningText->transform.UpdatePrevPosition();
             warningText->Start();
@@ -399,6 +399,7 @@ public:
 
         Scene::Start();
 
+        engine->GetAudioManager()->PlayAudio("blossom", -1);
     }
 
     void Update(float deltaTime) override{   
@@ -426,7 +427,7 @@ public:
         for (auto& obj : gameObjects) {
             obj->Update(deltaTime);
             if (obj->GetName() == "objCount") {
-                std::string objCountStr = "GameObject Count: " + std::to_string(gameObjects.size());
+                std::string objCountStr = "对象数量: " + std::to_string(gameObjects.size());
                 obj->GetComponent<TextRender>()->SetText(objCountStr);
             }
             if (obj->GetName() == "gameTime") {
@@ -436,7 +437,7 @@ public:
                 char buffer[16];
                 sprintf_s(buffer, "%02d:%02d", minutes, scecond);
                 std::string time(buffer);
-                time = "Time: " + time;
+                time = "时间: " + time;
                 obj->GetComponent<TextRender>()->SetText(time);
             }
         }

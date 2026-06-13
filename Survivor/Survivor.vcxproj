@@ -125,16 +125,17 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\SDL3Project\Survivor\Survivor\thirdparty\SDL3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\SDL3Project\Survivor\Survivor\SDL3thirparty\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_mixer.lib;SDL3_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>F:\SDL3Project\Survivor\Survivor\thirdparty\SDL3\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;SDL3_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>F:\SDL3Project\Survivor\Survivor\SDL3thirparty\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -142,6 +143,7 @@
     <ClCompile Include="AnimationClipManager.cpp" />
     <ClCompile Include="AnimationFrame.cpp" />
     <ClCompile Include="AnimatorComponent.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="BossAI.cpp" />
     <ClCompile Include="BossHpText.cpp" />
     <ClCompile Include="BulletFactory.cpp" />
@@ -153,6 +155,7 @@
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="ConnectOther.cpp" />
     <ClCompile Include="DamageDealer.cpp" />
+    <ClCompile Include="Delegate.cpp" />
     <ClCompile Include="EnemyAI.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="EnemySpawn.cpp" />
@@ -198,6 +201,7 @@
     <ClInclude Include="AnimationClipManager.h" />
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="AnimatorComponent.h" />
+    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="BossAI.h" />
     <ClInclude Include="BossHpText.h" />
     <ClInclude Include="BulletFactory.h" />
@@ -210,6 +214,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="ConnectOther.h" />
     <ClInclude Include="DamageDealer.h" />
+    <ClInclude Include="Delegate.h" />
     <ClInclude Include="EnemyAI.h" />
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="EnemySpawn.h" />

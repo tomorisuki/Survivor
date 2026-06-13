@@ -7,6 +7,7 @@
 #include "CollisionSystem.h"
 #include "FontManager.h"
 #include "SpatialGrid.h"
+#include "AudioManager.h"
 
 
 //#include "TestScene.h"
@@ -47,6 +48,9 @@ public:
 		this->spatialGrid = grid;
 	}
 
+	void RegisterAudioManager(AudioManager* audioManager) {
+		this->audioManager = audioManager;
+	}
 
 
 	void SetWindowSize(const Vector2D& windowSize) {
@@ -69,6 +73,7 @@ public:
 	FontManager* GetFontManager() const { return font_manager; }
 
 	SpatialGrid* GetSpatialGrid() const { return spatialGrid; }
+	AudioManager* GetAudioManager() const { return audioManager; }
 
 	Vector2D WindowSize() const { return windowSize; }
 
@@ -99,6 +104,7 @@ private:
 	CollisionSystem* collisionSystem = nullptr;
 	FontManager* font_manager = nullptr;
 	SpatialGrid* spatialGrid = nullptr;
+	AudioManager* audioManager = nullptr;
 	//Scene* scene = nullptr;
 	Camera* camera = nullptr;
 

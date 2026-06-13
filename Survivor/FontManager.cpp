@@ -1,16 +1,17 @@
-#include "FontManager.h"
+ï»¿#include "FontManager.h"
+#include "AudioManager.h"
 
 bool FontManager::InitResources()
 {
-	if (!LoadFont("silver", "assets/fonts/Silver.ttf", 32))
-		return false;
+	if (!LoadFont("silver", "assets/fonts/Silver.ttf", 24)) return false;
+	if (!LoadFont("IPix", "assets/fonts/IPix.ttf", 24)) return false;
 
 	return true;
 }
 
 bool FontManager::LoadFont(const std::string& name, const std::string& path, float size)
 {
-	if (fontMap.find(name) != fontMap.end()) return true; // ×ÖÌåÒÑ¼ÓÔØ
+	if (fontMap.find(name) != fontMap.end()) return true; // å­—ä½“å·²åŠ è½½
 
 	TTF_Font* font = TTF_OpenFont(path.c_str(), size);
 	if (font)
