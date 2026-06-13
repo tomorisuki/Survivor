@@ -16,26 +16,55 @@
 #include "PlayerHpTextComponent.h"
 #include "Health.h"
 
+#include "ExpOrbFactory.h"
+
 void UpgradeManager::Start()
 {
 	state = player->GetComponent<PlayerState>();
 	rigidBody = player->GetComponent<RigidBody>();
 	expComponent = player->GetComponent<ExperienceComponent>();
-
 	health = player->GetComponent<Health>();
 
 
+	upgradePool = std::make_unique<UpgradePool>();
 
+	upgradePool->AddUpgradeData("移动速度+10%", [this]()
+		{
+			rigidBody->SetMoveSpeed(rigidBody->moveSpeed * 1.1f);
+		});
 
+	upgradePool->AddUpgradeData("增加血量上限", [this]()
+		{
+			health->SetMaxHp(health->GetMaxHp() + 2);
+		});
 
+	upgradePool->AddUpgradeData("子弹数量+1", [this]()
+		{
+			BulletSpawn* bulletSpawn = dynamic_cast<BulletSpawn*>(scene->FindFirstObjectByName("bulletSpawn"));
+			state->bulletNumber += 1;
+			bulletSpawn->SetBulletNumber(state->bulletNumber);
+		});
 
+	upgradePool->AddUpgradeData("发射角度+30", [this]()
+		{
+			BulletSpawn* bulletSpawn = dynamic_cast<BulletSpawn*>(scene->FindFirstObjectByName("bulletSpawn"));
+			state->spreadAngle += 30.0f;
+			if (state->spreadAngle > 360.0f) state->spreadAngle = 360.0f;
+			bulletSpawn->SetSpreadAngle(state->spreadAngle);
+		});
 
+	upgradePool->AddUpgradeData("子弹攻速增加", [this]()
+		{
+			BulletSpawn* bulletSpawn = dynamic_cast<BulletSpawn*>(scene->FindFirstObjectByName("bulletSpawn"));
+			state->attackSpeedMultiplier -= 0.2f;
+			bulletSpawn->SetElapsedTime(state->attackSpeedMultiplier);
+		});
 
-
-
-
-
-
+	upgradePool->AddUpgradeData("经验吸附范围增加", [this]()
+		{
+			ExpOrbFactory* expOrbFactory = dynamic_cast<ExpOrbFactory*>(scene->FindFirstObjectByName("expOrbFactory"));
+			expOrbFactory->SetAbsorbRadius(expOrbFactory->GetRadius() + 20.0f);
+		});
 }
 
 void UpgradeManager::Update(float deltaTime)
@@ -63,6 +92,9 @@ void UpgradeManager::Update(float deltaTime)
 		expComponent->ResetUpgrade();
 
 		scene->GamePause();	//游戏暂停
+
+		std::vector<UpgradeData> buffs = upgradePool->GetThreeUpgradeData();
+
 		//显示增益选择界面
 		auto buff1 = scene->CreateGameObjectLater("buff1");
 		auto buff2 = scene->CreateGameObjectLater("buff2");
@@ -83,23 +115,18 @@ void UpgradeManager::Update(float deltaTime)
 
 		buff1->AddComponent<ButtonComponent>()->SetButtonRect({
 			0.0f,0.0f,64.0f,64.0f});
-		buff1->GetComponent<ButtonComponent>()->SetCallback([this,buff1,buff2,buff3]() {
-			rigidBody->SetMoveSpeed(rigidBody->moveSpeed * 1.1f);
-			buff1->SetPendingDestroy(true);
-			buff2->SetPendingDestroy(true);
-			buff3->SetPendingDestroy(true);
-			scene->GameResume();	//游戏继续
-			});
+		buff1->GetComponent<ButtonComponent>()->SetCallback(buffs[0].apply);
 		//buff1->GetComponent<ButtonComponent>()->SetIsIgnorePause(true);
 
 		buff1->transform.UpdatePrevPosition();
 		buff1->Start();
 
 		auto buffText1 = scene->CreateGameObjectLater("buffText1");
+		buffText1->SetIgnorePause(true);
 		buffText1->transform.position = { 330.5f,380.0f };
 		buffText1->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));
-		buffText1->AddComponent<TextRender>()->SetText("移动速度+10%");
+		buffText1->AddComponent<TextRender>()->SetText(buffs[0].title);
 		buffText1->AddComponent<LifeBindComponent>()->SetTarget(buff1);
 		buffText1->transform.UpdatePrevPosition();
 		buffText1->Start();
@@ -117,24 +144,17 @@ void UpgradeManager::Update(float deltaTime)
 
 		buff2->AddComponent<ButtonComponent>()->SetButtonRect({
 			0.0f,0.0f,64.0f,64.0f });
-		buff2->GetComponent<ButtonComponent>()->SetCallback([this, buff2,buff1,buff3]() {
-			BulletSpawn* bulletSpawn = dynamic_cast<BulletSpawn*>(scene->FindFirstObjectByName("bulletSpawn"));
-			state->bulletNumber += 1;
-			bulletSpawn->SetBulletNumber(state->bulletNumber);
-			buff2->SetPendingDestroy(true);
-			buff1->SetPendingDestroy(true);
-			buff3->SetPendingDestroy(true);
-			scene->GameResume();		//游戏继续
-			});
+		buff2->GetComponent<ButtonComponent>()->SetCallback(buffs[1].apply);
 		buff2->GetComponent<ButtonComponent>()->SetIsIgnorePause(true);
 		buff2->transform.UpdatePrevPosition();
 		buff2->Start();
 
 		auto buffText2 = scene->CreateGameObjectLater("buffText2");
+		buffText2->SetIgnorePause(true);
 		buffText2->transform.position = { 549.5f,380.0f };
 		buffText2->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));
-		buffText2->AddComponent<TextRender>()->SetText("子弹数量+1");
+		buffText2->AddComponent<TextRender>()->SetText(buffs[1].title);
 		buffText2->AddComponent<LifeBindComponent>()->SetTarget(buff2);
 		buffText2->transform.UpdatePrevPosition();
 		buffText2->Start();
@@ -153,27 +173,43 @@ void UpgradeManager::Update(float deltaTime)
 
 		buff3->AddComponent<ButtonComponent>()->SetButtonRect({
 			0.0f,0.0f,64.0f,64.0f });
-		buff3->GetComponent<ButtonComponent>()->SetCallback([this, buff2, buff1,buff3]() {
-			BulletSpawn* bulletSpawn = dynamic_cast<BulletSpawn*>(scene->FindFirstObjectByName("bulletSpawn"));
-			state->spreadAngle += 30;
-			bulletSpawn->SetSpreadAngle(state->spreadAngle);
-			buff2->SetPendingDestroy(true);
-			buff1->SetPendingDestroy(true);
-			buff3->SetPendingDestroy(true);
-			scene->GameResume();		//游戏继续
-			});
+		buff3->GetComponent<ButtonComponent>()->SetCallback(buffs[2].apply);
 		buff3->GetComponent<ButtonComponent>()->SetIsIgnorePause(true);
 		buff3->transform.UpdatePrevPosition();
 		buff3->Start();
 
 		auto buffText3 = scene->CreateGameObjectLater("buffText3");
+		buffText3->SetIgnorePause(true);
 		buffText3->transform.position = { 768.5f,380.0f };
 		buffText3->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));
-		buffText3->AddComponent<TextRender>()->SetText("发射角度+30");
+		buffText3->AddComponent<TextRender>()->SetText(buffs[2].title);
 		buffText3->AddComponent<LifeBindComponent>()->SetTarget(buff3);
 		buffText3->transform.UpdatePrevPosition();
 		buffText3->Start();
+
+		auto confirm = scene->CreateGameObjectLater("confirm");
+		confirm->SetIgnorePause(true);
+		confirm->transform.position = { 500.0f,600.0f };
+		confirm->AddComponent<SpriteRender>(
+			engine->GetTextureManager()->GetSprite("card"));
+		confirm->GetComponent<SpriteRender>()->GetSprite()->SetCropRect(
+			{ 0.0f,0.0f,63.0f,64.0f });
+		confirm->GetComponent<SpriteRender>()->SetUIRender(true);	//UI绘制
+
+		confirm->AddComponent<ButtonComponent>()->SetButtonRect({
+			0.0f,0.0f,64.0f,64.0f });
+		confirm->GetComponent<ButtonComponent>()->SetCallback([this, buff1, buff2, buff3,confirm]()
+			{
+				buff1->SetPendingDestroy(true);
+				buff2->SetPendingDestroy(true);
+				buff3->SetPendingDestroy(true);
+				confirm->SetPendingDestroy(true);
+				scene->GameResume();
+			});
+		confirm->GetComponent<ButtonComponent>()->SetIsIgnorePause(true);
+		confirm->transform.UpdatePrevPosition();
+		confirm->Start();
 	}
 }
 

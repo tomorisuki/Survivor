@@ -13,6 +13,7 @@ void Health::Start()
 
 void Health::Update(float deltaTime)
 {
+	
 }
 
 void Health::Render()
@@ -28,14 +29,40 @@ void Health::OnCollisionEnter(Collider* collider)
 
 	hp -= static_cast<int>(damageDealer->Damage());
 
-	if (hp <= 0) {
+	if (hp < 0) {
 		hp = 0;
 	}
 }
 
+void Health::AddHealth(int health)
+{
+	hp += health;
+	if (hp > maxHp)
+		hp = maxHp;
+}
+
+void Health::TakeDamage(int damage)
+{
+	hp -= damage;
+	if (hp < 0)
+		hp = 0;
+}
+
 void Health::SetHp(int hp)
 {
-	this->hp = hp;
+	if (hp > maxHp) this->hp = maxHp;
+	else
+		this->hp = hp;
+}
+
+void Health::SetMaxHp(int maxHp)
+{
+	this->maxHp = maxHp;
+}
+
+int Health::GetMaxHp() const
+{
+	return maxHp;
 }
 
 int Health::GetHp() const

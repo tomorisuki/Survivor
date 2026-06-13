@@ -14,7 +14,8 @@ void PlayerHpTextComponent::Start()
 void PlayerHpTextComponent::Update(float deltaTime)
 {
 	if (!health) return;
-	std::string playerHp = "玩家血量:" + std::to_string(health->GetHp());
+	std::string playerHp = "玩家血量: " + std::to_string(health->GetHp()) + " / " + 
+		std::to_string(health->GetMaxHp());
 	textRender->SetText(playerHp);
 }
 

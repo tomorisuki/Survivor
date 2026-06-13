@@ -34,6 +34,12 @@ namespace FMath {
 		std::uniform_real_distribution<float> dist(0.0f, 1.0f);
 		return dist(GetRandomEngine());
 	}
+
+	_ALWAYS_INLINE_ int RandomInt(int p_min, int p_max)
+	{
+		std::uniform_int_distribution<int> dist(p_min, p_max);
+		return dist(GetRandomEngine());
+	}
 	
 	_ALWAYS_INLINE_ float Min(float p_val_a, float p_val_b) {
 		return p_val_a > p_val_b ? p_val_b : p_val_a;

@@ -196,9 +196,12 @@ public:
 
 
 
-        expOrbFactory = std::make_unique<ExpOrbFactory>(engine);
+        auto expOrbFactory = std::make_unique<ExpOrbFactory>(engine);
+        expOrbFactory->SetName("expOrbFactory");
         expOrbFactory->SetScene(this);
         expOrbFactory->SetTarget(player);
+
+        
 
 		auto enemySpawn = std::make_unique<EnemySpawn>(engine);
         enemySpawn->SetTarget(player);
@@ -264,7 +267,7 @@ public:
         bulletSpawn->SetBulletNumber(0);
         bulletSpawn->SetScene(this);
         bulletSpawn->SetTarget(player);
-        bulletSpawn->SetElapsedTime(0.8f);
+        bulletSpawn->SetElapsedTime(1.0f);
         bulletSpawn->SetEnable(true);
         bulletSpawn->SetSpreadAngle(30.0f);
         objects.push_back(std::move(bulletSpawn));
@@ -372,7 +375,7 @@ public:
 
 
         objects.push_back(std::move(bossSpawn));
-
+        objects.push_back(std::move(expOrbFactory));
 
         auto logicFPS = CreateGameObject("logicFPS");
         logicFPS->transform.position = { 20.0f,20.0f };
@@ -477,7 +480,7 @@ public:
     
 
 private:
-    std::unique_ptr<ExpOrbFactory> expOrbFactory;
+    //std::unique_ptr<ExpOrbFactory> expOrbFactory;
     GameObject* target = nullptr;
 	EnemySpawn* enemySpawnPointer = nullptr;
     double gameTotalTime = 0.0;

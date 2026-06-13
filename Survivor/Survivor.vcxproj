@@ -193,6 +193,7 @@
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UpdateExpText.cpp" />
+    <ClCompile Include="UpgradeData.cpp" />
     <ClCompile Include="UpgradeManager.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
@@ -255,6 +256,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UpdateExpText.h" />
+    <ClInclude Include="UpgradeData.h" />
     <ClInclude Include="UpgradeManager.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>

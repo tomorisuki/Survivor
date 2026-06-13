@@ -215,6 +215,9 @@
     <ClCompile Include="Delegate.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="UpgradeData.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -381,5 +384,6 @@
     <ClInclude Include="SpatialGrid.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Delegate.h" />
+    <ClInclude Include="UpgradeData.h" />
   </ItemGroup>
 </Project>

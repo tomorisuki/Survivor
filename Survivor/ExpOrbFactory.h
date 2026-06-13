@@ -6,8 +6,10 @@
 
 #include "ClearScreen.h"
 
+#include "Object.h"
+
 //经验球工厂
-class ExpOrbFactory
+class ExpOrbFactory : public Object
 {
 public:
 	ExpOrbFactory(Engine* engine) : engine(engine) {}
@@ -45,7 +47,7 @@ public:
 		expOrb->GetComponent<ExpOrbComponent>()->SetTarget(target);
 		expOrb->GetComponent<ExpOrbComponent>()->SetAbsorbEnable(true);	//关闭经验球吸附
 		expOrb->GetComponent<ExpOrbComponent>()->SetLifeTime(8.0f);
-		expOrb->GetComponent<ExpOrbComponent>()->SetRadius(80.0f);
+		expOrb->GetComponent<ExpOrbComponent>()->SetRadius(radius);
 		expOrb->GetComponent<ExpOrbComponent>()->SetSpeed(300.0f);
 		
 		expOrb->Start();
@@ -75,10 +77,22 @@ public:
 		return item;
 	}
 
+	void SetAbsorbRadius(float radius) {
+		this->radius = radius;
+	}
+
+	float GetRadius() const {
+		return radius;
+	}
+
 private:
 	GameObject* target = nullptr;
 	Engine* engine = nullptr;
 	class Scene* scene = nullptr;
+
+	float radius = 80.0f;
+	float speed = 300.0f;
+
 
 };
 
