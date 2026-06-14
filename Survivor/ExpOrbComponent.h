@@ -35,7 +35,7 @@ public:
 	//设置吸附的移动速度
 	void SetSpeed(float speed);
 
-	//设置经验球存在时间
+	//设置经验球存在时间，-1不自动消失
 	void SetLifeTime(float time);
 
 	//设置开始追击

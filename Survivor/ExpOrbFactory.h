@@ -6,6 +6,8 @@
 
 #include "ClearScreen.h"
 
+#include "AddHealth.h"
+
 #include "Object.h"
 
 //经验球工厂
@@ -46,7 +48,7 @@ public:
 		expOrb->AddComponent<ExpOrbComponent>()->SetExpValue(1);
 		expOrb->GetComponent<ExpOrbComponent>()->SetTarget(target);
 		expOrb->GetComponent<ExpOrbComponent>()->SetAbsorbEnable(true);	//关闭经验球吸附
-		expOrb->GetComponent<ExpOrbComponent>()->SetLifeTime(8.0f);
+		expOrb->GetComponent<ExpOrbComponent>()->SetLifeTime(-1.0f);
 		expOrb->GetComponent<ExpOrbComponent>()->SetRadius(radius);
 		expOrb->GetComponent<ExpOrbComponent>()->SetSpeed(300.0f);
 		
@@ -66,12 +68,40 @@ public:
 		item->GetComponent<SpriteRender>()->SetLayer(2);
 
 		item->AddComponent<Collider>();
-		item->GetComponent<Collider>()->SetEnableDebug(true);
+		item->GetComponent<Collider>()->SetEnableDebug(false);
 		item->GetComponent<Collider>()->SetEnable(true);
 		item->GetComponent<Collider>()->SetSize(Vector2D{ 456.0f,396.0f });
 		item->GetComponent<Collider>()->SetLayer(5);
 		item->AddComponent<ClearScreen>()->SetScene(scene);
+		item->GetComponent<ClearScreen>()->SetLifeTime(-1.0f);
 
+		item->transform.UpdatePrevPosition();
+		item->Start();
+		return item;
+	}
+
+	GameObject* CreatAddHealthItem(const std::string& name, const Vector2D& position)
+	{
+		GameObject* item = new GameObject(engine);
+		item->name = name;
+		Vector2D offset = { 20.0f,20.0f };
+		item->transform.position = position + offset;
+
+		item->AddComponent<SpriteRender>(
+		engine->GetTextureManager()->GetSprite("food"));
+		item->GetComponent<SpriteRender>()->SetLayer(2);
+		item->GetComponent<SpriteRender>()->GetSprite()->SetCropRect({
+			96.0f,64.0f,16.0f,16.0f
+			});
+		item->AddComponent<Collider>();
+		item->GetComponent<Collider>()->SetEnableDebug(false);
+		item->GetComponent<Collider>()->SetEnable(true);
+		item->GetComponent<Collider>()->SetSize(Vector2D{ 16.0f,16.0f });
+		item->GetComponent<Collider>()->SetLayer(5);
+		
+		item->AddComponent<AddHealth>()->SetValue(1);
+		item->GetComponent<AddHealth>()->SetTarget(target);
+		
 		item->transform.UpdatePrevPosition();
 		item->Start();
 		return item;

@@ -31,5 +31,6 @@ private:
 	class Scene* scene = nullptr;
 
 	std::unique_ptr<UpgradePool> upgradePool;
+	int select = -1;
 };
 

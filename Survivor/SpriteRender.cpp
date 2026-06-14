@@ -22,7 +22,7 @@ void SpriteRender::Update(float deltaTime)
 
 void SpriteRender::Render()
 {
-	if (!sprite) return;
+	if (!sprite || !enable) return;
 	
 	if (isUI) {
 		engine->GetRenderSystem()->RenderUI(sprite, owner->transform);
@@ -78,4 +78,14 @@ int SpriteRender::BottomPos() const
 void SpriteRender::SetUIRender(bool flag)
 {
 	isUI = flag;
+}
+
+void SpriteRender::SetEnable(bool enable)
+{
+	this->enable = enable;
+}
+
+bool SpriteRender::Enable() const
+{
+	return enable;
 }

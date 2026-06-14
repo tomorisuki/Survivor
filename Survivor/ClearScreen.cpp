@@ -11,9 +11,11 @@ void ClearScreen::Start()
 
 void ClearScreen::Update(float deltaTime)
 {
-	currentTime += deltaTime;
-	if (currentTime >= lifeTime) {
-		owner->SetPendingDestroy(true);
+	if (lifeTime != -1.0f) {
+		currentTime += deltaTime;
+		if (currentTime >= lifeTime) {
+			owner->SetPendingDestroy(true);
+		}
 	}
 }
 
@@ -39,4 +41,9 @@ bool ClearScreen::IsClearScreen() const
 void ClearScreen::SetScene(class Scene* scene)
 {
 	this->scene = scene;
+}
+
+void ClearScreen::SetLifeTime(float time)
+{
+	lifeTime = time;
 }

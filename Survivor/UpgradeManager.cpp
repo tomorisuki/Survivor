@@ -18,6 +18,8 @@
 
 #include "ExpOrbFactory.h"
 
+#include "Delegate.h"	//委托
+
 void UpgradeManager::Start()
 {
 	state = player->GetComponent<PlayerState>();
@@ -93,7 +95,13 @@ void UpgradeManager::Update(float deltaTime)
 
 		scene->GamePause();	//游戏暂停
 
+		//int select = -1;	// 0 1 2
+		select = -1;
+
 		std::vector<UpgradeData> buffs = upgradePool->GetThreeUpgradeData();
+
+		Delegate<void>* selectDelegate = new Delegate<void>();
+		
 
 		//显示增益选择界面
 		auto buff1 = scene->CreateGameObjectLater("buff1");
@@ -115,7 +123,11 @@ void UpgradeManager::Update(float deltaTime)
 
 		buff1->AddComponent<ButtonComponent>()->SetButtonRect({
 			0.0f,0.0f,64.0f,64.0f});
-		buff1->GetComponent<ButtonComponent>()->SetCallback(buffs[0].apply);
+		buff1->GetComponent<ButtonComponent>()->SetCallback([this, selectDelegate]()
+			{
+				select = 0;
+				selectDelegate->Execute();
+			});
 		//buff1->GetComponent<ButtonComponent>()->SetIsIgnorePause(true);
 
 		buff1->transform.UpdatePrevPosition();
@@ -127,7 +139,7 @@ void UpgradeManager::Update(float deltaTime)
 		buffText1->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));
 		buffText1->AddComponent<TextRender>()->SetText(buffs[0].title);
-		buffText1->AddComponent<LifeBindComponent>()->SetTarget(buff1);
+		//buffText1->AddComponent<LifeBindComponent>()->SetTarget(buff1);
 		buffText1->transform.UpdatePrevPosition();
 		buffText1->Start();
 
@@ -144,7 +156,11 @@ void UpgradeManager::Update(float deltaTime)
 
 		buff2->AddComponent<ButtonComponent>()->SetButtonRect({
 			0.0f,0.0f,64.0f,64.0f });
-		buff2->GetComponent<ButtonComponent>()->SetCallback(buffs[1].apply);
+		buff2->GetComponent<ButtonComponent>()->SetCallback([this, selectDelegate]()
+			{
+				select = 1;
+				selectDelegate->Execute();
+			});
 		buff2->GetComponent<ButtonComponent>()->SetIsIgnorePause(true);
 		buff2->transform.UpdatePrevPosition();
 		buff2->Start();
@@ -155,7 +171,7 @@ void UpgradeManager::Update(float deltaTime)
 		buffText2->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));
 		buffText2->AddComponent<TextRender>()->SetText(buffs[1].title);
-		buffText2->AddComponent<LifeBindComponent>()->SetTarget(buff2);
+		//buffText2->AddComponent<LifeBindComponent>()->SetTarget(buff2);
 		buffText2->transform.UpdatePrevPosition();
 		buffText2->Start();
 
@@ -173,7 +189,11 @@ void UpgradeManager::Update(float deltaTime)
 
 		buff3->AddComponent<ButtonComponent>()->SetButtonRect({
 			0.0f,0.0f,64.0f,64.0f });
-		buff3->GetComponent<ButtonComponent>()->SetCallback(buffs[2].apply);
+		buff3->GetComponent<ButtonComponent>()->SetCallback([this,selectDelegate]()
+			{
+				select = 2;
+				selectDelegate->Execute();
+			});
 		buff3->GetComponent<ButtonComponent>()->SetIsIgnorePause(true);
 		buff3->transform.UpdatePrevPosition();
 		buff3->Start();
@@ -184,30 +204,65 @@ void UpgradeManager::Update(float deltaTime)
 		buffText3->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));
 		buffText3->AddComponent<TextRender>()->SetText(buffs[2].title);
-		buffText3->AddComponent<LifeBindComponent>()->SetTarget(buff3);
+		//buffText3->AddComponent<LifeBindComponent>()->SetTarget(buff3);
 		buffText3->transform.UpdatePrevPosition();
 		buffText3->Start();
 
+		
+
+		selectDelegate->Bind([this, buffText1, buffText2, buffText3]()
+			{
+				switch (select) {
+				case 0:
+					buffText1->GetComponent<TextRender>()->SetColor({ 255,0,0,255 });
+					buffText2->GetComponent<TextRender>()->SetColor({ 255,255,255,255 });
+					buffText3->GetComponent<TextRender>()->SetColor({ 255,255,255,255 });
+					break;
+				case 1:
+					buffText1->GetComponent<TextRender>()->SetColor({ 255,255,255,255 });
+					buffText2->GetComponent<TextRender>()->SetColor({ 255,0,0,255 });
+					buffText3->GetComponent<TextRender>()->SetColor({ 255,255,255,255 });
+					break;
+				case 2:
+					buffText1->GetComponent<TextRender>()->SetColor({ 255,255,255,255 });
+					buffText2->GetComponent<TextRender>()->SetColor({ 255,255,255,255 });
+					buffText3->GetComponent<TextRender>()->SetColor({ 255,0,0,255 });
+					break;
+				}
+			});
+
 		auto confirm = scene->CreateGameObjectLater("confirm");
 		confirm->SetIgnorePause(true);
-		confirm->transform.position = { 500.0f,600.0f };
+		confirm->transform.position = { 600.0f,600.0f };
 		confirm->AddComponent<SpriteRender>(
 			engine->GetTextureManager()->GetSprite("card"));
 		confirm->GetComponent<SpriteRender>()->GetSprite()->SetCropRect(
 			{ 0.0f,0.0f,63.0f,64.0f });
 		confirm->GetComponent<SpriteRender>()->SetUIRender(true);	//UI绘制
 
+		confirm->AddComponent<TextRender>()->SetFont(
+			engine->GetFontManager()->GetFont("silver"));
+
+		confirm->GetComponent<TextRender>()->SetText("确定");
+
+		confirm->GetComponent<TextRender>()->SetOffset({ 15.0f,20.0f });
+
 		confirm->AddComponent<ButtonComponent>()->SetButtonRect({
 			0.0f,0.0f,64.0f,64.0f });
-		confirm->GetComponent<ButtonComponent>()->SetCallback([this, buff1, buff2, buff3,confirm]()
+		confirm->GetComponent<ButtonComponent>()->SetCallback([this, buff1, buff2, buff3, buffText1, buffText2, buffText3, confirm,buffs,selectDelegate]()
 			{
+				if (select == -1) return;
+				buffs[select].apply();
 				buff1->SetPendingDestroy(true);
 				buff2->SetPendingDestroy(true);
 				buff3->SetPendingDestroy(true);
+				buffText1->SetPendingDestroy(true);
+				buffText2->SetPendingDestroy(true);
+				buffText3->SetPendingDestroy(true);
 				confirm->SetPendingDestroy(true);
 				scene->GameResume();
+				delete selectDelegate;
 			});
-		confirm->GetComponent<ButtonComponent>()->SetIsIgnorePause(true);
 		confirm->transform.UpdatePrevPosition();
 		confirm->Start();
 	}

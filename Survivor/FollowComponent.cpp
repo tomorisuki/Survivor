@@ -25,6 +25,8 @@ void FollowComponent::Update(float deltaTime)
 	//如果跟随目标被删除了，该跟随对象也跟着被删除
 	if (target->GetPendingDestroy()) {
 		target = nullptr;
+		if (spriteRender)
+			spriteRender->SetEnable(false);
 		owner->SetPendingDestroy(true);
 		return;
 	}

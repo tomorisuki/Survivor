@@ -17,6 +17,8 @@ public:
 
 	GameObject* SpawnEnemy(const std::string& enemyName);
 
+	std::vector<GameObject*> SpawnEnemyWithShadow(const std::string& enemyName);
+
 	//设置生成圆心
 	void SetCirclrPoint(Vector2D point);
 

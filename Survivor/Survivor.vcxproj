@@ -125,7 +125,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\SDL3Project\Survivor\Survivor\SDL3thirparty\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SDL3Project\Survivor\Survivor\SDL3thirparty\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -135,10 +135,11 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;SDL3_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>F:\SDL3Project\Survivor\Survivor\SDL3thirparty\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\SDL3Project\Survivor\Survivor\SDL3thirparty\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AddHealth.cpp" />
     <ClCompile Include="AnimationClip.cpp" />
     <ClCompile Include="AnimationClipManager.cpp" />
     <ClCompile Include="AnimationFrame.cpp" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddHealth.h" />
     <ClInclude Include="AnimationClip.h" />
     <ClInclude Include="AnimationClipManager.h" />
     <ClInclude Include="AnimationFrame.h" />

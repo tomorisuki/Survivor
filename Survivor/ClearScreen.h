@@ -18,6 +18,9 @@ public:
 
 	void SetScene(class Scene* scene);
 
+	//设置存在时间，-1不自动消失
+	void SetLifeTime(float time);
+
 private:
 
 	float lifeTime = 8.0f;

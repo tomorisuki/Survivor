@@ -26,6 +26,7 @@ bool TextureManager::Init()
     if (!LoadTexture("boss_run", "assets/boss/Run.png")) return false;
     if (!LoadTexture("boss_die", "assets/boss/Death.png")) return false;
     if (!LoadTexture("card", "assets/card.png")) return false;
+    if (!LoadTexture("food", "assets/food.png")) return false;
     
     return true;
 }

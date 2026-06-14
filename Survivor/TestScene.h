@@ -217,7 +217,10 @@ public:
         enemySpawnTimer->SetElapsedTime(gameState.enemySpawnSpeed);
         //enemySpawnTimer->SetElapsedTime(0.0001f);
         enemySpawnTimer->SetCallback([this]() {
-            addedGameObjects.push_back(enemySpawnPointer->SpawnEnemy("enemy"));
+            auto enemyWithShadow = enemySpawnPointer->SpawnEnemyWithShadow("enemy");
+
+            addedGameObjects.push_back(enemyWithShadow[0]);
+            addedGameObjects.push_back(enemyWithShadow[1]);
             });
 
         auto enemySpawnTimerPtr = enemySpawnTimer.get();

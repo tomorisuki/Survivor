@@ -22,6 +22,16 @@ GameObject* EnemySpawn::SpawnEnemy(const std::string& enemyName)
 	return enemyFactory->CreateEnemy(enemyName, spawnPosition, enemyHp);
 }
 
+std::vector<GameObject*> EnemySpawn::SpawnEnemyWithShadow(const std::string& enemyName)
+{
+	float angle = FRandom::instance().RandomRealFloat() * 360.0f;
+	Vector2D spawnPosition;
+	spawnPosition.x = point.x + FMath::Cos(angle) * spawnRadius;
+	spawnPosition.y = point.y + FMath::Sin(angle) * spawnRadius;
+
+	return enemyFactory->CreatEnemyWithShadow(enemyName,spawnPosition,enemyHp);
+}
+
 void EnemySpawn::SetCirclrPoint(Vector2D point)
 {
 	this->point = point;

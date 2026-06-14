@@ -44,6 +44,12 @@ public:
 	//设置是否为UI绘制
 	void SetUIRender(bool flag);
 
+	//设置是否启用
+	void SetEnable(bool enable);
+
+	//获取是否启用
+	bool Enable() const;
+
 private:
 	//如果每次调用reset，会有delete的性能开销，所以此组件应该只有使用权
 	//std::unique_ptr<Sprite> spritePtr;			//SpriteRenderComponent拥有一个Sprite
@@ -52,5 +58,6 @@ private:
 	bool isUI = false;			//是否为UI绘制
 	Sprite* sprite = nullptr;
 	class AnimatorComponent* animator = nullptr;
+	bool enable = true;
 };
 

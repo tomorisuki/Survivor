@@ -31,7 +31,8 @@ public:
 	//设置是否启用文本渲染
 	void SetEnable(bool enable);
 
-
+	//设置文本渲染位置偏移
+	void SetOffset(const Vector2D& offset);
 
 private:
 
@@ -46,5 +47,7 @@ private:
 	bool enable = true;
 
 	bool isDirty = true;	//文本内容或字体发生变化时需要重新生成纹理
+
+	Vector2D offset;		//文字位置偏移，默认(0,0)
 };
 

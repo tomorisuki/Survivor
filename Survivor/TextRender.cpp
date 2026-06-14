@@ -23,8 +23,10 @@ void TextRender::Render()
 			isDirty = false;
 		}
 	}
+	Transform transform = owner->transform;
+	transform.position += offset;
 
-	engine->GetRenderSystem()->RenderUIText(texture, owner->transform);
+	engine->GetRenderSystem()->RenderUIText(texture, transform);
 }
 
 void TextRender::SetText(const std::string& text)
@@ -42,10 +44,18 @@ void TextRender::SetFont(TTF_Font* font)
 
 void TextRender::SetColor(const SDL_Color& color)
 {
+	if (!(this->color.a == color.a && this->color.b == color.b && this->color.g == color.g
+		&& this->color.r == color.r))
+		isDirty = true;
 	this->color = color;
 }
 
 void TextRender::SetEnable(bool enable)
 {
 	this->enable = enable;
+}
+
+void TextRender::SetOffset(const Vector2D& offset)
+{
+	this->offset = offset;
 }
