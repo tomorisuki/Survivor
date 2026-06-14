@@ -50,6 +50,8 @@
 
 #include "RenderFPSText.h"
 
+#include "FloatingTextFactory.h"
+
 struct GameState{
     int enemyHp = 2;
     float enemySpawnSpeed = 0.5f;
@@ -201,11 +203,16 @@ public:
         expOrbFactory->SetScene(this);
         expOrbFactory->SetTarget(player);
 
+        auto floatingTextFactory = std::make_unique<FloatingTextFactory>(engine);
+        floatingTextFactory->SetName("floatingTextFactory");
+        floatingTextFactory->SetScene(this);
         
 
 		auto enemySpawn = std::make_unique<EnemySpawn>(engine);
         enemySpawn->SetTarget(player);
         enemySpawn->SetExpOrbFactory(expOrbFactory.get());
+        enemySpawn->SetFloatingTextFactory(floatingTextFactory.get());
+
         
         enemySpawn->SetCirclrPoint(Vector2D{ 1280.0f,720.0f });
         enemySpawn->SetSpawnRadius(1500.0f);
@@ -278,7 +285,7 @@ public:
 
         objects.push_back(std::move(enemySpawn));
 		objects.push_back(std::move(enemySpawnTimer));
-
+        
         
         /*---------------UI----------------*/
 
@@ -346,7 +353,8 @@ public:
             boss->AddComponent<DamageDealer>()->SetDamage(2.0f);
 
             boss->AddComponent<Health>();
-            boss->GetComponent<Health>()->SetHp(100);
+            boss->GetComponent<Health>()->SetMaxHp(60);
+            boss->GetComponent<Health>()->SetHp(60);
 
             boss->AddComponent<RigidBody>();
             boss->GetComponent<RigidBody>()->SetEnable(true);
@@ -379,6 +387,7 @@ public:
 
         objects.push_back(std::move(bossSpawn));
         objects.push_back(std::move(expOrbFactory));
+        objects.push_back(std::move(floatingTextFactory));
 
         auto logicFPS = CreateGameObject("logicFPS");
         logicFPS->transform.position = { 20.0f,20.0f };

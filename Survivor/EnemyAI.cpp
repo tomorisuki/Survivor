@@ -7,7 +7,9 @@
 #include "Health.h"
 #include "Collider.h"
 #include "ExpOrbFactory.h"
+#include "FloatingTextFactory.h"
 #include "Scene.h"
+#include "DamageDealer.h"
 
 void EnemyAI::Start()
 {
@@ -87,10 +89,24 @@ void EnemyAI::OnCollisionEnter(Collider* collider)
 		animator->Play("hurt");
 		this->collider->SetEnable(false);
 		isHurt = true;
+		DamageDealer* damageDealer = collider->Owner()->GetComponent<DamageDealer>();
+		int damage = 0;
+		if (damageDealer) {
+			damage = static_cast<int>(damageDealer->Damage());
+		}
+		std::string text = "-" + std::to_string(damage);
+		floatingTextFactory->GetScene()->AddGameObject(
+			floatingTextFactory->CreatFloatingText(text, owner->transform.position)
+		);
 	}
 }
 
 void EnemyAI::SetExpOrbFactory(ExpOrbFactory* factory)
 {
 	expOrbFactory = factory;
+}
+
+void EnemyAI::SetFloatingTextFactory(FloatingTextFactory* factory)
+{
+	floatingTextFactory = factory;
 }

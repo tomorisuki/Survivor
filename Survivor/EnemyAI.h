@@ -26,6 +26,8 @@ public:
 
 	void SetExpOrbFactory(class ExpOrbFactory* factory);
 
+	void SetFloatingTextFactory(class FloatingTextFactory* factory);
+
 private:
 	class GameObject* attackTarget = nullptr;
 	class RigidBody* rigidBody = nullptr;
@@ -33,6 +35,7 @@ private:
 	class Health* health = nullptr;
 	class Collider* collider = nullptr;
 	class ExpOrbFactory* expOrbFactory = nullptr;
+	class FloatingTextFactory* floatingTextFactory = nullptr;
 
 	bool isHurt = false;
 };

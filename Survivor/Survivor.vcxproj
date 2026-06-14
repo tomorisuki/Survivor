@@ -165,6 +165,8 @@
     <ClCompile Include="ExperienceComponent.cpp" />
     <ClCompile Include="ExpOrbComponent.cpp" />
     <ClCompile Include="ExpOrbFactory.cpp" />
+    <ClCompile Include="FloatingText.cpp" />
+    <ClCompile Include="FloatingTextFactory.cpp" />
     <ClCompile Include="FMath.cpp" />
     <ClCompile Include="FollowComponent.cpp" />
     <ClCompile Include="FontManager.cpp" />
@@ -226,6 +228,8 @@
     <ClInclude Include="ExperienceComponent.h" />
     <ClInclude Include="ExpOrbComponent.h" />
     <ClInclude Include="ExpOrbFactory.h" />
+    <ClInclude Include="FloatingText.h" />
+    <ClInclude Include="FloatingTextFactory.h" />
     <ClInclude Include="FMath.h" />
     <ClInclude Include="FollowComponent.h" />
     <ClInclude Include="FontManager.h" />

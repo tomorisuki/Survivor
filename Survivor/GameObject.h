@@ -21,6 +21,7 @@ class GameObject final : public Object
 	friend class EnemyFactory;
 	friend class ExpOrbFactory;
 	friend class BulletFactory;
+	friend class FloatingTextFactory;
 private:
 	//构造函数私有化，其他地方不能随意创建
 	explicit GameObject(Engine* engine) {

@@ -27,6 +27,8 @@ public:
 
 	void SetExpOrbFactory(class ExpOrbFactory* factory);
 
+	void SetFloatingTextFactory(class FloatingTextFactory* factory);
+
 	//设置敌人血量
 	void SetEnemyHp(int hp);
 

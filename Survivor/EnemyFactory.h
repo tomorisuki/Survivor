@@ -58,6 +58,7 @@ public:
 		enemy->GetComponent<EnemyAI>()->SetAttackTarget(target);
 		enemy->GetComponent<EnemyAI>()->SetInitialPosition(position);
 		enemy->GetComponent<EnemyAI>()->SetExpOrbFactory(expOrbFactory);
+		enemy->GetComponent<EnemyAI>()->SetFloatingTextFactory(floatingTextFactory);
 
 		enemy->Start();
 		enemy->transform.UpdatePrevPosition();
@@ -107,6 +108,7 @@ public:
 		enemy->GetComponent<EnemyAI>()->SetAttackTarget(target);
 		enemy->GetComponent<EnemyAI>()->SetInitialPosition(position);
 		enemy->GetComponent<EnemyAI>()->SetExpOrbFactory(expOrbFactory);
+		enemy->GetComponent<EnemyAI>()->SetFloatingTextFactory(floatingTextFactory);
 
 		enemy->Start();
 		enemy->transform.UpdatePrevPosition();
@@ -141,9 +143,15 @@ public:
 		expOrbFactory = factory;
 	}
 
+	void SetFloatingTextFactory(class FloatingTextFactory* factory)
+	{
+		floatingTextFactory = factory;
+	}
+
 private:
 	Engine* engine = nullptr;
 	GameObject* target = nullptr;	//敌人攻击目标
 	class ExpOrbFactory* expOrbFactory = nullptr;
+	class FloatingTextFactory* floatingTextFactory = nullptr;
 };
 

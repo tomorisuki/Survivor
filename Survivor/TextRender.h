@@ -34,6 +34,14 @@ public:
 	//设置文本渲染位置偏移
 	void SetOffset(const Vector2D& offset);
 
+	//启用UI绘制
+	void SetEnableUIRender(bool enable);
+
+	//设置绘制层级
+	void SetLayer(int layer);
+
+	//获取绘制层级
+	int Layer() const;
 private:
 
 	std::string text;
@@ -42,12 +50,19 @@ private:
 
 	SDL_Texture* texture = nullptr;
 
+	//测试
+	std::unique_ptr<Sprite> sprite;
+
 	SDL_Color color = { 255,255,255,255 };	//默认白色
 
 	bool enable = true;
 
 	bool isDirty = true;	//文本内容或字体发生变化时需要重新生成纹理
 
+	bool uiRender = true;	//是否为UI绘制
+
 	Vector2D offset;		//文字位置偏移，默认(0,0)
+
+	int layer = 0;
 };
 

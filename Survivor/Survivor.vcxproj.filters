@@ -218,6 +218,15 @@
     <ClCompile Include="UpgradeData.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="AddHealth.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatingTextFactory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatingText.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -385,5 +394,8 @@
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Delegate.h" />
     <ClInclude Include="UpgradeData.h" />
+    <ClInclude Include="AddHealth.h" />
+    <ClInclude Include="FloatingTextFactory.h" />
+    <ClInclude Include="FloatingText.h" />
   </ItemGroup>
 </Project>

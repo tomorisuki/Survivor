@@ -4,6 +4,7 @@
 
 void TextRender::Start()
 {
+	sprite = std::make_unique<Sprite>();
 }
 
 void TextRender::Update(float deltaTime)
@@ -26,7 +27,13 @@ void TextRender::Render()
 	Transform transform = owner->transform;
 	transform.position += offset;
 
-	engine->GetRenderSystem()->RenderUIText(texture, transform);
+	sprite->SetTexture(texture);
+
+	if (uiRender)
+		engine->GetRenderSystem()->RenderUIText(texture, transform);
+	else
+		engine->GetRenderSystem()->RenderWorld(sprite.get(),
+			engine->GetCamera(), owner->transform, layer);
 }
 
 void TextRender::SetText(const std::string& text)
@@ -58,4 +65,19 @@ void TextRender::SetEnable(bool enable)
 void TextRender::SetOffset(const Vector2D& offset)
 {
 	this->offset = offset;
+}
+
+void TextRender::SetEnableUIRender(bool enable)
+{
+	uiRender = enable;
+}
+
+void TextRender::SetLayer(int layer)
+{
+	this->layer = layer;
+}
+
+int TextRender::Layer() const
+{
+	return layer;
 }

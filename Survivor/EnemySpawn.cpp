@@ -47,6 +47,11 @@ void EnemySpawn::SetExpOrbFactory(class ExpOrbFactory* factory)
 	enemyFactory->SetExpOrbFactory(factory);
 }
 
+void EnemySpawn::SetFloatingTextFactory(FloatingTextFactory* factory)
+{
+	enemyFactory->SetFloatingTextFactory(factory);
+}
+
 void EnemySpawn::SetEnemyHp(int hp)
 {
 	enemyHp = hp;

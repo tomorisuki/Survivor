@@ -14,7 +14,9 @@
 class ExpOrbFactory : public Object
 {
 public:
-	ExpOrbFactory(Engine* engine) : engine(engine) {}
+	ExpOrbFactory(Engine* engine) {
+		this->engine = engine;
+	}
 
 	void SetScene(class Scene* scene) {
 		this->scene = scene;
@@ -117,7 +119,7 @@ public:
 
 private:
 	GameObject* target = nullptr;
-	Engine* engine = nullptr;
+	//Engine* engine = nullptr;
 	class Scene* scene = nullptr;
 
 	float radius = 80.0f;
