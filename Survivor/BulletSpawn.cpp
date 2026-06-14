@@ -10,6 +10,7 @@
 BulletSpawn::BulletSpawn(Engine* engine)
 {
 	bulletFactory = std::make_unique<BulletFactory>(engine);
+	this->engine = engine;
 }
 
 void BulletSpawn::Update(float deltaTime)
@@ -39,6 +40,7 @@ void BulletSpawn::Update(float deltaTime)
 			float render_angle = target_deg - 180.0f;
 			scene->AddGameObject(bulletFactory->CreatBullet(target->transform.position,
 				currentDirection, render_angle));
+			engine->GetAudioManager()->PlayAudio("bullet");
 		}
 		else {
 
@@ -58,6 +60,7 @@ void BulletSpawn::Update(float deltaTime)
 				scene->AddGameObject(bulletFactory->CreatBullet(
 					target->transform.position, dir, render_angle));
 			}
+			engine->GetAudioManager()->PlayAudio("bullet");
 		}
 		currentTime -= elapsedTime;
 	}

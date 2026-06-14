@@ -84,6 +84,11 @@ public:
 
         auto player = CreateGameObject("player");
         player->AddComponent<SpriteRender>()->SetIsIgnorePause(true);
+        player->GetComponent<SpriteRender>()->SetLayer(2001);
+        //test
+        //player->GetComponent<SpriteRender>()->SetLayerWithColliderBottom(true);
+        
+
         engine->GetTextureManager()->GetSprite("sunflower")->SetFlip(false);
         player->transform.position = { 500.0f,200.0f };
         player->AddComponent<RigidBody>();
@@ -110,7 +115,9 @@ public:
 
         player->AddComponent<ExperienceComponent>();
 
-        player->AddComponent<Health>()->SetHp(5);
+        
+        player->AddComponent<Health>()->SetMaxHp(5);
+        player->GetComponent<Health>()->SetHp(5);
 
         player->AddComponent<PlayerState>();
 
@@ -224,10 +231,23 @@ public:
         enemySpawnTimer->SetElapsedTime(gameState.enemySpawnSpeed);
         //enemySpawnTimer->SetElapsedTime(0.0001f);
         enemySpawnTimer->SetCallback([this]() {
-            auto enemyWithShadow = enemySpawnPointer->SpawnEnemyWithShadow("enemy");
+            //auto enemyWithShadow = enemySpawnPointer->SpawnEnemyWithShadow("enemy");
 
-            addedGameObjects.push_back(enemyWithShadow[0]);
-            addedGameObjects.push_back(enemyWithShadow[1]);
+            //addedGameObjects.push_back(enemyWithShadow[0]);
+            //addedGameObjects.push_back(enemyWithShadow[1]);
+            if (gameTotalTime >= 60.0f) {
+                float rand = FMath::RandomRealFloat();
+                if (rand <= 0.5f) {
+                    addedGameObjects.push_back(enemySpawnPointer->SpawnEnemySlime("enemy"));
+                }
+                else {
+                    addedGameObjects.push_back(enemySpawnPointer->SpawnEnemy("enemy"));
+                }
+                
+            }
+            else {
+                addedGameObjects.push_back(enemySpawnPointer->SpawnEnemySlime("enemy"));
+            }
             });
 
         auto enemySpawnTimerPtr = enemySpawnTimer.get();
@@ -250,7 +270,8 @@ public:
         warningTextTimer->SetElapsedTime(120.0f);
         warningTextTimer->SetCallback([this]() {
             auto warningText = CreateGameObjectLater("warningText");
-            warningText->transform.position = { 350.0f,350.0f };
+            warningText->transform.scale = { 2.0f,2.0f };
+            warningText->transform.position = { 380.0f,350.0f };
             warningText->AddComponent<TextRender>()->SetFont(
                 engine->GetFontManager()->GetFont("silver"));
             warningText->GetComponent<TextRender>()->SetColor({ 255,165,0,255 });   //橙色
@@ -414,7 +435,7 @@ public:
 
         Scene::Start();
 
-        engine->GetAudioManager()->PlayAudio("blossom", -1);
+        engine->GetAudioManager()->PlayAudio("game_bgm", -1);
     }
 
     void Update(float deltaTime) override{   

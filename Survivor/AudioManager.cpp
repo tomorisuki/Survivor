@@ -79,6 +79,9 @@ bool AudioManager::LoadAudioResources()
 {
 	if (!LoadAudio("blossom", "assets/audio/blossom.wav", true)) return false;
 	if (!LoadAudio("grass_walk", "assets/audio/grass_walk.wav", false)) return false;
+	if (!LoadAudio("add_health", "assets/audio/add_health.wav", false)) return false;
+	if (!LoadAudio("bullet", "assets/audio/bullet.wav", false)) return false;
+	if (!LoadAudio("game_bgm", "assets/audio/game_bgm.wav", false)) return false;
 
 	return true;
 }

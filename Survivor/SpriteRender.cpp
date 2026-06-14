@@ -2,6 +2,8 @@
 
 #include "AnimatorComponent.h"
 
+#include "Collider.h"
+
 SpriteRender::SpriteRender(Sprite* sprite)
 {
 	this->sprite = sprite;
@@ -12,6 +14,7 @@ SpriteRender::SpriteRender(Sprite* sprite)
 void SpriteRender::Start()
 {
 	animator = owner->GetComponent<AnimatorComponent>();
+	collider = owner->GetComponent<Collider>();
 	if (animator) this->sprite = animator->GetFirstFrame();
 }
 
@@ -36,7 +39,10 @@ void SpriteRender::Render()
 	}
 	else
 	{
-		tempLayer = BottomPos();
+		if (layerWithCollider)
+			tempLayer = ColliderBottomPos();
+		else
+			tempLayer = BottomPos();
 	}
 	engine->GetRenderSystem()->RenderWorld(sprite, engine->GetCamera(), owner->transform, tempLayer);
 }
@@ -73,6 +79,19 @@ int SpriteRender::Layer() const
 int SpriteRender::BottomPos() const
 {
 	return static_cast<int>(owner->transform.position.y + sprite->Size().y);
+}
+
+int SpriteRender::ColliderBottomPos() const
+{
+	if (collider)
+		return static_cast<int>(collider->ColliderBottomPos().y);
+	else
+		return 0;
+}
+
+void SpriteRender::SetLayerWithColliderBottom(bool flag)
+{
+	layerWithCollider = flag;
 }
 
 void SpriteRender::SetUIRender(bool flag)

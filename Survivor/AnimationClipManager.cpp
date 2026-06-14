@@ -54,6 +54,15 @@ bool AnimationClipManager::InitResources(class TextureManager* texture_manager)
 	if (!LoadAnimationClip("wizard_die", texture_manager->GetSprite("boss_die"), 18, 1, 18, false))
 		return false;
 
+	if (!LoadAnimationClip("slime_walk", texture_manager->GetSprite("slime"), 8, 1, 8, true, 0.1f, { 0.0f,96.0f }, 96.0f, 96.0f))
+		return false;
+
+	if (!LoadAnimationClip("slime_hurt", texture_manager->GetSprite("slime"), 4, 1, 4, false, 0.1f, { 0.0f,576.0f }, 96.0f, 96.0f))
+		return false;
+
+	if (!LoadAnimationClip("slime_die", texture_manager->GetSprite("slime"), 10, 1, 10, false, 0.1f, { 0.0f,672.0f }, 96.0f, 96.0f))
+		return false;
+
 	return true;
 }
 

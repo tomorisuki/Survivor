@@ -90,6 +90,16 @@ Vector2D Collider::Offset() const
 	return offset;
 }
 
+Vector2D Collider::ColliderCenter() const
+{
+	return owner->transform.position + offset + (Size() / 2);
+}
+
+Vector2D Collider::ColliderBottomPos() const
+{
+	return owner->transform.position + offset + Size();
+}
+
 bool Collider::Enable() const
 {
 	return enable;

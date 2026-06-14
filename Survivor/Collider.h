@@ -94,6 +94,12 @@ public:
 	//获取偏移量
 	Vector2D Offset() const;
 
+	//获取碰撞箱的中心位置，世界坐标
+	Vector2D ColliderCenter() const;
+
+	//获取碰撞箱底部位置，世界坐标
+	Vector2D ColliderBottomPos() const;
+
 	//是否启用
 	bool Enable() const;
 

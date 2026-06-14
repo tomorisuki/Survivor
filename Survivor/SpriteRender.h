@@ -41,6 +41,12 @@ public:
 	//以图片底部的y值为层级
 	int BottomPos() const;
 
+	//碰撞箱底部的y值为层级
+	int ColliderBottomPos() const;
+
+	//设置层级以碰撞箱底部的y值为层级
+	void SetLayerWithColliderBottom(bool flag);
+
 	//设置是否为UI绘制
 	void SetUIRender(bool flag);
 
@@ -58,6 +64,8 @@ private:
 	bool isUI = false;			//是否为UI绘制
 	Sprite* sprite = nullptr;
 	class AnimatorComponent* animator = nullptr;
+	class Collider* collider = nullptr;
 	bool enable = true;
+	bool layerWithCollider = false;
 };
 

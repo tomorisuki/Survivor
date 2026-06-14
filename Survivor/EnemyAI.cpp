@@ -17,27 +17,28 @@ void EnemyAI::Start()
 	animator = owner->GetComponent<AnimatorComponent>();
 	health = owner->GetComponent<Health>();
 	collider = owner->GetComponent<Collider>();
+	targetCollider = attackTarget->GetComponent<Collider>();
 }
 
 void EnemyAI::Update(float deltaTime)
 {
 	if (!rigidBody || !attackTarget || !health) return;
-
 	if (health->GetHp() == 0) {
 		animator->Play("die");
 		if (collider) collider->SetEnable(false);
 		if (rigidBody) rigidBody->SetEnable(false);
 		if (!animator->isPlaying()) {
 			float result = FMath::RandomRealFloat();
+			Vector2D itemPosition = collider ? collider->ColliderCenter() : owner->transform.position;
 			if (result >= 0.0f && result <= 0.9f)
 				expOrbFactory->GetScene()->AddGameObject(expOrbFactory->CreatExpOrb("expOrb",
-					owner->transform.position));
-			else if (result > 0.9f && result <= 0.93f)
+					itemPosition));
+			else if (result > 0.95f && result <= 0.96f)
 				expOrbFactory->GetScene()->AddGameObject(expOrbFactory->CreatClearAllItem("clearAll",
-					owner->transform.position));
-			else if (result > 0.93f)
+					itemPosition));
+			else if (result > 0.97f)
 				expOrbFactory->GetScene()->AddGameObject(expOrbFactory->CreatAddHealthItem("addHealth",
-					owner->transform.position));
+					itemPosition));
 
 			owner->SetPendingDestroy(true);
 		}
@@ -49,20 +50,18 @@ void EnemyAI::Update(float deltaTime)
 		{
 			isHurt = false;
 			collider->SetEnable(true);
-			animator->Play("fly");
+			animator->Play("move");
 		}
-		else
-			return;
+		//Enemies won't stop moving just because they take damage.
 	}
-
-
-	//获取一个指向目标的向量
-	Vector2D moveDirection = (attackTarget->transform.position - owner->transform.position).Normalized();
+	//Get a vector pointing to the target.
+	Vector2D selfPosition = owner->transform.position + collider->Offset() + (collider->Size() / 2);
+	Vector2D moveDirection = (targetCollider->ColliderCenter() - selfPosition).Normalized();
 
 	if (moveDirection.x > 0.1f)
-		animator->SetFlip(true);
+		isLeft ? animator->SetFlip(true) : animator->SetFlip(false);
 	else if (moveDirection.x < -0.1f)
-		animator->SetFlip(false);
+		isLeft ? animator->SetFlip(false) : animator->SetFlip(true);
 
 	rigidBody->AddForce(moveDirection);
 }
@@ -95,8 +94,9 @@ void EnemyAI::OnCollisionEnter(Collider* collider)
 			damage = static_cast<int>(damageDealer->Damage());
 		}
 		std::string text = "-" + std::to_string(damage);
+		//Vector2D textPosition = collider->ColliderCenter() + Vector2D{0.0f,-collider->}
 		floatingTextFactory->GetScene()->AddGameObject(
-			floatingTextFactory->CreatFloatingText(text, owner->transform.position)
+			floatingTextFactory->CreatFloatingText(text, this->collider->ColliderCenter())
 		);
 	}
 }
@@ -109,4 +109,9 @@ void EnemyAI::SetExpOrbFactory(ExpOrbFactory* factory)
 void EnemyAI::SetFloatingTextFactory(FloatingTextFactory* factory)
 {
 	floatingTextFactory = factory;
+}
+
+void EnemyAI::SetIsDefualtLeft(bool flag)
+{
+	isLeft = flag;
 }

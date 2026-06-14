@@ -25,16 +25,17 @@ public:
 		enemy->name = name;	//敌人名字
 		enemy->transform.scale = { 0.5f,0.5f };
 		enemy->AddComponent<SpriteRender>();	//渲染组件
-		enemy->AddComponent<SpriteRender>()->SetIsIgnorePause(true);
+		enemy->GetComponent<SpriteRender>()->SetIsIgnorePause(true);
+		enemy->GetComponent<SpriteRender>()->SetLayerWithColliderBottom(true);
 
 		enemy->AddComponent<AnimatorComponent>();	//动画组件
-		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("fly",
+		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("move",
 			engine->GetAniClipMgr()->GetAnimationClip("enemy_fly"));
 		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("die",
 			engine->GetAniClipMgr()->GetAnimationClip("enemy_die"));
 		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("hurt",
 			engine->GetAniClipMgr()->GetAnimationClip("enemy_hurt"));
-		enemy->GetComponent<AnimatorComponent>()->Play("fly");
+		enemy->GetComponent<AnimatorComponent>()->Play("move");
 		enemy->GetComponent<AnimatorComponent>()->SetIsIgnorePause(true);
 
 		enemy->AddComponent<RigidBody>();
@@ -59,6 +60,59 @@ public:
 		enemy->GetComponent<EnemyAI>()->SetInitialPosition(position);
 		enemy->GetComponent<EnemyAI>()->SetExpOrbFactory(expOrbFactory);
 		enemy->GetComponent<EnemyAI>()->SetFloatingTextFactory(floatingTextFactory);
+		enemy->GetComponent<EnemyAI>()->SetIsDefualtLeft(true);
+
+		enemy->Start();
+		enemy->transform.UpdatePrevPosition();
+
+		return enemy;
+	}
+
+	GameObject* CreateEnemySlime(const std::string& name, const Vector2D& position, int hp = 2)
+	{
+		GameObject* enemy = new GameObject(engine);
+		enemy->name = name;	//敌人名字
+		enemy->transform.scale = { 2.0f,2.0f };
+		enemy->AddComponent<SpriteRender>()->SetIsIgnorePause(true);	//渲染组件
+		//test
+		enemy->GetComponent<SpriteRender>()->SetLayerWithColliderBottom(true);
+
+		enemy->AddComponent<AnimatorComponent>();	//动画组件
+		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("move",
+			engine->GetAniClipMgr()->GetAnimationClip("slime_walk"));
+		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("die",
+			engine->GetAniClipMgr()->GetAnimationClip("slime_die"));
+		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("hurt",
+			engine->GetAniClipMgr()->GetAnimationClip("slime_hurt"));
+		enemy->GetComponent<AnimatorComponent>()->Play("move");
+		enemy->GetComponent<AnimatorComponent>()->SetIsIgnorePause(true);
+
+		enemy->AddComponent<RigidBody>();
+		enemy->GetComponent<RigidBody>()->SetUseGravity(false);
+		enemy->GetComponent<RigidBody>()->SetMoveSpeed(300.0f);
+		enemy->GetComponent<RigidBody>()->SetLinearDamping(4.2f);
+
+		enemy->AddComponent<DamageDealer>()->SetDamage(1.0f);
+
+		enemy->AddComponent<Collider>();
+		enemy->GetComponent<Collider>()->SetEnableDebug(false);
+		enemy->GetComponent<Collider>()->SetLayer(2);
+		enemy->GetComponent<Collider>()->SetSize(Vector2D{ 17.0f,14.0f });
+		enemy->GetComponent<Collider>()->SetOffset(Vector2D{ 76.0f,90.0f });
+		enemy->GetComponent<Collider>()->SetEnable(true);
+
+
+
+		enemy->AddComponent<Health>()->SetMaxHp(hp);
+		enemy->GetComponent<Health>()->SetHp(hp);
+		
+
+		enemy->AddComponent<EnemyAI>();
+		enemy->GetComponent<EnemyAI>()->SetAttackTarget(target);
+		enemy->GetComponent<EnemyAI>()->SetInitialPosition(position);
+		enemy->GetComponent<EnemyAI>()->SetExpOrbFactory(expOrbFactory);
+		enemy->GetComponent<EnemyAI>()->SetFloatingTextFactory(floatingTextFactory);
+		enemy->GetComponent<EnemyAI>()->SetIsDefualtLeft(false);
 
 		enemy->Start();
 		enemy->transform.UpdatePrevPosition();
@@ -75,16 +129,16 @@ public:
 		enemy->name = name;	//敌人名字
 		enemy->transform.scale = { 0.5f,0.5f };
 		enemy->AddComponent<SpriteRender>();	//渲染组件
-		enemy->AddComponent<SpriteRender>()->SetIsIgnorePause(true);
+		enemy->GetComponent<SpriteRender>()->SetIsIgnorePause(true);
 
 		enemy->AddComponent<AnimatorComponent>();	//动画组件
-		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("fly",
+		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("move",
 			engine->GetAniClipMgr()->GetAnimationClip("enemy_fly"));
 		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("die",
 			engine->GetAniClipMgr()->GetAnimationClip("enemy_die"));
 		enemy->GetComponent<AnimatorComponent>()->AddAnimationClip("hurt",
 			engine->GetAniClipMgr()->GetAnimationClip("enemy_hurt"));
-		enemy->GetComponent<AnimatorComponent>()->Play("fly");
+		enemy->GetComponent<AnimatorComponent>()->Play("move");
 		enemy->GetComponent<AnimatorComponent>()->SetIsIgnorePause(true);
 
 		enemy->AddComponent<RigidBody>();
@@ -102,13 +156,15 @@ public:
 
 
 
-		enemy->AddComponent<Health>()->SetHp(hp);
+		enemy->AddComponent<Health>()->SetMaxHp(hp);
+		enemy->GetComponent<Health>()->SetHp(hp);
 
 		enemy->AddComponent<EnemyAI>();
 		enemy->GetComponent<EnemyAI>()->SetAttackTarget(target);
 		enemy->GetComponent<EnemyAI>()->SetInitialPosition(position);
 		enemy->GetComponent<EnemyAI>()->SetExpOrbFactory(expOrbFactory);
 		enemy->GetComponent<EnemyAI>()->SetFloatingTextFactory(floatingTextFactory);
+		enemy->GetComponent<EnemyAI>()->SetIsDefualtLeft(true);
 
 		enemy->Start();
 		enemy->transform.UpdatePrevPosition();

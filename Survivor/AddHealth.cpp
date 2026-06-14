@@ -1,7 +1,8 @@
-#include "AddHealth.h"
+﻿#include "AddHealth.h"
 
 #include "GameObject.h"
 #include "Health.h"
+#include "Engine.h"
 
 void AddHealth::Start()
 {
@@ -15,6 +16,7 @@ void AddHealth::Update(float deltaTime)
 void AddHealth::OnCollisionEnter(Collider* collider)
 {
 	AddHealthToTarget();
+	engine->GetAudioManager()->PlayAudio("add_health");
 	owner->SetPendingDestroy(true);
 }
 

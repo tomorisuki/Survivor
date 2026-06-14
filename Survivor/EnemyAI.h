@@ -28,6 +28,9 @@ public:
 
 	void SetFloatingTextFactory(class FloatingTextFactory* factory);
 
+	//设置图片是否默认向左，用于翻转
+	void SetIsDefualtLeft(bool flag);
+
 private:
 	class GameObject* attackTarget = nullptr;
 	class RigidBody* rigidBody = nullptr;
@@ -36,7 +39,9 @@ private:
 	class Collider* collider = nullptr;
 	class ExpOrbFactory* expOrbFactory = nullptr;
 	class FloatingTextFactory* floatingTextFactory = nullptr;
-
+	class Collider* targetCollider = nullptr;
+	//Vector2D colliderCenter;
 	bool isHurt = false;
+	bool isLeft = false;
 };
 
