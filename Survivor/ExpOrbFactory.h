@@ -34,8 +34,8 @@ public:
 		GameObject* expOrb = new GameObject(engine);
 		expOrb->name = name;
 		expOrb->transform.scale = { 0.2f,0.2f };
-		Vector2D offset = { 20.0f,20.0f };
-		expOrb->transform.position = position + offset;
+		//Vector2D offset = { 20.0f,20.0f };
+		expOrb->transform.position = position;// +offset;
 		expOrb->AddComponent<SpriteRender>(engine->GetTextureManager()->GetSprite("gold_apple"));
 		expOrb->GetComponent<SpriteRender>()->SetLayer(1);
 		
@@ -86,8 +86,8 @@ public:
 	{
 		GameObject* item = new GameObject(engine);
 		item->name = name;
-		Vector2D offset = { 20.0f,20.0f };
-		item->transform.position = position + offset;
+		//Vector2D offset = { 20.0f,20.0f };
+		item->transform.position = position;// +offset;
 
 		item->AddComponent<SpriteRender>(
 		engine->GetTextureManager()->GetSprite("food"));

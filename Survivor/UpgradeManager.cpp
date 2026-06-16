@@ -243,7 +243,7 @@ void UpgradeManager::Update(float deltaTime)
 		confirm->AddComponent<TextRender>()->SetFont(
 			engine->GetFontManager()->GetFont("silver"));
 
-		confirm->GetComponent<TextRender>()->SetText("确定");
+		confirm->GetComponent<TextRender>()->SetText(u8"确定");
 
 		confirm->GetComponent<TextRender>()->SetOffset({ 15.0f,20.0f });
 

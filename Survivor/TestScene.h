@@ -121,7 +121,7 @@ public:
 
         player->AddComponent<PlayerState>();
 
-        target = player;
+        //target = player;
 
         camera->SetFollowTarget(&player->transform);
         
@@ -345,7 +345,7 @@ public:
         auto bossSpawn = std::make_unique<Timer>();
         bossSpawn->SetElapsedTime(60.0f);
         bossSpawn->SetOnce(true);
-        bossSpawn->SetCallback([this]() {
+        bossSpawn->SetCallback([this,player]() {
             auto boss = CreateGameObjectLater("boss");
             boss->transform.position = { 200.0f,200.0f };
             boss->transform.scale = { 2.0f,2.0f };
@@ -384,7 +384,8 @@ public:
             boss->GetComponent<RigidBody>()->SetLinearDamping(3.5f);
 
             boss->AddComponent<BossAI>();
-            boss->GetComponent<BossAI>()->SetAttackTarget(target);
+            boss->GetComponent<BossAI>()->SetAttackTarget(player);
+            boss->GetComponent<BossAI>()->SetScene(this);
             
             boss->transform.UpdatePrevPosition();
             boss->Start();
@@ -514,7 +515,7 @@ public:
 
 private:
     //std::unique_ptr<ExpOrbFactory> expOrbFactory;
-    GameObject* target = nullptr;
+    //GameObject* target = nullptr;
 	EnemySpawn* enemySpawnPointer = nullptr;
     double gameTotalTime = 0.0;
     GameState gameState;

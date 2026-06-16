@@ -16,7 +16,10 @@ public:
 	//设置攻击对象
 	void SetAttackTarget(class GameObject* target);
 
+	void SetScene(class Scene* scene);
+
 private:
+	class Scene* scene = nullptr;
 
 	class GameObject* target = nullptr;
 

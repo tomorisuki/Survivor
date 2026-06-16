@@ -63,6 +63,9 @@ bool AnimationClipManager::InitResources(class TextureManager* texture_manager)
 	if (!LoadAnimationClip("slime_die", texture_manager->GetSprite("slime"), 10, 1, 10, false, 0.1f, { 0.0f,672.0f }, 96.0f, 96.0f))
 		return false;
 
+	if (!LoadAnimationClip("circle_bullet", texture_manager->GetSprite("circle_bullet"), 5, 1, 5, false, 0.1f, { 0.0f,0.0f }, 192.0f, 192.0f))
+		return false;
+
 	return true;
 }
 

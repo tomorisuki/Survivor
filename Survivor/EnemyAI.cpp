@@ -30,13 +30,13 @@ void EnemyAI::Update(float deltaTime)
 		if (!animator->isPlaying()) {
 			float result = FMath::RandomRealFloat();
 			Vector2D itemPosition = collider ? collider->ColliderCenter() : owner->transform.position;
-			if (result >= 0.0f && result <= 0.9f)
+			if (result >= 0.0f && result <= 0.95f)
 				expOrbFactory->GetScene()->AddGameObject(expOrbFactory->CreatExpOrb("expOrb",
 					itemPosition));
-			else if (result > 0.95f && result <= 0.96f)
+			else if (result > 0.95f && result <= 0.958f)
 				expOrbFactory->GetScene()->AddGameObject(expOrbFactory->CreatClearAllItem("clearAll",
 					itemPosition));
-			else if (result > 0.97f)
+			else if (result > 0.958f)
 				expOrbFactory->GetScene()->AddGameObject(expOrbFactory->CreatAddHealthItem("addHealth",
 					itemPosition));
 

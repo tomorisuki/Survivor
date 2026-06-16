@@ -72,6 +72,7 @@ public:
 	{
 		GameObject* enemy = new GameObject(engine);
 		enemy->name = name;	//敌人名字
+		enemy->transform.position = position;
 		enemy->transform.scale = { 2.0f,2.0f };
 		enemy->AddComponent<SpriteRender>()->SetIsIgnorePause(true);	//渲染组件
 		//test
@@ -98,6 +99,7 @@ public:
 		enemy->GetComponent<Collider>()->SetEnableDebug(false);
 		enemy->GetComponent<Collider>()->SetLayer(2);
 		enemy->GetComponent<Collider>()->SetSize(Vector2D{ 17.0f,14.0f });
+		//enemy->GetComponent<Collider>()->SetOffset(Vector2D{ 380.0f,450.0f });
 		enemy->GetComponent<Collider>()->SetOffset(Vector2D{ 76.0f,90.0f });
 		enemy->GetComponent<Collider>()->SetEnable(true);
 
@@ -109,7 +111,7 @@ public:
 
 		enemy->AddComponent<EnemyAI>();
 		enemy->GetComponent<EnemyAI>()->SetAttackTarget(target);
-		enemy->GetComponent<EnemyAI>()->SetInitialPosition(position);
+		//enemy->GetComponent<EnemyAI>()->SetInitialPosition(position);
 		enemy->GetComponent<EnemyAI>()->SetExpOrbFactory(expOrbFactory);
 		enemy->GetComponent<EnemyAI>()->SetFloatingTextFactory(floatingTextFactory);
 		enemy->GetComponent<EnemyAI>()->SetIsDefualtLeft(false);

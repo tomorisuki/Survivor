@@ -30,8 +30,8 @@ struct GridHash
 class SpatialGrid
 {
 public:
-
-	SpatialGrid(int size = 128) : cellSize(size){}
+	// 64 or 128?
+	SpatialGrid(int size = 64) : cellSize(size){}
 
 	void Clear();
 
@@ -43,7 +43,7 @@ public:
 
 private:
 
-	int cellSize = 128;
+	int cellSize = 64;
 
 	uint32_t currentQueryStamp = 0;
 

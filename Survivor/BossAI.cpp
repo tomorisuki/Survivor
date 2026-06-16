@@ -7,6 +7,9 @@
 #include "Health.h"
 #include "Collider.h"
 
+#include "SpreadBullet.h"
+
+#include "Scene.h"
 
 void BossAI::Start()
 {
@@ -15,8 +18,6 @@ void BossAI::Start()
 	rigidBody = owner->GetComponent<RigidBody>();
 	health = owner->GetComponent<Health>();
 	collider = owner->GetComponent<Collider>();
-
-
 }
 
 //ani: idle move attack die
@@ -43,7 +44,6 @@ void BossAI::Update(float deltaTime)
 	if (distance <= 360000.0f && !crazy) {
 		Vector2D position = owner->transform.position + Vector2D{ 134.0f,139.0f };
 		Vector2D direction = (target->transform.position - position).Normalized();
-
 		if (direction.x > 0.1f) {
 			animator->SetFlip(false);
 		}
@@ -74,6 +74,36 @@ void BossAI::Update(float deltaTime)
 		rigidBody->AddForce(direction);
 		animator->Play("run");
 
+
+		static float current = 0.0f;
+		static float cd = 1.0f;
+
+		current += deltaTime;
+		if (current >= cd) {
+			current -= cd;
+			// Shoot bullet.
+			auto bullet = scene->CreateGameObjectLater("boss_bullet");
+			bullet->transform.scale = { 0.3f,0.3f };
+			bullet->transform.position = collider->ColliderCenter();
+			bullet->AddComponent<SpriteRender>()->SetIsIgnorePause(true);
+			bullet->AddComponent<AnimatorComponent>()->AddAnimationClip("bullet",
+				engine->GetAniClipMgr()->GetAnimationClip("circle_bullet"));
+			bullet->GetComponent<AnimatorComponent>()->SetIsIgnorePause(true);
+			bullet->GetComponent<AnimatorComponent>()->Play("bullet");
+			bullet->AddComponent<Collider>()->SetSize(Vector2D{ 57.6f,57.6f });
+			bullet->GetComponent<Collider>()->SetLayer(4);
+			bullet->AddComponent<SpreadBullet>()->SetBulletSpeed(600.0f);
+			bullet->GetComponent<SpreadBullet>()->SetLifeTime(10.0f);
+
+			Vector2D thisPosition = collider->ColliderCenter();
+			Vector2D targetPosition = target->GetComponent<Collider>()->ColliderCenter();
+			Vector2D dir = (targetPosition - thisPosition).Normalized();
+			bullet->GetComponent<SpreadBullet>()->SetDirection(dir);
+			bullet->Start();
+			bullet->transform.UpdatePrevPosition();
+		}
+
+
 		float currDistance = target->transform.position.DistanceSquared(owner->transform.position);
 
 		if (currDistance > 360000.0f) {
@@ -89,4 +119,9 @@ void BossAI::Render()
 void BossAI::SetAttackTarget(GameObject* target)
 {
 	this->target = target;
+}
+
+void BossAI::SetScene(Scene* scene)
+{
+	this->scene = scene;
 }

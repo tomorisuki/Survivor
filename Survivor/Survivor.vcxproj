@@ -125,7 +125,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\SDL3Project\Survivor\Survivor\SDL3thirparty\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SDL3Project\Survivor\Survivor\SDL3thirparty\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -134,7 +134,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;SDL3_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>F:\SDL3Project\Survivor\Survivor\SDL3thirparty\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\SDL3Project\Survivor\Survivor\SDL3thirparty\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -145,6 +145,7 @@
     <ClCompile Include="AnimatorComponent.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="BossAI.cpp" />
+    <ClCompile Include="BossBullet.cpp" />
     <ClCompile Include="BossHpText.cpp" />
     <ClCompile Include="BulletFactory.cpp" />
     <ClCompile Include="BulletSpawn.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="AnimatorComponent.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="BossAI.h" />
+    <ClInclude Include="BossBullet.h" />
     <ClInclude Include="BossHpText.h" />
     <ClInclude Include="BulletFactory.h" />
     <ClInclude Include="BulletSpawn.h" />

@@ -29,7 +29,8 @@ bool TextureManager::Init()
     if (!LoadTexture("food", "assets/food.png")) return false;
     if (!LoadTexture("slime", "assets/enemy_slime.png")) return false;
     if (!LoadTexture("main_ui", "assets/main_ui.png")) return false;
-    
+    if (!LoadTexture("circle_bullet", "assets/bullets/circle_bullet.png")) return false;
+
     return true;
 }
 

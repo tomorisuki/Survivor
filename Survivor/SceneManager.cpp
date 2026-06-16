@@ -58,4 +58,5 @@ void SceneManager::ProcessPendingOperations()
 			currentScene->SetStart(true);
 		}
 	}
+	if (currentScene) currentScene->ProcessPendingOperations();
 }
