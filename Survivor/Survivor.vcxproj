@@ -127,7 +127,6 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>F:\SDL3Project\Survivor\Survivor\SDL3thirparty\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -180,6 +179,7 @@
     <ClCompile Include="LifeTimeComponent.cpp" />
     <ClCompile Include="LogicFPSText.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="OrbitBullet.cpp" />
     <ClCompile Include="PlayerControl.cpp" />
     <ClCompile Include="PlayerHpTextComponent.cpp" />
@@ -187,6 +187,7 @@
     <ClCompile Include="RenderFPSText.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SpatialGrid.cpp" />
     <ClCompile Include="SpreadBullet.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="LifeBindComponent.h" />
     <ClInclude Include="LifeTimeComponent.h" />
     <ClInclude Include="LogicFPSText.h" />
+    <ClInclude Include="MainScene.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="OrbitBullet.h" />
     <ClInclude Include="PlayerControl.h" />
@@ -252,6 +254,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SpatialGrid.h" />
     <ClInclude Include="SpreadBullet.h" />
     <ClInclude Include="Sprite.h" />

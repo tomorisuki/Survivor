@@ -8,6 +8,7 @@
 #include "FontManager.h"
 #include "SpatialGrid.h"
 #include "AudioManager.h"
+#include "SceneManager.h"
 
 
 //#include "TestScene.h"
@@ -52,6 +53,11 @@ public:
 		this->audioManager = audioManager;
 	}
 
+	void RegisterSceneManager(SceneManager* sceneManager)
+	{
+		this->sceneManager = sceneManager;
+	}
+
 
 	void SetWindowSize(const Vector2D& windowSize) {
 		this->windowSize = windowSize;
@@ -74,6 +80,8 @@ public:
 
 	SpatialGrid* GetSpatialGrid() const { return spatialGrid; }
 	AudioManager* GetAudioManager() const { return audioManager; }
+
+	SceneManager* GetSceneManager() const { return sceneManager; }
 
 	Vector2D WindowSize() const { return windowSize; }
 
@@ -105,6 +113,7 @@ private:
 	FontManager* font_manager = nullptr;
 	SpatialGrid* spatialGrid = nullptr;
 	AudioManager* audioManager = nullptr;
+	SceneManager* sceneManager = nullptr;
 	//Scene* scene = nullptr;
 	Camera* camera = nullptr;
 

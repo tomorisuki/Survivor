@@ -72,6 +72,8 @@ bool Game::InitGame()
 
     audioManager = std::make_unique<AudioManager>();
 
+    sceneManager = std::make_unique<SceneManager>(engine.get());
+
     collisionSystem->SetEngine(engine.get());
 
     /*------------分配内存------------*/
@@ -86,6 +88,7 @@ bool Game::InitGame()
     engine->RegisterCollisionSystem(collisionSystem.get());
     engine->RegisterFontManager(font_manager.get());
     engine->RegisterAudioManager(audioManager.get());
+    engine->RegisterSceneManager(sceneManager.get());
     engine->SetWindowSize({ WINDOW_WIDTH,WINDOW_HEIGHT });
     /*-----------设置参数-----------*/
 
@@ -99,9 +102,16 @@ bool Game::InitGame()
     audioManager->InitResources();
 
     /*------------初始化------------*/
-    scene = new TestScene();
-    scene->SetEngine(engine.get());
-    scene->Start();
+    //scene = new TestScene();
+    //scene->SetEngine(engine.get());
+    //scene->Start();
+
+    //mainScene = std::make_unique<MainScene>();
+    //mainScene->SetEngine(engine.get());
+    //mainScene->Start();
+    
+    sceneManager->SetDefaultScene(new MainScene());
+
 
     //engine->SetScene(scene);
 
@@ -150,12 +160,18 @@ void Game::Run()
             float game_delta = static_cast<float>(fixed_dt);
             input->Update();    //输入系统的更新
 
-            scene->Update(game_delta);
+            //mainScene->Update(game_delta);
+            //scene->Update(game_delta);
+
+            sceneManager->Update(game_delta);
 
             collisionSystem->Update(game_delta);
 
             //更新的最后一帧处理
-            scene->ProcessPendingOperations();
+            //mainScene->ProcessPendingOperations();
+            //scene->ProcessPendingOperations();
+
+            sceneManager->ProcessPendingOperations();
 
             accumulator -= fixed_dt;
             logic_fps++;
@@ -171,8 +187,9 @@ void Game::Run()
         render->RenderClear();
 
 
-
-        scene->Render();
+        sceneManager->Render();
+        //scene->Render();
+        //mainScene->Render();
 
         
         render->Render(alpha);

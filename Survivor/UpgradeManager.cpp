@@ -30,24 +30,24 @@ void UpgradeManager::Start()
 
 	upgradePool = std::make_unique<UpgradePool>();
 
-	upgradePool->AddUpgradeData("移动速度+10%", [this]()
+	upgradePool->AddUpgradeData(u8"移动速度+10%", [this]()
 		{
 			rigidBody->SetMoveSpeed(rigidBody->moveSpeed * 1.1f);
 		});
 
-	upgradePool->AddUpgradeData("增加血量上限", [this]()
+	upgradePool->AddUpgradeData(u8"增加血量上限", [this]()
 		{
 			health->SetMaxHp(health->GetMaxHp() + 2);
 		});
 
-	upgradePool->AddUpgradeData("子弹数量+1", [this]()
+	upgradePool->AddUpgradeData(u8"子弹数量+1", [this]()
 		{
 			BulletSpawn* bulletSpawn = dynamic_cast<BulletSpawn*>(scene->FindFirstObjectByName("bulletSpawn"));
 			state->bulletNumber += 1;
 			bulletSpawn->SetBulletNumber(state->bulletNumber);
 		});
 
-	upgradePool->AddUpgradeData("发射角度+30", [this]()
+	upgradePool->AddUpgradeData(u8"发射角度+30", [this]()
 		{
 			BulletSpawn* bulletSpawn = dynamic_cast<BulletSpawn*>(scene->FindFirstObjectByName("bulletSpawn"));
 			state->spreadAngle += 30.0f;
@@ -55,14 +55,14 @@ void UpgradeManager::Start()
 			bulletSpawn->SetSpreadAngle(state->spreadAngle);
 		});
 
-	upgradePool->AddUpgradeData("子弹攻速增加", [this]()
+	upgradePool->AddUpgradeData(u8"子弹攻速增加", [this]()
 		{
 			BulletSpawn* bulletSpawn = dynamic_cast<BulletSpawn*>(scene->FindFirstObjectByName("bulletSpawn"));
 			state->attackSpeedMultiplier -= 0.2f;
 			bulletSpawn->SetElapsedTime(state->attackSpeedMultiplier);
 		});
 
-	upgradePool->AddUpgradeData("经验吸附范围增加", [this]()
+	upgradePool->AddUpgradeData(u8"经验吸附范围增加", [this]()
 		{
 			ExpOrbFactory* expOrbFactory = dynamic_cast<ExpOrbFactory*>(scene->FindFirstObjectByName("expOrbFactory"));
 			expOrbFactory->SetAbsorbRadius(expOrbFactory->GetRadius() + 20.0f);

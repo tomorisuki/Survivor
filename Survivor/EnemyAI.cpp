@@ -49,7 +49,7 @@ void EnemyAI::Update(float deltaTime)
 		if (!animator->isPlaying())
 		{
 			isHurt = false;
-			collider->SetEnable(true);
+			//collider->SetEnable(true);
 			animator->Play("move");
 		}
 		//Enemies won't stop moving just because they take damage.
@@ -86,7 +86,7 @@ void EnemyAI::OnCollisionEnter(Collider* collider)
 {
 	if (collider->Layer() == 3 && !isHurt) {
 		animator->Play("hurt");
-		this->collider->SetEnable(false);
+		//this->collider->SetEnable(false);
 		isHurt = true;
 		DamageDealer* damageDealer = collider->Owner()->GetComponent<DamageDealer>();
 		int damage = 0;

@@ -104,6 +104,8 @@ void InputSystem::Update()
         key.second.previous = key.second.current;
         key.second.current = KeyStateRequire[static_cast<int>(key.second.key_code)];
     }
+    lastMouseClick = currMouseClick;
+    currMouseClick = mouseClick;
 }
 
 void InputSystem::BindKeyCode(const std::string& name, KeyCode key_code)
@@ -114,13 +116,6 @@ void InputSystem::BindKeyCode(const std::string& name, KeyCode key_code)
 bool InputSystem::isPress(const std::string& name)
 {
     return keyMap[name].current && !keyMap[name].previous;
-    ////如果按键的状态为true
-    //if (KeyStateRequire[static_cast<int>(keyMap[name].key_code)] &&
-    //    (keyMap[name].key_state != KeyState::Press)) {
-    //    keyMap[name].key_state = KeyState::Press;
-    //    return true;
-    //}
-    //return false;
 }
 
 bool InputSystem::isPress(KeyCode key_code) const
@@ -132,12 +127,6 @@ bool InputSystem::isPress(KeyCode key_code) const
 bool InputSystem::isDown(const std::string& name)
 {
     return keyMap[name].current;
-   /* if (KeyStateRequire[static_cast<int>(keyMap[name].key_code)] &&
-        (keyMap[name].key_state == KeyState::Press || keyMap[name].key_state == KeyState::Down)) {
-        keyMap[name].key_state = KeyState::Down;
-        return true;
-    }
-    return false;*/
 }
 
 bool InputSystem::isDown(KeyCode key_code) const
@@ -148,12 +137,6 @@ bool InputSystem::isDown(KeyCode key_code) const
 bool InputSystem::isUp(const std::string& name)
 {
     return !keyMap[name].current && keyMap[name].previous;
-   /* if (!KeyStateRequire[static_cast<int>(keyMap[name].key_code)] &&
-        (keyMap[name].key_state == KeyState::Down)) {
-        keyMap[name].key_state = KeyState::Up;
-        return true;
-    }
-    return false;*/
 }
 
 bool InputSystem::isUp(KeyCode key_code)
@@ -168,12 +151,17 @@ Vector2D InputSystem::MousePos() const
 
 bool InputSystem::MouseLeftDown() const
 {
-    return mouseClick;
+    return currMouseClick;
 }
 
 bool InputSystem::MouseLeftUp() const
 {
-    return mouseClick;
+    return !currMouseClick && lastMouseClick;
+}
+
+bool InputSystem::MouseLeftPress() const
+{
+    return currMouseClick && !lastMouseClick;
 }
 
 

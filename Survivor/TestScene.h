@@ -270,12 +270,12 @@ public:
         warningTextTimer->SetElapsedTime(120.0f);
         warningTextTimer->SetCallback([this]() {
             auto warningText = CreateGameObjectLater("warningText");
-            warningText->transform.scale = { 2.0f,2.0f };
-            warningText->transform.position = { 380.0f,350.0f };
+            //warningText->transform.scale = { 2.0f,2.0f };
+            warningText->transform.position = { 450.0f,350.0f };
             warningText->AddComponent<TextRender>()->SetFont(
                 engine->GetFontManager()->GetFont("silver"));
             warningText->GetComponent<TextRender>()->SetColor({ 255,165,0,255 });   //橙色
-            warningText->GetComponent<TextRender>()->SetText("敌人血量增加，敌人生成速度加快！");
+            warningText->GetComponent<TextRender>()->SetText(u8"敌人血量增加，敌人生成速度加快！");
             warningText->AddComponent<LifeTimeComponent>()->SetLifeTime(5.0f);
             warningText->transform.UpdatePrevPosition();
             warningText->Start();
@@ -463,7 +463,7 @@ public:
         for (auto& obj : gameObjects) {
             obj->Update(deltaTime);
             if (obj->GetName() == "objCount") {
-                std::string objCountStr = "对象数量: " + std::to_string(gameObjects.size());
+                std::string objCountStr = u8"对象数量: " + std::to_string(gameObjects.size());
                 obj->GetComponent<TextRender>()->SetText(objCountStr);
             }
             if (obj->GetName() == "gameTime") {
@@ -473,7 +473,7 @@ public:
                 char buffer[16];
                 sprintf_s(buffer, "%02d:%02d", minutes, scecond);
                 std::string time(buffer);
-                time = "时间: " + time;
+                time = u8"时间: " + time;
                 obj->GetComponent<TextRender>()->SetText(time);
             }
         }

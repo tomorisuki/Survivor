@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Component.h"
 
@@ -11,17 +11,17 @@ public:
 
 	void Update(float deltaTime) override;
 
-	//ÉèÖÃÆ¯¸¡Ê±¼ä
+	//è®¾ç½®æ¼‚æµ®æ—¶é—´
 	void SetFloatingTime(float time);
 
-	//ÉèÖÃÆ¯¸¡ËÙ¶È
+	//è®¾ç½®æ¼‚æµ®é€Ÿåº¦
 	void SetFloatingSpeed(float speed);
 
 private:
 
-	float floatingTime = 0.5f;		//Æ¯¸¡Ê±¼ä
-	float currentTime = 0.0f;		//ÒÑ¹ýÊ±¼ä
-	float floatingSpeed = 100.0f;	//Æ¯¸¡ËÙ¶È
+	float floatingTime = 0.5f;		//æ¼‚æµ®æ—¶é—´
+	float currentTime = 0.0f;		//å·²è¿‡æ—¶é—´
+	float floatingSpeed = 100.0f;	//æ¼‚æµ®é€Ÿåº¦
 
 };
 

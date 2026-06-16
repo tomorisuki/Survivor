@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Component.h"
 
@@ -13,21 +13,21 @@ public:
 
 	void OnCollisionEnter(class Collider* collider);
 
-	//ÉèÖÃ¼ÓÑªÄ¿±ê
+	//è®¾ç½®åŠ è¡€ç›®æ ‡
 	void SetTarget(class GameObject* target);
 
 	
 
-	//ÉèÖÃ¼ÓÑªÖµ
+	//è®¾ç½®åŠ è¡€å€¼
 	void SetValue(int value);
 
-	//¸øÄ¿±ê¼ÓÑªÁ¿
+	//ç»™ç›®æ ‡åŠ è¡€é‡
 	void AddHealthToTarget();
 
 private:
 	class GameObject* target = nullptr;
 	class Health* health = nullptr;
 
-	int value = 1;			//¼ÓÑªÖµ
+	int value = 1;			//åŠ è¡€å€¼
 };
 

@@ -16,6 +16,8 @@ public:
 
 	void operator=(const Sprite& sprite);
 
+	void operator=(const Sprite* sprite);
+
 	void SetTexture(SDL_Texture* sdl_texture);
 
 	//获取SDL_Texture
@@ -68,10 +70,12 @@ public:
 	SDL_FRect CropRect() const;
 
 private:
+	SDL_FRect cropRect = { 0,0,0,0 };				//图片矩形选区
 	SDL_Texture* sdl_texture = nullptr;				//SDL_Texture
+
 	Vector2D size;									//大小
 	Vector2D scale = { 1.0f,1.0f };					//图片缩放
-	SDL_FRect cropRect = { 0,0,0,0 };				//图片矩形选区
+
 	float rotation = 0.0f;							//图片旋转角度
 	float alpha = 255.0f;							//图片透明度
 	SDL_FlipMode flipMode = SDL_FLIP_HORIZONTAL;	//图片翻转模式，默认水平翻转

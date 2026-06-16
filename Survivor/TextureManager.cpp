@@ -28,6 +28,7 @@ bool TextureManager::Init()
     if (!LoadTexture("card", "assets/card.png")) return false;
     if (!LoadTexture("food", "assets/food.png")) return false;
     if (!LoadTexture("slime", "assets/enemy_slime.png")) return false;
+    if (!LoadTexture("main_ui", "assets/main_ui.png")) return false;
     
     return true;
 }

@@ -15,6 +15,7 @@
 
 #include "Engine.h"
 #include "TestScene.h"
+#include "MainScene.h"
 
 
 constexpr int WINDOW_WIDTH = 1200;
@@ -53,10 +54,12 @@ private:
 	std::unique_ptr<CollisionSystem> collisionSystem;
 	std::unique_ptr<FontManager> font_manager;
 	std::unique_ptr<AudioManager> audioManager;
+	std::unique_ptr<SceneManager> sceneManager;
 
-	SDL_Event sdl_event;
+	SDL_Event sdl_event{};
 	bool running = true;
 	TestScene* scene = nullptr;
+	std::unique_ptr<MainScene> mainScene;
 private:
 	Game() = default;
 	Game(const Game&) = delete;

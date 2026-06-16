@@ -11,6 +11,15 @@ SpriteRender::SpriteRender(Sprite* sprite)
 	//this->sprite = std::unique_ptr<Sprite>{sprite};
 }
 
+void SpriteRender::HaveSprite()
+{
+	if (!sprite) return;
+	auto spritePtr = new Sprite();
+	*spritePtr = *sprite;		//拷贝属性
+	ownSprite.reset(spritePtr);
+	sprite = ownSprite.get();
+}
+
 void SpriteRender::Start()
 {
 	animator = owner->GetComponent<AnimatorComponent>();

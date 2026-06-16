@@ -15,7 +15,7 @@
 
 int main()
 {
-	//获取Game
+	//Get Game
 	Game& game = Game::GetInstance();
 	game.Run();
 

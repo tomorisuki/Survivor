@@ -43,7 +43,8 @@ public:
 			}
 		}
 
-		camera->SaveData();
+		if (camera)
+			camera->SaveData();
 	}
 
 	virtual void Render() 
@@ -165,6 +166,16 @@ public:
 		}
 	}
 
+	void SetStart(bool start)
+	{
+		isStart = start;
+	}
+
+	bool IsStart() const
+	{
+		return isStart;
+	}
+
 protected:
 	Engine* engine = nullptr;
 	std::unique_ptr<Camera> camera;
@@ -174,6 +185,6 @@ protected:
 
 	std::unordered_map<std::string, int> gameObjectCount;
 	std::unordered_map<std::string, int> objectCount;
-
+	bool isStart = false;
 	bool gamePause = false;
 };

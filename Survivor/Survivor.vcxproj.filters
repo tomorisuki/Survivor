@@ -227,6 +227,12 @@
     <ClCompile Include="FloatingText.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>Project\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -397,5 +403,9 @@
     <ClInclude Include="AddHealth.h" />
     <ClInclude Include="FloatingTextFactory.h" />
     <ClInclude Include="FloatingText.h" />
+    <ClInclude Include="MainScene.h">
+      <Filter>Project\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h" />
   </ItemGroup>
 </Project>

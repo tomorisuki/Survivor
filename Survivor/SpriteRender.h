@@ -15,6 +15,13 @@ public:
 
 	SpriteRender(Sprite* sprite);
 
+	
+	/**
+	* @brief 使SpriteRender拥有一个Sprite。
+	* 工作原理，用已有的SpriteA来创建一个SpriteB，然后智能指针接管B，SpriteA指向B
+	*/
+	void HaveSprite();
+
 	//开始函数：加载使用
 	void Start() override;
 	
@@ -63,6 +70,7 @@ private:
 	bool setLayer = false;		//是否指定层级
 	bool isUI = false;			//是否为UI绘制
 	Sprite* sprite = nullptr;
+	std::unique_ptr<Sprite> ownSprite;
 	class AnimatorComponent* animator = nullptr;
 	class Collider* collider = nullptr;
 	bool enable = true;
