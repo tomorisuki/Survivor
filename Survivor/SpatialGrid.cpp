@@ -4,7 +4,9 @@
 
 void SpatialGrid::Clear()
 {
-	cells.clear();
+	for (auto& [pos, vec] : cells) {
+		vec.clear(); // 保留内存，不释放
+	}
 }
 
 void SpatialGrid::Build(const std::vector<Collider*>& colliders)

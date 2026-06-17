@@ -39,7 +39,7 @@ void EnemyAI::Update(float deltaTime)
 			else if (result > 0.958f)
 				expOrbFactory->GetScene()->AddGameObject(expOrbFactory->CreatAddHealthItem("addHealth",
 					itemPosition));
-
+					
 			owner->SetPendingDestroy(true);
 		}
 		return;

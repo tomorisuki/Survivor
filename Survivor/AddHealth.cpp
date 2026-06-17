@@ -11,6 +11,12 @@ void AddHealth::Start()
 
 void AddHealth::Update(float deltaTime)
 {
+	if (lifeTime == -1.0f) return;
+	currTime += deltaTime;
+	if (currTime >= lifeTime)
+	{
+		owner->SetPendingDestroy(true);
+	}
 }
 
 void AddHealth::OnCollisionEnter(Collider* collider)
@@ -23,6 +29,11 @@ void AddHealth::OnCollisionEnter(Collider* collider)
 void AddHealth::SetTarget(GameObject* target)
 {
 	this->target = target;
+}
+
+void AddHealth::SetLifeTime(float time)
+{
+	lifeTime = time;
 }
 
 void AddHealth::SetValue(int value)

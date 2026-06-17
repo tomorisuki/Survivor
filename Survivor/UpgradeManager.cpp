@@ -37,7 +37,8 @@ void UpgradeManager::Start()
 
 	upgradePool->AddUpgradeData(u8"增加血量上限", [this]()
 		{
-			health->SetMaxHp(health->GetMaxHp() + 2);
+			if (health)
+				health->SetMaxHp(health->GetMaxHp() + 2);
 		});
 
 	upgradePool->AddUpgradeData(u8"子弹数量+1", [this]()
@@ -90,6 +91,7 @@ void UpgradeManager::Update(float deltaTime)
 			return;
 		}
 	}
+
 	if (expComponent->Upgrade()) {
 		expComponent->ResetUpgrade();
 

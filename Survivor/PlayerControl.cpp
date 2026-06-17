@@ -6,6 +6,7 @@
 
 #include "SpriteRender.h"
 #include "Health.h"
+#include "Collider.h"
 
 
 void PlayerControl::Start()
@@ -15,6 +16,7 @@ void PlayerControl::Start()
 	animator = owner->GetComponent<AnimatorComponent>();
 	health = owner->GetComponent<Health>();
 	spriteRender = owner->GetComponent<SpriteRender>();
+	collider = owner->GetComponent<Collider>();
 }
 
 void PlayerControl::Update(float deltaTime)
@@ -27,6 +29,11 @@ void PlayerControl::Update(float deltaTime)
 			return;
 		}
 	}
+
+	if (owner->transform.position.x < 0.0f) owner->transform.position.x = 0.0f;
+	if (owner->transform.position.x > 2560.0f - collider->Size().x) owner->transform.position.x = 2560.0f - collider->Size().x;
+	if (owner->transform.position.y < 0.0f) owner->transform.position.y = 0.0f;
+	if (owner->transform.position.y > 1440.0f - collider->Size().y) owner->transform.position.y = 1440.0f - collider->Size().y;
 
 	Vector2D moveDir = { 0.0f,0.0f };
 	if (input->isDown("up")) {

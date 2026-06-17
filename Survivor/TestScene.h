@@ -53,8 +53,8 @@
 #include "FloatingTextFactory.h"
 
 struct GameState{
-    int enemyHp = 2;
-    float enemySpawnSpeed = 0.5f;
+    int enemyHp = 2;       //2
+    float enemySpawnSpeed = 0.5f;   //0.5f
 };
 
 

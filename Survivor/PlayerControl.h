@@ -21,6 +21,7 @@ private:
 	class RigidBody* rigidBody = nullptr;
 	class Health* health = nullptr;
 	class SpriteRender* spriteRender = nullptr;
+	class Collider* collider = nullptr;
 	bool isClearScreen = false;
 	bool isAbsorb = false;
 	Vector2D direction;

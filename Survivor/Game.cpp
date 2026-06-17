@@ -26,7 +26,8 @@ bool Game::InitGame()
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_mixer初始化失败: %s", SDL_GetError());
         return false;
     }
-
+    //SDL_WINDOW_FULLSCREEN
+    //SDL_WINDOW_RESIZABLE
     SDL_CreateWindowAndRenderer("Survivor", WINDOW_WIDTH, WINDOW_HEIGHT,
         SDL_WINDOW_RESIZABLE, &sdl_window, &sdl_renderer);
 
@@ -81,6 +82,7 @@ bool Game::InitGame()
 
     
     /*-----------设置参数-----------*/
+    engine->SetSDLWindow(sdl_window);
     engine->RegisterInputSystem(input.get());
     engine->RegisterRenderSystem(render.get());
     engine->RegisterTextureManager(texture_manager.get());
@@ -143,6 +145,13 @@ void Game::Run()
                 running = false;
                 break;
             }
+            if (sdl_event.type == SDL_EVENT_WINDOW_RESIZED)
+            {
+                float w = static_cast<float>(sdl_event.window.data1);
+                float h = static_cast<float>(sdl_event.window.data2);
+                //engine->SetWindowSize({ w,h });
+            }
+
             input->Input(sdl_event);
         }
         if (!running) break;
@@ -162,7 +171,7 @@ void Game::Run()
 
             //mainScene->Update(game_delta);
             //scene->Update(game_delta);
-
+            //game_delta *= 0.5f;
             sceneManager->Update(game_delta);
 
             collisionSystem->Update(game_delta);

@@ -61,6 +61,8 @@ public:
 
 	void SetWindowSize(const Vector2D& windowSize) {
 		this->windowSize = windowSize;
+		if (camera)
+			camera->SetCameraSize(windowSize);
 	}
 
 	//每个场景拥有一个摄像机，全局只有一个摄像机
@@ -68,7 +70,15 @@ public:
 		this->camera = camera;
 	}
 
+	void SetSDLWindow(SDL_Window* sdlWindow)
+	{
+		this->sdlWindow = sdlWindow;
+	}
 
+	SDL_Window* GetSDLWindow() const
+	{
+		return sdlWindow;
+	}
 
 	InputSystem* Input() const { return input; }
 	RenderSystem* GetRenderSystem() const { return render; }
@@ -114,6 +124,8 @@ private:
 	SpatialGrid* spatialGrid = nullptr;
 	AudioManager* audioManager = nullptr;
 	SceneManager* sceneManager = nullptr;
+
+	SDL_Window* sdlWindow = nullptr;
 	//Scene* scene = nullptr;
 	Camera* camera = nullptr;
 

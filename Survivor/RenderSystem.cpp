@@ -7,6 +7,16 @@
 
 #include <algorithm>	//排序算法
 
+/*
+bool isCollision(const SDL_FRect& a, const SDL_FRect& b)
+{
+	return !(a.x + a.w <= b.x ||  // a在b左边
+		b.x + b.w <= a.x ||  // b在a左边
+		a.y + a.h <= b.y ||  // a在b上边
+		b.y + b.h <= a.y);   // b在a上边
+}
+*/
+
 void RenderSystem::RenderWorld(Sprite* sprite, Camera* camera, const Transform& transform,
 	int layer)
 {
@@ -31,6 +41,20 @@ void RenderSystem::RenderWorld(Sprite* sprite, Camera* camera, const Transform& 
 	item.camera = camera;
 	item.layer = layer;									//当前层级
 	item.order = this->order++;
+
+	//SDL_FRect a = {
+	//	item.position.x,item.position.y,
+	//	item.dstRect.w,item.dstRect.h
+	//};
+
+	//SDL_FRect b = {
+	//	camera->transform.position.x,camera->transform.position.y,
+	//	camera->cameraSize.x,camera->cameraSize.y
+	//};
+	//if (!isCollision(a, b)) return;
+
+
+
 	worldQueue.push_back(item);
 }
 

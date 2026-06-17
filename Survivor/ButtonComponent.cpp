@@ -16,6 +16,7 @@ void ButtonComponent::Start()
 
 void ButtonComponent::Update(float deltaTime)
 {
+
 	ButtonRect tempRect = rect;
 	tempRect.x = owner->transform.position.x;
 	tempRect.y = owner->transform.position.y;

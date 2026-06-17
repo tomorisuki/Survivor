@@ -75,7 +75,7 @@ public:
 		item->GetComponent<Collider>()->SetSize(Vector2D{ 456.0f,396.0f });
 		item->GetComponent<Collider>()->SetLayer(5);
 		item->AddComponent<ClearScreen>()->SetScene(scene);
-		item->GetComponent<ClearScreen>()->SetLifeTime(-1.0f);
+		item->GetComponent<ClearScreen>()->SetLifeTime(10.0f);
 
 		item->transform.UpdatePrevPosition();
 		item->Start();
@@ -103,6 +103,7 @@ public:
 		
 		item->AddComponent<AddHealth>()->SetValue(1);
 		item->GetComponent<AddHealth>()->SetTarget(target);
+		item->GetComponent<AddHealth>()->SetLifeTime(10.0f);
 		
 		item->transform.UpdatePrevPosition();
 		item->Start();
